@@ -1,0 +1,46 @@
+{% load static %}
+<html>
+
+<head>
+</head>
+
+<body>
+    <div>
+        <table style="width: 600px;">
+            <tbody>
+                <tr>
+                    <td>
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation">
+                            <tbody>
+                                <tr>
+                                    <td width="15%">
+                                        <img src="cid:edtl.png" style="width: 100%; height: 15%;" alt="LOGO">
+                                    </td>
+                                    <td>
+                                        <h3 style="margin: 0;">ELETRICIDADE DE TIMOR LESTE, EP </h3>
+                                        <h4 style="margin: 0;"> Rua Caicoli, Dili, Timor Leste </h4>
+                                        <h4 style="margin: 0;"> +670 3339829 </h4>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-md-12">
+
+                <hr>
+                Dear {{to_email}}, <br>
+                We have a new News, with title " {{title}} ", Please visit our site to
+                view
+                more
+                <br>
+                Thank You
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

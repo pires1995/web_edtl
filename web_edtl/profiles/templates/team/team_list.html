@@ -1,0 +1,245 @@
+{% extends 'web_admin/layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+    <h1>{{title}}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
+            <!-- TODO -->
+            <!-- <li class="breadcrumb-item"><a href="{% url 'admin-news-list' %}">About List</a></li> -->
+
+            <li class="breadcrumb-item active">{{title}}</li>
+            <!-- <li class="breadcrumb-item">Users</li> -->
+        </ol>
+    </nav>
+</div>
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Organograma EDTL, EP</h5>
+
+                    <!-- Default Tabs -->
+                    <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
+                        <li class="nav-item flex-fill" role="presentation">
+                            <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab"
+                                data-bs-target="#home-justified" type="button" role="tab" aria-controls="home"
+                                aria-selected="true">Organograma</button>
+                        </li>
+                        <li class="nav-item flex-fill" role="presentation">
+                            <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab"
+                                data-bs-target="#profile-justified" type="button" role="tab" aria-controls="profile"
+                                aria-selected="false">Empregu</button>
+                        </li>
+                        <li class="nav-item flex-fill" role="presentation">
+                            <button class="nav-link w-100" id="contact-tab" data-bs-toggle="tab"
+                                data-bs-target="#contact-justified" type="button" role="tab" aria-controls="contact"
+                                aria-selected="false">Divisaun</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-2" id="myTabjustifiedContent">
+                        <div class="tab-pane fade show active" id="home-justified" role="tabpanel"
+                            aria-labelledby="home-tab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title mr-2">Lista Organograma
+                                                {% if group == 'admin' %}
+
+                                                <i class="bi bi-arrow-right"></i>
+                                                <a href="{% url 'admin-position-add' %}" class="btn btn-primary"> <i
+                                                        class="bi-plus-lg"></i> Aumenta
+                                                </a>
+                                                {% endif %}
+                                            </h5>
+                                            <hr>
+
+                                            <!-- Table with stripped rows -->
+                                            <table class="table table-striped table-bordered" id="example">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" width="5%">Nu.</th>
+                                                        <th scope="col" width="50%">Naran Kompletu</th>
+                                                        <th scope="col" width="10%">Seksu</th>
+                                                        <th scope="col" width="10%">Pozisaun</th>
+                                                        <th scope="col" width="10%">Aksaun</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for org in organograma %}
+                                                    <tr>
+                                                        <td>{{forloop.counter}}</td>
+                                                        <td>
+                                                            <!-- <a href="#">
+                                                            </a> -->
+                                                            {{org.employee.first_name}}
+                                                            {{org.employee.last_name}}
+                                                        </td>
+                                                        <td>
+                                                            {{org.employee.sex}}
+                                                        </td>
+                                                        <td>{{org.division.name_tet}}</td>
+                                                        <td>
+                                                            <a href="{% url 'admin-position-update' org.hashed %}"
+                                                                type="button" title="Update" class="btn btn-primary"><i
+                                                                    class="bi bi-pencil-square"></i></a>
+
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                            <!-- End Table with stripped rows -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile-justified" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title mr-2">Lista Empregu
+                                                {% if group == 'admin' %}
+
+                                                <i class="bi bi-arrow-right"></i>
+                                                <a href="{% url 'admin-employee-add' %}" class="btn btn-primary"> <i
+                                                        class="bi-plus-lg"></i> Aumenta
+                                                </a>
+                                                {% endif %}
+                                            </h5>
+                                            <hr>
+
+                                            <!-- Table with stripped rows -->
+                                            <table class="table table-striped table-bordered" id="example">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" width="5%">Nu.</th>
+                                                        <th scope="col" width="55%">Naran Kompletu</th>
+                                                        <th scope="col" width="10%">Seksu</th>
+                                                        <th scope="col" width="10%">Numeru Telefone</th>
+                                                        <th scope="col" width="10%">Email</th>
+                                                        <th scope="col" width="20%">Imajen</th>
+                                                        <th scope="col" width="10%">Aksaun</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for emp in employees %}
+                                                    <tr>
+                                                        <td>{{forloop.counter}}</td>
+                                                        <td>
+                                                            <!-- <a href="#">
+                                                            </a> -->
+                                                            {{emp.first_name}}
+                                                            {{emp.last_name}}
+                                                        </td>
+                                                        <td>
+                                                            {{emp.sex}}
+                                                        </td>
+                                                        <td>
+                                                            {{emp.mobile}}
+                                                        </td>
+                                                        <td>
+                                                            {{emp.email}}
+                                                        </td>
+                                                        <td>
+                                                            <img src="{{emp.image.url}}" width="50%" height="40%"
+                                                                alt="Profile" class="rounded-circle">
+
+                                                        </td>
+                                                        <td>
+                                                            <a href="{% url 'admin-employee-update' emp.hashed %}"
+                                                                type="button" title="Update" class="btn btn-primary"><i
+                                                                    class="bi bi-pencil-square"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                            <!-- End Table with stripped rows -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="contact-justified" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title mr-2">Lista Divisaun
+                                                {% if group == 'admin' %}
+
+                                                <i class="bi bi-arrow-right"></i>
+                                                <a href="{% url 'admin-division-add' %}" class="btn btn-primary"> <i
+                                                        class="bi-plus-lg"></i> Aumenta
+                                                </a>
+                                                {% endif %}
+                                            </h5>
+                                            <hr>
+
+                                            <!-- Table with stripped rows -->
+                                            <table class="table table-striped table-bordered" id="example">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col" width="5%">Nu.</th>
+                                                        <th scope="col" width="5%">Kode</th>
+                                                        <th scope="col" width="25%">Naran Divisaun (Tetum)</th>
+                                                        <th scope="col" width="30%">Naran Divisaun (Portugues)</th>
+                                                        <th scope="col" width="30%">Naran Divisaun (Ingles)</th>
+                                                        <th scope="col" width="10%">Aksaun</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for div in divisions %}
+                                                    <tr>
+                                                        <td>{{forloop.counter}}</td>
+                                                        <td>
+                                                            <!-- <a href="#">
+                                                            </a> -->
+                                                            {{div.code}}
+                                                        </td>
+                                                        <td>
+                                                            {{div.name_tet}}
+                                                        </td>
+                                                        <td>
+                                                            {{div.name_por}}
+                                                        </td>
+                                                        <td>
+                                                            {{div.name_eng}}
+                                                        </td>
+                                                        <td>
+                                                            <a href="{% url 'admin-division-update' div.hashed %}"
+                                                                type="button" title="Update" class="btn btn-primary"><i
+                                                                    class="bi bi-pencil-square"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                            <!-- End Table with stripped rows -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End Default Tabs -->
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

@@ -1,0 +1,87 @@
+{% extends 'web_admin/layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+    <h1>{{title}}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
+            <!-- TODO -->
+            <li class="breadcrumb-item"><a href="{% url 'admin-client-list' %}">List Client</a></li>
+
+            <li class="breadcrumb-item active">{{title}}</li>
+            <!-- <li class="breadcrumb-item">Users</li> -->
+        </ol>
+    </nav>
+</div>
+<section class="section profile">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body pt-3">
+                    <div class="card-title">
+                        <h2>Detail Client</h2>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        Client Information
+                                    </div>
+                                    <div class="">
+                                        <h6>Naran Kompletu: <strong> {{objects.name}} {{objects.last_name}}
+                                            </strong></h6>
+                                        <h6>Email: <strong> {{objects.email}}
+                                            </strong></h6>
+                                        <h6>Mobile: <strong> {{objects.mobile}}
+                                            </strong></h6>
+                                        <h6>Number Kontador: <strong> {{objects.numero_kontador}}
+                                            </strong></h6>
+                                        <h6>Address: <strong> {{objects.address}}
+                                            </strong></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        Login Information
+                                    </div>
+                                    <div class="">
+                                        <h6>Email: <strong> {{objects.user.email}}
+                                            </strong></h6>
+                                        {% if objects.is_active == False %}
+
+                                        <h6>Temporary Password: <strong> {{objects.temp_password}}
+                                            </strong></h6>
+                                        <h6>Status: <strong class="text-danger"> Not Activate
+                                            </strong></h6>
+                                        {% else %}
+                                        <h6>Password: <strong> {{objects.user.password}}
+                                            </strong></h6>
+                                        <h6>Status: <strong class="text-success"> Activated
+                                            </strong></h6>
+
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock content%}

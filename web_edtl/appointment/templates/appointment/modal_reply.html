@@ -1,0 +1,27 @@
+{% load crispy_forms_tags %}
+<div class="modal fade" id="reply{{object.id}}" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reply Form</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <input type="hidden" value="{{object.id}}" name="id">
+                    <input type="hidden" name="decision" value="3">
+                    <div class="form-floating">
+                        <textarea class="form-control" name="comments" placeholder="Leave a comment here"
+                            id="floatingTextarea2" required style="height: 100px"></textarea>
+                        <label for="floatingTextarea2">{% if object.comment %}{{ object.comment }}{% endif %}</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

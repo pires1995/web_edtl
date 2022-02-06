@@ -1,0 +1,108 @@
+{% extends 'web_admin/layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+    <h1>{{title}}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
+            <!-- TODO -->
+            <!-- <li class="breadcrumb-item"><a href="{% url 'admin-news-list' %}">About List</a></li> -->
+
+            <li class="breadcrumb-item active">{{title}}</li>
+            <!-- <li class="breadcrumb-item">Users</li> -->
+        </ol>
+    </nav>
+</div>
+
+<section class="section">
+    <div class="row">
+        <div class="col-md-12">
+            <a href="{% url 'admin-about-add' %}" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Aumenta</a>
+            {% if objects %}
+
+            <a href="{% url 'admin-about-update' objects.hashed %}" class="btn btn-primary"><i class="bi bi-pencil"></i>
+                Altera</a>
+            {% endif %}
+        </div>
+    </div>
+    <hr>
+
+    <!-- End Introduction -->
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Who we are EDTL, EP (Tetum)</h5>
+                    <p>{{objects.wwa_tet|safe}}</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Who we are EDTL, EP (Portugues)</h5>
+                    <p>{{objects.wwa_por|safe}}</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Who we are EDTL, EP (English)</h5>
+                    <p>{{objects.wwa_eng|safe}}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Vision -->
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">What we do EDTL, EP (Tetum)</h5>
+                    <p>{{objects.wwd_tet|safe}}</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">What we do EDTL, EP (Portugues)</h5>
+                    <p>{{objects.wwd_por|safe}}</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">What we do EDTL, EP (English)</h5>
+                    <p>{{objects.wwd_eng|safe}}</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Mission -->
+
+
+
+</section>
+{% endblock content %}

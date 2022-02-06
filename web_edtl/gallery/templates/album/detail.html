@@ -1,0 +1,192 @@
+{% extends 'web_admin/layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+    <h1>{{title}}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
+            <!-- TODO -->
+            <li class="breadcrumb-item"><a href="{% url 'admin-album-list' %}">List Album</a></li>
+
+            <li class="breadcrumb-item active">{{title}}</li>
+            <!-- <li class="breadcrumb-item">Users</li> -->
+        </ol>
+    </nav>
+</div>
+<section class="section profile">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body pt-3">
+                    <div class="card-title">
+                        <h2 class="pb-4">Detalla Album</h2>
+                        <h6>Category: <i>{{objects.category}}</i> </h6>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cover Imagen</h5>
+                                    <!-- <a href="{% url 'admin-gallery-update' album %}" class="btn btn-primary"> <i
+                                            class="bi-pencil-square"></i>
+                                        Update Image</a> -->
+                                    <hr>
+                                    <a href="{{ objects.image.url }}" target="_blank">
+                                        <img class="" width="100%" src="{{objects.image.url}}" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-4 align-self-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Naran Album (Tetum)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.name_tet}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 align-self-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Naran Album (Portugues)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.name_por}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 align-self-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Naran Album (Ingles)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.name_eng}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Deskrisaun (Tetum)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.overview_tet|safe}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Deskrisaun (Portugues)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.overview_por|safe}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Deskrisaun (Ingles)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.overview_eng|safe}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            {% if gallery %}
+
+            <div class="card">
+                <div class="card-body pt-3">
+                    <div class="card-title">
+                        <h2>Imagen Sira Seluk</h2>
+                    </div>
+                    <hr>
+                    <a href="{% url 'admin-gallery-add' album %}" class="btn btn-primary"> <i class="bi-plus-lg"></i>
+                        Add More
+                        Image</a>
+                    <div class="row mt-3">
+                        <div class="col-lg-12 align-self-center">
+                            <div class="basic">
+                                {% for image in gallery %}
+                                <div class="image mb-2">
+                                    <!-- TODO FIX -->
+                                    <a href="{{ image.image.url }}" target="_blank"><img class="img-fluid"
+                                            src="{{image.image_thumbnail.url}}" alt=""></a>
+                                    <p class="text-center fst-italic fs-6"> {% if image.overview_tet %}
+
+                                        {{image.overview_tet}} (TETUM)
+                                        {% else %}
+                                        Laiha Deskrisaun ba Imagen (TETUM)
+                                        {% endif %}
+                                    </p>
+                                    <p class="text-center fst-italic fs-6"> {% if image.overview_po %}
+
+                                        {{image.overview_por}} (PORTUGUES)
+                                        {% else %}
+                                        Laiha Deskrisaun ba Imagen (PORTUGUES)
+                                        {% endif %}
+                                    </p>
+                                    <p class="text-center fst-italic fs-6"> {% if image.overview_tet %}
+
+                                        {{image.overview_eng}} (INGLES)
+                                        {% else %}
+                                        Laiha Deskrisaun ba Imagen (INGLES)
+                                        {% endif %}
+                                    </p>
+                                </div>
+                                <a href="{% url 'admin-gallery-update' image.hashed %}" type="button" title="Update"
+                                    class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                <!-- <a href="#" type="button" title="Delete" class="btn btn-danger"><i
+                                        class="bi bi-trash"></i></a> -->
+                                <hr>
+                                {% endfor %}
+                                <!-- <h5 class="">Example Card</h5> -->
+                                <!-- <p>{{object.content|safe}}</p> -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            {% else %}
+            <div class="row mb-3">
+                <div class="col-md-12">
+
+                    <a href="{% url 'admin-gallery-add' album %}" class="btn btn-primary"> <i class="bi-plus-lg"></i>
+                        Add More
+                        Image</a>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock content%}

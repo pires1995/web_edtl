@@ -1,0 +1,96 @@
+{% extends 'web_admin/layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+    <h1>{{title}}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
+            <!-- TODO -->
+            <li class="breadcrumb-item"><a href="{% url 'admin-bill-list' %}">List Bill</a></li>
+
+            <li class="breadcrumb-item active">{{title}}</li>
+            <!-- <li class="breadcrumb-item">Users</li> -->
+        </ol>
+    </nav>
+</div>
+<section class="section profile">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body pt-3">
+                    <div class="card-title">
+                        <h2>Detail Bill</h2>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        Client Information
+                                    </div>
+                                    <div class="">
+                                        <h6>Naran Kompletu: <strong> {{objects.client.name}} {{objects.last_name}}
+                                            </strong></h6>
+                                        <h6>Email: <strong> {{objects.client.email}}
+                                            </strong></h6>
+                                        <h6>Mobile: <strong> {{objects.client.mobile}}
+                                            </strong></h6>
+                                        <h6>Number Kontador: <strong> {{objects.client.numero_kontador}}
+                                            </strong></h6>
+                                        <h6>Address: <strong> {{objects.client.address}}
+                                            </strong></h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        Bill Information
+                                        {% if objects.is_done == False %}
+                                        <a href="{% url 'admin-bill-approve' objects.hashed %}" class="btn btn-success">
+                                            <i class="bi bi-check"></i>
+                                            Approve</a>
+
+                                        {% else %}
+                                        <h4 class="text-success">
+                                            <i class="bi bi-check-all">APPROVED</i>
+                                        </h4>
+                                        <hr>
+                                        <h6>Approve By: <strong> <i class="bi bi-person"></i>
+                                                {{objects.done_by.first_name}}
+                                                {{objects.done_by.last_name}}
+                                            </strong>on <strong> <i class="bi bi-clock"> {{objects.done_date}} </i>
+                                            </strong> </h6>
+                                        {% endif %}
+
+                                    </div>
+                                    <div class="">
+                                        <h6>Bill Number: <strong> {{objects.bill_number}}
+                                            </strong></h6>
+                                        <h6>Payment Date: <strong> {{objects.payment_date}}
+                                            </strong></h6>
+                                        <h6>Upload Date: <strong> {{objects.upload_date}}
+                                            </strong></h6>
+                                        <a href="{{ objects.file.url }}" target="_blank">
+                                            <img class="" width="100%" src="{{objects.file.url}}" alt=""></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock content%}

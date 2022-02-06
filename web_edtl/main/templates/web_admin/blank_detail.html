@@ -1,0 +1,70 @@
+{% extends 'web_admin/layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+    <h1>{{title}}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
+            <!-- TODO -->
+            <li class="breadcrumb-item"><a href="#">....</a></li>
+
+            <li class="breadcrumb-item active">{{title}}</li>
+            <!-- <li class="breadcrumb-item">Users</li> -->
+        </ol>
+    </nav>
+</div>
+<section class="section profile">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body pt-3">
+                    <div class="card-title">
+                        <h2>....</h2>
+
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-12 align-self-center">
+                            <div class="basic">
+                                <div class="image">
+                                    <!-- TODO FIX -->
+                                    <a href="{{ object.image.url }}" target="_blank"><img
+                                            class="img-fluid rounded mx-auto d-block"
+                                            src="{{object.image_thumbnail.url}}" alt=""></a>
+                                    <p class="text-center fst-italic fs-6">{{object.image_description}}</p>
+                                </div>
+                                <hr>
+                                <h6 class="fw-bold">Headline: </h6>
+                                <p>{{object.headline}}</p>
+                                <hr>
+                                <!-- <h5 class="">Example Card</h5> -->
+                                <p>{{object.content|safe}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body pt-3">
+                    <div class="card-title">
+                        <h2>News Images</h2>
+                    </div>
+                    <hr>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock content%}

@@ -1,0 +1,100 @@
+{% extends 'web_admin/layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+    <h1>{{title}}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'admin-new-project-list' %}">New Project List</a></li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </nav>
+</div>
+
+<section class="section">
+    <div class="row">
+
+
+        <div class="col-sm-12">
+            <div class="card border-info shadow-lg pt-1 rounded">
+                <div class="card-body">
+                    <h5 class="card-title">Prienche Informasaun {{subtitle}}</h5>
+                    <form method="POST" id="locationForm" data-posts-url="{% url 'ajax_load_posts' %}"
+                        data-villages-url="{% url 'ajax_load_villages' %}" novalidate>
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="form-group col-md-4 mb-0">
+                                {{ form.municipality|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-4 mb-0">
+                                {{ form.administrativepost|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-4 mb-0">
+                                {{ form.village|as_crispy_field }}
+                            </div>
+                        </div>
+                        <!--end form-row-->
+                        <div class="row">
+                            <div class="form-group col-md-3 mb-0">
+                                {{ form.latitude|as_crispy_field }}
+                            </div>
+                            <div class="form-group col-md-3 mb-0">
+                                {{ form.longitude|as_crispy_field }}
+                            </div>
+                        </div>
+                        <!--end form-row-->
+                        <div class="col-12">
+                            <button class="btn btn-primary" type="submit"> <i class="bi bi-lock text-white"></i> Rai</button>
+                          </div>
+                    </form>
+                </div>
+                <!--end card-body-->
+            </div>
+            <!--end card-->
+        </div>
+        <!--end col-->
+    </div>
+</section>
+
+{% endblock %}
+{% block scripts %}
+
+<script>
+    $("#id_municipality").change(function () {
+        var url = $("#locationForm").attr("data-posts-url");
+        var municipalityId = $(this).val();
+
+        $.ajax({
+            url: url,
+            data: {
+                'municipality': municipalityId
+            },
+            success: function (data) {
+                $("#id_administrativepost").html(data);
+            }
+        });
+
+    });
+    // this one is for fetching village data
+    $("#id_administrativepost").change(function () {
+        var url = $("#locationForm").attr("data-posts-url");
+        var postId = $(this).val();
+
+        $.ajax({
+            url: '{% url 'ajax_load_villages' %}',
+            data: {
+                'post': postId
+            },
+            success: function (data) {
+                $("#id_village").html(data);
+            }
+        });
+
+    });
+</script>
+{% endblock %}

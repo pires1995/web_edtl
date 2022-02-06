@@ -1,0 +1,134 @@
+{% extends 'web_admin/layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+    <h1>{{title}}</h1>
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
+            <!-- TODO -->
+            <li class="breadcrumb-item"><a href="{% url 'admin-guidelines-list' %}">Lista Guidelines</a></li>
+
+            <li class="breadcrumb-item active">{{title}}</li>
+            <!-- <li class="breadcrumb-item">Users</li> -->
+        </ol>
+    </nav>
+</div>
+<section class="section profile">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body pt-3">
+                    <div class="card-title">
+                        <h2>Detalla Tender</h2>
+                    </div>
+                    <hr>
+                    <div class="row text-center">
+                        <div class="col-md-4 align-self-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Titulu Guideline (Tetum)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.title_tet}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 align-self-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Titulu Guideline (Portugues)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.title_por}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 align-self-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Titulu Guideline (Ingles)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.title_eng}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Deskrisaun (Tetum)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.description_tet|safe}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Deskrisaun (Portugues)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.description_por|safe}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Deskrisaun (Ingles)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.description_eng|safe}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body pt-3">
+                    <div class="card-title">
+                        <h2>Imagen</h2>
+                        <hr>
+                    </div>
+                    <a href="{{ objects.image.url }}" target="_blank">
+                        <img class="" width="100%" src="{{objects.image.url}}" alt=""></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h5>Ficheiru</h5>
+                        <embed src="{{objects.file.url}}" width="100%" height="700px" type="application/pdf">
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content%}
