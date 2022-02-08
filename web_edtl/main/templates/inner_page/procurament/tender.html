@@ -1,0 +1,91 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+        <li><a href="{% url 'redirect-home' %}">Home</a></li>
+        <li>Tender List</li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title" data-aos="fade-up">
+            <h2><strong>TENDER</strong></h2>
+          </div>
+      <div class="row justify-content-center">
+
+        <div class="col-md-12 entries">
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col" width="5%">Nu</th>
+                    <th scope="col" width="20%">Title</th>
+                    <th scope="col" width="25%">Description</th>
+                    <th scope="col" width="12%">Start Period</th>
+                    <th scope="col" width="12%">End Period</th>
+                    <th scope="col" width="11%">Status</th>
+                    <th scope="col" width="15%">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>ICT Maintenance</td>
+                    <td>We Open Vacancy on ICT Maintenance, to view more please download on PDF file.</td>
+                    <td>2 / Feb / 2022</td>
+                    <td>21 / Feb / 2022</td>
+                    <td>Active</td>
+                    <td>
+                        <span class="download">
+                            <a href="#"><i class="bi bi-download"></i> Download</a>
+                        </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>AC Maintenance</td>
+                    <td>We Open Vacancy on AC Maintenance, to view more please download on PDF file.</td>
+                    <td>2 / Feb / 2022</td>
+                    <td>21 / Feb / 2022</td>
+                    <td>Active</td>
+                    <td>
+                        <span class="download">
+                            <a href="#"><i class="bi bi-download"></i> Download</a>
+                        </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Electrician Management</td>
+                    <td>We Open Vacancy on Electrician Managementr to view more please download on PDF file.</td>
+                    <td>2 / Feb / 2022</td>
+                    <td>21 / Feb / 2022</td>
+                    <td>Out of Date</td>
+                    <td>
+                        <span class="download">
+                            <a href="#"><i class="bi bi-download"></i> Download</a>
+                        </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+
+          <div class="blog-pagination">
+            <ul class="justify-content-center">
+              <li><a href="#">1</a></li>
+              <li class="active"><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+            </ul>
+          </div>
+
+        </div><!-- End blog entries list -->
+
+      </div>
+
+    </div>
+  </section>
+{% endblock content %}

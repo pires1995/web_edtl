@@ -1,0 +1,58 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+      <ol>
+      <li><a href="{% url 'redirect-home' %}">Home</a></li>
+      <li>Guideline List</li>
+      </ol>
+  </div>
+</section><!-- End Breadcrumbs -->
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title" data-aos="fade-up">
+            <h2><strong>PROCURAMENT GUIDELINE</strong></h2>
+          </div>
+          <div class="row justify-content-center">
+
+            <div class="col-md-12 entries">
+                <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col" width="10%">Nu.</th>
+                        <th scope="col" width="30%">Title</th>
+                        <th scope="col" width="40%">Description</th>
+                        <th scope="col" width="20%">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>How to Apply Tender in EDTL,EP ?</td>
+                        <td>This guideline help Company to prepare documents before submit to EDTL,EP.</td>
+                        <td>
+                            <span class="download">
+                                <a href="#"><i class="bi bi-download"></i> Download</a>
+                            </span>
+                        </td>
+                    </tbody>
+                  </table>
+    
+    
+              <div class="blog-pagination">
+                <ul class="justify-content-center">
+                  <li><a href="#">1</a></li>
+                  <li class="active"><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                </ul>
+              </div>
+    
+            </div><!-- End blog entries list -->
+    
+          </div>
+
+    </div>
+  </section>
+{% endblock content %}

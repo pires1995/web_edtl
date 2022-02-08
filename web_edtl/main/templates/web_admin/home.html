@@ -6,7 +6,7 @@
 {% block content %}
 
 <div class="pagetitle">
-    <h1>Dashboard</h1>
+    <h1>Welcome to EDTL, EP Website Admin Dashboard</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item active">Dashboard</li>
@@ -16,11 +16,68 @@
 
 <section class="section dashboard">
     <div class="row">
+        <div class="col-md-4">
+                <div class="card info-card sales-card">
+  
+                  <div class="card-body">
+                    <h5 class="card-title">Subscribe Users</h5>
+  
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-people"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6>{{subusers}}</h6>
+  
+                      </div>
+                    </div>
+                  </div>
+              </div><!-- End Sales Card -->
+        </div>
+        <div class="col-md-4">
+            <div class="card info-card customers-card">
+
+                <div class="card-body">
+                  <h5 class="card-title">Appointments</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-people"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{appointment}}</h6>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card info-card revenue-card">
+
+                <div class="card-body">
+                  <h5 class="card-title">Active Users (FMS)</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-person-plus"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{client}}</h6>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+        </div>
+    </div>
+    <div class="row">
 
         <!-- Left side columns -->
         <div class="col-lg-8">
             <div class="row">
-
+                <div id="news_bar"></div>
             </div>
         </div><!-- End Left side columns -->
 
@@ -36,3 +93,44 @@
     </div>
 </section>
 {% endblock content %}
+{% block scripts %}
+<script src="{% static 'web_admin/js/code/highcharts.js' %}"></script>
+<script>
+    Highcharts.chart('news_bar', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'News Approved'
+        },
+        xAxis: {
+            categories: [
+                {% for entry in news %}
+                   '{{entry.news_category__name}}' {% if not forloop.last %}, 
+                   {% endif %}
+                {% endfor %}
+            ]
+        },
+        series: [
+        {
+            grouping: false,
+            name: 'Geral',
+            data: [
+                {% for entry in news %}
+                {{ entry.geral_count }} {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            ]
+        }, 
+        {
+            grouping: false,
+            name: 'Projetu',
+            data: [
+                {% for entry in news %}
+                {{ entry.project_count }} {% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            ],
+            color: 'crimson'
+        }]
+    });
+</script>
+{% endblock scripts %}

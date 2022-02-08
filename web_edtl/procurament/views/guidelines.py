@@ -62,3 +62,19 @@ def guidelines_detail(request, hashid):
         'title': 'Detail Guidelines', 'subtitle': 'Guidelines', 'objects': objects
     }
     return render(request, 'guidelines/detail.html', context)
+
+@login_required
+def guidelines_activate(request, hashid):
+    objects = get_object_or_404(Guidelines, hashed=hashid)
+    objects.is_active = True
+    objects.save()
+    messages.success(request, 'Successfully Activate Guidelines')
+    return redirect('admin-guidelines-list')
+
+@login_required
+def guidelines_deactivate(request, hashid):
+    objects = get_object_or_404(Guidelines, hashed=hashid)
+    objects.is_active = False
+    objects.save()
+    messages.success(request, 'Successfully Deactivate Guidelines')
+    return redirect('admin-guidelines-list')

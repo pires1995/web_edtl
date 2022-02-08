@@ -62,3 +62,19 @@ def internships_detail(request, hashid):
         'title': 'Detail Internships', 'subtitle': 'Internships', 'objects': objects
     }
     return render(request, 'internships/detail.html', context)
+
+@login_required
+def internships_activate(request, hashid):
+    objects = get_object_or_404(Internships, hashed=hashid)
+    objects.is_active = True
+    objects.save()
+    messages.success(request, 'Successfully Activate Internship')
+    return redirect('admin-internships-list')
+
+@login_required
+def internships_deactivate(request, hashid):
+    objects = get_object_or_404(Internships, hashed=hashid)
+    objects.is_active = False
+    objects.save()
+    messages.success(request, 'Successfully Deactivate Internship')
+    return redirect('admin-internships-list')

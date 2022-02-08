@@ -62,3 +62,19 @@ def product_detail(request, hashid):
         'title': 'Detail Product', 'subtitle': 'Product', 'objects': objects
     }
     return render(request, 'product/detail.html', context)
+
+@login_required
+def product_activate(request, hashid):
+    objects = get_object_or_404(Product, hashed=hashid)
+    objects.is_active = True
+    objects.save()
+    messages.success(request, 'Successfully Activate Product')
+    return redirect('admin-product-list')
+
+@login_required
+def product_deactivate(request, hashid):
+    objects = get_object_or_404(Product, hashed=hashid)
+    objects.is_active = False
+    objects.save()
+    messages.success(request, 'Successfully Deactivate Product')
+    return redirect('admin-product-list')

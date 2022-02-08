@@ -20,6 +20,6 @@
     },
     "peacock.color": "#61dafb",
     "[html]": {
-        "editor.formatOnSave": true
+        "editor.formatOnSave": false
       },
 }

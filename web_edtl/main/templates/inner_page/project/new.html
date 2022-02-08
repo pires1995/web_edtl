@@ -1,0 +1,65 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+        <li><a href="{% url 'redirect-home' %}">Home</a></li>
+        <li>New Project List</li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title" data-aos="fade-up">
+            <h2><strong>NEW PROJECT (PLAN)</strong></h2>
+          </div>
+          <div class="row justify-content-center">
+
+            <div class="col-md-12 entries">
+                <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col" width="5%">Nu</th>
+                        <th scope="col" width="35%">Project Name</th>
+                        <th scope="col" width="15%">Category</th>
+                        <th scope="col" width="9%">Fund</th>
+                        <th scope="col" width="12%">Type of Procurament</th>
+                        <th scope="col" width="9%">Year</th>
+                        <th scope="col" width="15%">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Instalasaun electricidade iha Posto Administrativo Laclubar</td>
+                        <td>Fundu Infrastutura</td>
+                        <td>OGE</td>
+                        <td>RFQ</td>
+                        <td>2022</td>
+                        <td>
+                            <span class="download">
+                                <a href="{% url 'new-detail' l3 %}"><i class="bi bi-eye"></i> Detail</a>
+                            </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+    
+    
+              <div class="blog-pagination">
+                <ul class="justify-content-center">
+                  <li><a href="#">1</a></li>
+                  <li class="active"><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                </ul>
+              </div>
+    
+            </div><!-- End blog entries list -->
+    
+          </div>
+
+    </div>
+  </section>
+{% endblock content %}

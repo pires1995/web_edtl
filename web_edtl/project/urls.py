@@ -24,4 +24,9 @@ urlpatterns = [
     # LOCATION
     path('ongoing-project-add-location/<str:hashid>/', views.ongoing_project_add_location, name='admin-ongoing-project-add-location'),
     path('ongoing-project-update-location/<str:hashid>/<str:hashid2>/', views.ongoing_project_update_location, name='admin-ongoing-project-update-location'),
+
+    path('new-project-activate/<str:hashid>/', views.new_project_activate, name='admin-new-project-activate'),
+    path('new-project-deactivate/<str:hashid>/', views.new_project_deactivate, name='admin-new-project-deactivate'),
+    path('ongoing-project-activate/<str:hashid>/', views.ongoing_project_activate, name='admin-ongoing-project-activate'),
+    path('ongoing-project-deactivate/<str:hashid>/', views.ongoing_project_deactivate, name='admin-ongoing-project-deactivate'),
 ]

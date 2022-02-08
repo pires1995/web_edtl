@@ -1,0 +1,54 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+        <li><a href="{% url 'redirect-home' %}">Home</a></li>
+        <li>FAQ Detail</li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+    <!-- ======= Portfolio Section ======= -->
+    <section id="portfolio blog" class="blog contact">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2><strong>FAQ DETAIL</strong></h2>
+                <h6><strong>How to contact staff EDTL, EP on Municipality ?</strong></h6>
+                <p style="font-style: italic;"> We have main staff to all municipality in the list bellow :</p>
+              </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <table class="table table-bordered border-warning" data-aos="fade-up">
+                    <thead>
+                      <tr>
+                        <th scope="col">Municipality</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Mobile Number</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Staff Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                    <tr>
+                        <th scope="row">Aileu</th>
+                        <td>Aileu Villa</td>
+                        <td>+670 77878272</td>
+                        <td>edtl_aileu@edtlep.tl</td>
+                        <td>Joao de Deus</td>
+                      </tr>
+                    <tr>
+                        <th scope="row">Ainaro</th>
+                        <td>Ainaro Villa</td>
+                        <td>+670 77337872</td>
+                        <td>edtl_ainaro@edtlep.tl</td>
+                        <td>Mario de Fatima</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+        </div>
+      </section><!-- End Portfolio Section -->
+{% endblock content %}

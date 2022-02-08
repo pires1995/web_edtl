@@ -1,4 +1,8 @@
 {% extends 'web_admin/layout.html' %}
+{% block head %}
+<meta property="og:title" content="When Great Minds Don’t Think Alike" />
+<meta property="og:description" content="When Great Minds Don’t Think Alike" />
+{% endblock head %}
 {% load social_share %}
 {% load crispy_forms_tags %}
 {% load static %}
@@ -6,8 +10,8 @@
 {{title}}
 {% endblock title %}
 {% block content %}
+
 <div class="pagetitle">
-    <h1>{{title}}</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
@@ -34,13 +38,13 @@
                     {% endif %}
                     {% endif %}
                     <div class="card-title">
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-12">
-                                {% post_to_facebook "Test"{{object.title}} object_or_url "<p style='color: green;'>
-                                    facebook</p>" %}
+                                {% post_to_facebook object_or_url %}
                             </div>
-                        </div>
+                        </div> -->
                         <h2>{{object.title}}</h2>
+                        <meta property="og:title" content="{{object.title}}">
                         <div class="row">
                             <div class="col-md-6">
                                 <span>

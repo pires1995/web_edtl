@@ -1,0 +1,70 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+        <li><a href="{% url 'redirect-home' %}">Home</a></li>
+        <li>Event List</li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+<section id="blog" class="blog team section-bg">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title" data-aos="fade-up">
+            <h2><strong>EVENTS</strong></h2>
+          </div>
+      <div class="row justify-content-center">
+
+        <div class="col-lg-10 entries">
+
+            
+            <div class="container">
+              <div class="row">
+      
+                <div class="col-md-4 d-flex align-items-stretch">
+                  <div class="member" data-aos="fade-up">
+                    <div class="member-img">
+                      <img src="{% static 'main/img/3.jpg' %}" class="img-fluid" alt="">
+                      
+                    </div>
+                    <div class="member-info">
+                      <h4><a href="{% url 'event-detail' l3 %}">Pameran ba Komemorasaun 20 de Maio</a></h4>
+                      <span>Date: 18/05/2022</span>
+                    </div>
+                  </div>
+                </div>
+      
+                <div class="col-md-4 d-flex align-items-stretch">
+                  <div class="member" data-aos="fade-up" data-aos-delay="100">
+                    <div class="member-img">
+                      <img src="{% static 'main/img/about.jpg' %}" class="img-fluid" alt="">
+    
+                    </div>
+                    <div class="member-info">
+                        <h4><a href="{% url 'event-detail' l3 %}">Konkursu ba Estudante Finalista</a></h4>
+                        <span>Date: 10/06/2022</span>
+                    </div>
+                  </div>
+                </div>
+      
+              </div>
+      
+            </div>
+
+          <div class="blog-pagination">
+            <ul class="justify-content-center">
+              <li><a href="#">1</a></li>
+              <li class="active"><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+            </ul>
+          </div>
+
+        </div><!-- End blog entries list -->
+
+
+      </div>
+
+    </div>
+  </section>
+{% endblock content %}

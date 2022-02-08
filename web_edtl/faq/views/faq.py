@@ -63,3 +63,19 @@ def faq_detail(request, hashid):
         'title': 'Detail Faq', 'subtitle': 'Faq', 'objects': objects
     }
     return render(request, 'faq/detail.html', context)
+
+@login_required
+def faq_activate(request, hashid):
+    objects = get_object_or_404(Faq, hashed=hashid)
+    objects.is_active = True
+    objects.save()
+    messages.success(request, 'Successfully Activate Faq')
+    return redirect('admin-faq-list')
+
+@login_required
+def faq_deactivate(request, hashid):
+    objects = get_object_or_404(Faq, hashed=hashid)
+    objects.is_active = False
+    objects.save()
+    messages.success(request, 'Successfully Deactivate Faq')
+    return redirect('admin-faq-list')

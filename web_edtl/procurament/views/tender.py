@@ -62,3 +62,19 @@ def tender_detail(request, hashid):
         'title': 'Detail Tender', 'subtitle': 'Tender', 'objects': objects
     }
     return render(request, 'tender/detail.html', context)
+
+@login_required
+def tender_activate(request, hashid):
+    objects = get_object_or_404(Tender, hashed=hashid)
+    objects.is_active = True
+    objects.save()
+    messages.success(request, 'Successfully Activate Tender')
+    return redirect('admin-tender-list')
+
+@login_required
+def tender_deactivate(request, hashid):
+    objects = get_object_or_404(Tender, hashed=hashid)
+    objects.is_active = False
+    objects.save()
+    messages.success(request, 'Successfully Deactivate Tender')
+    return redirect('admin-tender-list')

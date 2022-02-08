@@ -154,3 +154,19 @@ def new_project_update_budget(request, hashid, hashid2):
         'title': 'Altera Project Budget','subtitle': 'Project Budget', 'form': form
     }
     return render(request, 'budget/form.html', context)
+
+@login_required
+def new_project_activate(request, hashid):
+    objects = get_object_or_404(Project, hashed=hashid)
+    objects.is_active = True
+    objects.save()
+    messages.success(request, 'Successfully Activate Project')
+    return redirect('admin-new-project-list')
+
+@login_required
+def new_project_deactivate(request, hashid):
+    objects = get_object_or_404(Project, hashed=hashid)
+    objects.is_active = False
+    objects.save()
+    messages.success(request, 'Successfully Deactivate Project')
+    return redirect('admin-new-project-list')

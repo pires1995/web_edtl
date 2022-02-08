@@ -7,11 +7,11 @@ body {
 }
 
 a {
-  text-decoration: none;
   color: $primary;
+  text-decoration: none;
 }
 
-a:hover {
+a:hover  {
   color: lighten($primary, 10);
   text-decoration: none;
 }
@@ -19,7 +19,7 @@ a:hover {
 h1, h2, h3, h4, h5, h6 {
   font-family: $font-primary;
 }
-
+ 
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
@@ -52,4 +52,13 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 1;
   }
 
+}
+
+/*--------------------------------------------------------------
+# Disable AOS delay on mobile
+--------------------------------------------------------------*/
+@media screen and (max-width: 768px) {
+  [data-aos-delay] {
+    transition-delay: 0 !important;
+  }
 }

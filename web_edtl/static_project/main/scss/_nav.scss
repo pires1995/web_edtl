@@ -24,12 +24,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 0 10px 30px;
-    font-family: $font-secondary;
-    font-size: 15px; 
-    font-weight: 500;
-    color: $secondary;
+    padding: 10px 0 10px 20px;
+    font-size: 13px; 
+    color: lighten($secondary, 20);
     white-space: nowrap;
+    text-transform: uppercase;
     transition: 0.3s;
 
     i {
@@ -45,14 +44,13 @@
 
   .getstarted, .getstarted:focus {
     background: $primary;
-    padding: 8px 25px;
+    padding: 8px 20px;
     margin-left: 30px;
     border-radius: 4px;
-    font-weight: 400;
     color: #fff;
     &:hover {
       color: #fff;
-      background: lighten($primary, 8);
+      background: lighten($primary, 5);
     }
   }
 
@@ -78,9 +76,10 @@
 
       a {
         padding: 10px 20px;
-        font-size: 15px;
+        font-size: 13px;
         text-transform: none;
-        font-weight: 400;
+        font-weight: 500;
+        color: darken($primary, 30);
         i {
           font-size: 12px;
         }
@@ -156,7 +155,6 @@
 }
 
 .navbar-mobile {
-
   position: fixed;
   overflow: hidden;
   top: 0;
@@ -189,7 +187,7 @@
   a, a:focus {
     padding: 10px 20px;
     font-size: 15px; 
-    color: $secondary;
+    color: darken($primary, 30);
   }
 
   a:hover, .active, li:hover > a  {

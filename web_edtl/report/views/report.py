@@ -62,3 +62,19 @@ def report_detail(request, hashid):
         'title': 'Detail Report', 'subtitle': 'Report', 'objects': objects
     }
     return render(request, 'report/detail.html', context)
+
+@login_required
+def report_activate(request, hashid):
+    objects = get_object_or_404(Report, hashed=hashid)
+    objects.is_active = True
+    objects.save()
+    messages.success(request, 'Successfully Activate Report')
+    return redirect('admin-report-list')
+
+@login_required
+def report_deactivate(request, hashid):
+    objects = get_object_or_404(Report, hashed=hashid)
+    objects.is_active = False
+    objects.save()
+    messages.success(request, 'Successfully Deactivate Report')
+    return redirect('admin-report-list')

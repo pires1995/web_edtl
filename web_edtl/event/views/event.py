@@ -63,3 +63,19 @@ def event_detail(request, hashid):
         'title': 'Detail Event', 'subtitle': 'Event', 'objects': objects
     }
     return render(request, 'event/detail.html', context)
+
+@login_required
+def event_activate(request, hashid):
+    objects = get_object_or_404(Event, hashed=hashid)
+    objects.is_active = True
+    objects.save()
+    messages.success(request, 'Successfully Activate Event')
+    return redirect('admin-event-list')
+
+@login_required
+def event_deactivate(request, hashid):
+    objects = get_object_or_404(Event, hashed=hashid)
+    objects.is_active = False
+    objects.save()
+    messages.success(request, 'Successfully Deactivate Event')
+    return redirect('admin-event-list')

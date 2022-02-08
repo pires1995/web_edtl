@@ -1,0 +1,60 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+            <li><a href="{% url 'redirect-home' %}">Home</a></li>
+            <li><a href="{% url 'new-list' l3 %}">Project New List</a></li>
+            <li>Detail</li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title" data-aos="fade-up">
+            <h2><strong>NEW PROJECT DETAIL</strong></h2>
+          </div>
+      <div class="row justify-content-center">
+        <div class="col-md-7 entries">
+            <article class="entry entry-single">
+              <div class="entry-content">
+                  
+                  <h6 class="title">Project Information</h6>
+                  <hr>
+                <h6>Name Project: <strong>Instalasaun baixada electricidade, instalasaun kanu transmisaun & lutu hadulas estasaun bomba Tuana Laran</strong></h6>
+                <h6>Kategoria: <strong>Fundu Infrastutura</strong></h6>
+                <h6>Fundu: <strong>OGE</strong></h6>
+                <h6>Year: <strong>2020</strong></h6>
+                <h6>Type of Procurament: <strong>RFQ</strong></h6>
+                <h6>Amount: <strong>$80.000,00</strong></h6>
+                <h6>Status: <strong>New</strong></h6>
+              </div>
+  
+              
+              </article><!-- End blog entry -->
+            
+          </div>
+          <div class="col-md-5">
+              <article class="entry entry-single">
+  
+                  <div class="entry-content">
+                      
+                      <h6 class="title">Project Location Information</h6>
+                      <hr>
+                      <h6>Municipality: <strong>Dili</strong></h6>
+                      <h6>Administrative Post: <strong>Dom Aleixo</strong></h6>
+                      <h6>Village: <strong>--</strong></h6>
+                      <h6>Latitude: <strong>--</strong></h6>
+                      <h6>Longitude: <strong>--</strong></h6>
+                  </div>
+                  </article><!-- End blog entry -->
+          
+          </div>
+
+      </div>
+
+    </div>
+  </section>
+{% endblock content %}

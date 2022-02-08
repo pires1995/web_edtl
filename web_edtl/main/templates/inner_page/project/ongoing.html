@@ -1,0 +1,65 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+        <li><a href="{% url 'redirect-home' %}">Home</a></li>
+        <li>Project Ongoing List</li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title" data-aos="fade-up">
+            <h2><strong>ONGOING PROJECT</strong></h2>
+          </div>
+          <div class="row justify-content-center">
+
+            <div class="col-md-12 entries">
+                <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col" width="5%">Nu</th>
+                        <th scope="col" width="35%">Project Name</th>
+                        <th scope="col" width="10%">Category</th>
+                        <th scope="col" width="12%">Start Period</th>
+                        <th scope="col" width="12%">End Period</th>
+                        <th scope="col" width="11%">Company</th>
+                        <th scope="col" width="15%">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Instalasaun baixada electricidade, instalasaun kanu transmisaun & lutu hadulas estasaun bomba Tuana Laran</td>
+                        <td>Fundu Infrastutura</td>
+                        <td>30 / Jan / 2020</td>
+                        <td>11 / Feb / 2021</td>
+                        <td>Omega Eletric</td>
+                        <td>
+                            <span class="download">
+                                <a href="{% url 'ongoing-detail' l3 %}"><i class="bi bi-eye"></i> Detail</a>
+                            </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+    
+    
+              <div class="blog-pagination">
+                <ul class="justify-content-center">
+                  <li><a href="#">1</a></li>
+                  <li class="active"><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                </ul>
+              </div>
+    
+            </div><!-- End blog entries list -->
+    
+          </div>
+
+    </div>
+  </section>
+{% endblock content %}

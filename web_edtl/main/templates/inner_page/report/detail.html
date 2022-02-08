@@ -1,0 +1,66 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+        <li><a href="{% url 'redirect-home' %}">Home</a></li>
+        <li><a href="{% url 'news-list' l3 %}">Report List</a></li>
+        <li>Report Detail</li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row">
+
+        <h2 class="section-title">
+          <a href="#">Relatorio Annual 2021</a>
+        </h2>
+        <div class="col-md-5 entries">
+
+          <article class="entry entry-single">
+
+            <div class="entry-img">
+              <img src="{% static 'main/img/10.jpg' %}" alt="" class="img-fluid">
+            </div>
+
+
+            
+        </article><!-- End blog entry -->
+
+          
+        </div><!-- End blog entries list -->
+        
+        <div class="col-md-7">
+
+          <div class="sidebar">
+              <h3 class="sidebar-title">Information about Report</h3>
+              <hr>
+              <div class="sidebar-item categories">
+                <ul>
+                </ul>
+                <p>Description about Event: 
+                </p>
+                    <h6>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta quia nisi, modi incidunt minus, hic magnam eum necessitatibus veniam commodi iusto sapiente! Reprehenderit.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi labore harum beatae dolores, rerum illo blanditiis iusto? Reiciendis, illo sunt!
+                    </h6>
+                    <div class="download">
+                        <a href="#"><i class="bi bi-download"></i> Download</a>
+                    </div>
+                    <!-- <button class="read-more"> <i class="bi bi-download"></i> Download</button> -->
+            </div><!-- End sidebar categories-->
+            
+            
+            
+        </div><!-- End sidebar -->
+        
+    </div><!-- End blog sidebar -->
+    
+</div>
+
+</div>
+</section>
+{% endblock content %}

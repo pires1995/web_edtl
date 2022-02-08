@@ -62,3 +62,19 @@ def vacancy_detail(request, hashid):
         'title': 'Detail Vacancy', 'subtitle': 'Vacancy', 'objects': objects
     }
     return render(request, 'vacancy/detail.html', context)
+
+@login_required
+def vacancy_activate(request, hashid):
+    objects = get_object_or_404(Vacancy, hashed=hashid)
+    objects.is_active = True
+    objects.save()
+    messages.success(request, 'Successfully Activate Vacancy')
+    return redirect('admin-vacancy-list')
+
+@login_required
+def vacancy_deactivate(request, hashid):
+    objects = get_object_or_404(Vacancy, hashed=hashid)
+    objects.is_active = False
+    objects.save()
+    messages.success(request, 'Successfully Deactivate Vacancy')
+    return redirect('admin-vacancy-list')

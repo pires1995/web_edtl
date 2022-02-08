@@ -1,0 +1,58 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+        <li><a href="{% url 'redirect-home' %}">Home</a></li>
+        <li><a href="{% url 'news-list' l3 %}">Documentary List</a></li>
+        <li>Detail</li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+    <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+        <div class="container">
+  
+          <div class="row gy-4">
+            <h2 class="section-title">
+              <a href="#">Documentary Detail</a>
+            </h2>
+            <div class="col-lg-8">
+              <div class="portfolio-details-slider swiper">
+                <div class="swiper-wrapper align-items-center">
+  
+                  <div class="swiper-slide">
+                    <img src="{% static 'main/img/1.jpg' %}" alt="">
+                  </div>
+  
+                  <div class="swiper-slide">
+                    <img src="{% static 'main/img/2.jpg' %}" alt="">
+                  </div>
+  
+                  <div class="swiper-slide">
+                    <img src="{% static 'main/img/3.jpg' %}" alt="">
+                  </div>
+  
+                </div>
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+  
+            <div class="col-lg-4">
+              <div class="portfolio-info">
+                <h3>Documentary information</h3>
+                <ul>
+                  <li><strong>Title</strong>: Renewable energy at Betano</li>
+                  <li><strong>Category</strong>: Production and Renewable energy</li>
+                  <li><strong>Year</strong>: 2021</li>
+                  <li><strong>Description Album</strong>: Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis possimus officia assumenda vitae impedit adipisci et aut sint rerum, nesciunt consectetur sunt necessitatibus sapiente.</li>
+                </ul>
+              </div>
+            </div>
+  
+          </div>
+  
+        </div>
+      </section><!-- End Portfolio Details Section -->
+{% endblock content %}
