@@ -24,11 +24,11 @@ urlpatterns = [
          views.news_sent, name="admin-news-sent"),
 
     # NEWS COORDINATOR
-    path('request-news/', views.news_approval_request_list,
+    path('admin-request-news/', views.news_approval_request_list,
          name='admin-news-request-list'),
-    path('approved-news/', views.news_approved_list,
+    path('admin-approved-news/', views.news_approved_list,
          name='admin-news-approved-list'),
-    path('approve-news/<str:hashid>/', views.news_approved,
+    path('admin-approve-news/<str:hashid>/', views.news_approved,
          name='admin-news-approve'),
 
      #TEST

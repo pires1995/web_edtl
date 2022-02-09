@@ -36,7 +36,7 @@ class NewsForm(forms.ModelForm):
     # image = forms.FileField(label="Image", required=False)
     title = forms.CharField(label="Title")
     headline = forms.CharField(label="Headline", widget=forms.Textarea(
-        attrs={"rows": 3}), required=True)
+        attrs={"rows": 3}), required=False)
     content = forms.CharField(label="Content", widget=SummernoteWidget(
         attrs={'summernote': {'width': '100%', 'height': '400px'}}))
 

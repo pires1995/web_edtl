@@ -11,8 +11,8 @@ urlpatterns = [
     path('', RedirectView.as_view(url='home/en/'), name="redirect-home"),
     
 #     NEWS
-    path('news/<str:lang>/', views.news_list, name="news-list"),
-    path('news-detail/<str:lang>/', views.news_detail, name="news-detail"),
+    path('main-news/<str:lang>/', views.news_list, name="news-list"),
+    path('main-news-detail/<str:lang>/', views.news_detail, name="news-detail"),
     
 #     ABOUT
     path('who-we-are/<str:lang>/', views.who_we_are, name="who-we-are"),
@@ -20,10 +20,11 @@ urlpatterns = [
     path('board-profile/<str:lang>/', views.board_profile, name="board-profile"),
 
 #     RESOURCE
-    path('resource/<str:lang>/', views.resource_detail, name="resource-detail"),
+    path('resource/<str:lang>/<str:hashid>/', views.resource_detail, name="resource-detail"),
 
     # DEPARTMENT
-    path('department/<str:lang>/', views.department_detail, name="department-detail"),
+    path('department/<str:lang>/', views.department, name="department-list"),
+    path('department/<str:lang>/<str:hashid>/', views.department_detail, name="department-detail"),
     path('division/<str:lang>/', views.division_detail, name="division-detail"),
 
     # EVENTS
@@ -74,7 +75,7 @@ urlpatterns = [
     
     # USERS
     path('users/', views.user_lists, name='admin-user-lists'),
-    path('users/add', views.user_add, name='admin-user-add'),
+    path('users/add/', views.user_add, name='admin-user-add'),
     path('users/update/<str:hashid>/',
          views.user_update, name='admin-user-update'),
     path('users/activate/<str:hashid>/',

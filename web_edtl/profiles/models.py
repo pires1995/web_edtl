@@ -63,7 +63,7 @@ class Employee(models.Model):
 
 
 class Position(models.Model):
-    division = models.OneToOneField(Division, on_delete=models.CASCADE, null=True)
+    division = models.ForeignKey(Division, on_delete=models.CASCADE, null=True)
     employee = models.OneToOneField(Employee, on_delete=models.CASCADE, null=True, related_name='position')
     start_period = models.DateField(null=True, blank=True)
     end_period = models.DateField(null=True, blank=True)

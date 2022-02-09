@@ -23,21 +23,19 @@
         active 
       {% endif %} dropdown"><a href="#"><span>Resources</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="{% url 'resource-detail' l3 %}">EDTL 24 Apps</a></li>
-            <li><a href="{% url 'resource-detail' l3 %}">Solar PV</a></li>
-            <li><a href="{% url 'resource-detail' l3 %}">Electricity Token</a></li>
+            {% for product in products  %}
+              
+              <li><a href="{% url 'resource-detail' l3 product.hashed %}">{{product.name_eng}}</a></li>
+            {% endfor %}
           </ul>
         </li>
         <li class="{% if url_name == 'department-detail'  %}
         active 
       {% endif %} dropdown"><a href="#"><span>Departments</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="{% url 'department-detail' l3 %}">Production and Renewable energy</a></li>
-            <li><a href="{% url 'department-detail' l3 %}">Transmision Line</a></li>
-            <li><a href="{% url 'department-detail' l3 %}">Distribution and Customer Services</a></li>
-            <li><a href="{% url 'department-detail' l3 %}">Electricity System Plan and Design</a></li>
-            <li><a href="{% url 'department-detail' l3 %}">Finance and Comercial</a></li>
-            <li><a href="{% url 'department-detail' l3 %}">Corporate Service</a></li>
+            {% for department in  departments %}              
+            <li><a href="{% url 'department-detail' l3 department.hashed %}">{{department.name_tet}}</a></li>
+            {% endfor %}
           </ul>
         </li>
         <li class="{% if url_name == 'event-list' or url_name == 'report-list' or url_name == 'documentary-list' %}

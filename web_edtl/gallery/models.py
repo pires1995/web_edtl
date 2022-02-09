@@ -7,6 +7,17 @@ from departments.models import Department
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
+class GalleryCategory(models.Model):
+    name = models.CharField(max_length=100)
+    hashed = models.CharField(max_length=100, blank=True)
+
+    def __str__(self):
+        template = '{0.name}'
+        return template.format(self)
+
+    def save(self, *args, **kwargs):
+        self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
+        return super(GalleryCategory, self).save(*args, **kwargs)
 
 class Album(models.Model):
     category = models.ForeignKey(Department, on_delete=models.CASCADE)
