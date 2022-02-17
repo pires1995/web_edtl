@@ -1,6 +1,11 @@
 {% extends "main/layout.html" %}
 {% load static %}
 {% block content %}
+{% block head %}
+<meta property="og:title"         content="{{objects.title}}" />
+<meta property="og:description"   content="{{objects.headline}}" />
+<meta property="og:image"         content="{{objects.image.url}}" />
+{% endblock head %}
   <!-- ======= Breadcrumbs ======= -->
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
@@ -50,6 +55,10 @@
             <div class="sidebar-item categories">
               <hr>
               <div class="">
+                <div class="entry-footer">
+                <h6>{{lang_data.SHARE_LBL}}: </h6>
+                
+            </div>
                 <ul>
                   <li class="d-flex align-items-center">
                     <span>

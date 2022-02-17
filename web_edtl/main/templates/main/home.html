@@ -20,7 +20,7 @@
                 </div>
   
                 <h2 class="entry-title">
-                  <a href="#">{{news_main.title}}</a>
+                  <a href="{% url 'news-detail' lang news_main.entered_date|date:'Y' news_main.entered_date|date:'m' news_main.hashed news_main.title_seo  %}">{{news_main.title}}</a>
                 </h2>
   
                 <div class="entry-meta">
@@ -36,7 +36,7 @@
                    {{news_main.content|striptags|slice:':300'}}...
                   </p>
                   <div class="read-more">
-                    <a href="#">{{lang_data.BTN_READ_MORE}}</a>
+                    <a href="{% url 'news-detail' lang news_main.entered_date|date:'Y' news_main.entered_date|date:'m' news_main.hashed news_main.title_seo  %}">{{lang_data.BTN_READ_MORE}}</a>
                   </div>
                 </div>
   
@@ -51,7 +51,7 @@
 
                   <div class="post-item clearfix">
                     <img src="{{object.image.url}}" alt="">
-                    <h4><a href="#">{{object.title|truncatechars:100}}</a></h4>
+                    <h4><a href="{% url 'news-detail' lang object.entered_date|date:'Y' object.entered_date|date:'m' object.hashed object.title_seo  %}">{{object.title|truncatechars:100}}</a></h4>
                     <time datetime="2020-01-01">{{object.entered_date|date:"d/M/Y"}}</time>
                   </div>
                   {% endfor %}

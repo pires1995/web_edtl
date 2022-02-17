@@ -22,7 +22,7 @@ def home(request, lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
-    banners = Banner.objects.filter(is_active=True)
+    banners = Banner.objects.filter(is_active=True).order_by('-datetime')[:5]
     news_main = News.objects.filter(is_active=True, is_approved=True, language="English").last()
     news_recent = News.objects.filter(is_active=True, is_approved=True, language="English").order_by('-approved_date')[1:4]
     faq_home = Faq.objects.filter(is_active=True, is_homepage=True)

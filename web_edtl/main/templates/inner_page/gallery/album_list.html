@@ -47,7 +47,7 @@
                       
                     
                     <div class="col-md-4 portfolio-item {{obj.category.title_seo}}">
-                    <img src="{{obj.image.url}}" class="img-fluid" alt="">
+                    <img src="{% static 'main/img/img_loading.png' %}" data-src="{{obj.image.url}}" class="img-fluid" alt="">
                     <div class="portfolio-info">
                         <h6>
                             {% if lang == 'tt' %}

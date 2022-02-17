@@ -19,10 +19,11 @@ def tender_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    page_description = get_object_or_404(PageManegament, name='tender')
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
-                 'page_obj':page_obj, 'today': today
+                 'page_obj':page_obj, 'today': today, 'page_description': page_description
     }
     template = 'inner_page/procurament/tender.html'
     return render(request, template, context)
@@ -44,10 +45,11 @@ def guideline_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    page_description = get_object_or_404(PageManegament, name='guideline')
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
-                'page_obj':page_obj, 'today': today
+                'page_obj':page_obj, 'today': today, 'page_description': page_description
     }
     template = 'inner_page/procurament/guideline.html'
     return render(request, template, context)

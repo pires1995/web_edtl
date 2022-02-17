@@ -209,11 +209,11 @@ def news_approved(request, hashid):
     objects.approved_by = request.user
     objects.approved_date = datetime.datetime.now()
     objects.is_approved = True
-    email_users = NewsUser.objects.all()
-    for email_to in email_users:
-        set_name = email_to.email
-        set_name2 = re.split(r'[@.]', set_name)
-        new_news.delay(email_to.email,set_name2[0], objects.title)
+    # email_users = NewsUser.objects.all()
+    # for email_to in email_users:
+    #     set_name = email_to.email
+    #     set_name2 = re.split(r'[@.]', set_name)
+    #     new_news.delay(email_to.email,set_name2[0], objects.title)
     objects.save()
     messages.success(request, f'Successfully Approved News')
     return redirect('admin-news-request-list')

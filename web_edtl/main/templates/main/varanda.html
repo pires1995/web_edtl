@@ -51,7 +51,7 @@
 
                   <div class="post-item clearfix">
                     <img src="{{object.image.url}}" alt="">
-                    <h4><a href="#">{{object.title|truncatechars:100}}</a></h4>
+                    <h4><a href="{% url 'news-detail' lang object.entered_date|date:'Y' object.entered_date|date:'m' object.hashed object.title_seo  %}">{{object.title|truncatechars:100}}</a></h4>
                     <time datetime="2020-01-01">{{object.entered_date|date:"d/M/Y"}}</time>
                   </div>
                   {% endfor %}

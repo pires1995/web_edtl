@@ -73,7 +73,8 @@ def announcement_update(request, hashid):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.author = request.user
-            instance.title_seo = title_seo(form.cleaned_data.get('title'))
+            if form.cleaned_data.get('title_tet') or form.cleaned_data.get('title_por') or form.cleaned_data.get('title_eng'):
+                instance.title_seo = title_seo(form.cleaned_data.get('title_tet'))
             instance.save()
             messages.success(request, f'Successfully Update Announcement')
             return redirect('admin-announcement-list')

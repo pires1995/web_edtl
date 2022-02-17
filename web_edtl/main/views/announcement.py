@@ -13,7 +13,7 @@ def announcement_list(request,lang):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     objects = Announcement.objects.filter(is_active=True)
-    paginator = Paginator(objects, 5)
+    paginator = Paginator(objects, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     year = Year.objects.all()

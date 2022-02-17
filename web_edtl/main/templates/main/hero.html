@@ -16,15 +16,26 @@
           {% endif %}
           <div class="carousel-container">
             <div class="carousel-content animate__animated animate__fadeInUp">
+             
               {% if lang == 'en' %}
               <h2>{{banner.title_eng}}</h2>
+              {% if banner.description_eng %}
               <p>{{banner.description_eng}}</p>
+              {% endif %}
+
               {% elif lang == 'pt' %}
               <h2>{{banner.title_por}}</h2>
+              {% if banner.description_por %}
               <p>{{banner.description_por}}</p>
+              {% endif %}
+
               {% else %}
               <h2>{{banner.title_tet}}</h2>
+              {% if banner.description_tet %}
               <p>{{banner.description_tet}}</p>
+              {% endif %}
+
+              
               {% endif %}
             </div>
           </div>
