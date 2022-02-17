@@ -1,0 +1,96 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>{{lang_data.ANNOUNCEMENT_LIST_LBL}}</li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+<section id="blog" class="blog team section-bg">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title" data-aos="fade-up">
+            <h2><strong>{{lang_data.ANNOUNCEMENT_TITLE_LBL}}</strong></h2>
+          </div>
+      <div class="row justify-content-center">
+
+        <div class="col-md-9 entries">
+
+            
+            <div class="container">
+              <div class="row">
+                {% for object in page_obj  %}
+                  
+                <div class="col-md-4 d-flex align-items-stretch">
+                    <div class="member" data-aos="fade-up">
+                    <div class="member-img">
+                      <img src="{{object.image.url}}" class="img-fluid" alt="">
+                      
+                    </div>
+                    <div class="member-info">
+                      <h4><a href="{% url 'announcement-detail' lang object.hashed %}">
+                        {% if lang == 'tt' %}
+                        {{object.title_tet}}
+                        {% elif lang == 'pt' %}
+                        {{object.title_por}}
+                        {% else %}
+                        {{object.title_eng}}
+                          
+                        {% endif %}
+                      </a></h4>
+                      <span>Date Posted: {{object.date_posted|date:"d/M/Y H:m"}}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+      
+              </div>
+      
+            </div>
+
+            {% if page_obj %}
+            <div class="blog-pagination">
+                <ul class="justify-content-center">
+                  {% if page_obj.has_previous %}
+                    <li><a  href="?page=1"><i class="fa bi bi-chevron-double-left"></i></a></li>
+                    <li></li><a  href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i></a></li>
+                  {% endif %}
+                  {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="active"><a c href="?page={{ num }}">{{ num }}</a></li>
+                    {% elif num > page_obj.number|add:'-3' and num > page_obj.number|add:'3' %}
+                      <li></li><a  href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                    <li></li><a  href="?page={{ page_obj.next_page_number }}"><i class="bi bi-chevron-right"></i></a></li>
+                    <li></li><a  href="?page={{ page_obj.paginator.num_pages }}"><i class="bi bi-chevron-double-right"></i></a></li>
+                  {% endif %}
+                </ul>
+              </div>
+                {% endif %}
+        </div><!-- End blog entries list -->
+        <div class="col-md-3">
+          <div class="sidebar">
+              <h3 class="sidebar-title">{{lang_data.PROJECT_DETAIL7_LBL}}</h3>
+              <div class="sidebar-item2 categories">
+                  <ul>
+                    {% for object in year %}
+                      
+                    <li><a href="#">{{object}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div><!-- End sidebar categories-->
+            
+            
+            
+          </div><!-- End sidebar -->
+      </div>
+
+      </div>
+
+    </div>
+  </section>
+{% endblock content %}

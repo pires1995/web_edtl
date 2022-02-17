@@ -1,0 +1,91 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+      <ol>
+      <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+      <li>{{lang_data.VOLUNTEER_LIST_LBL}}</li>
+      </ol>
+  </div>
+</section><!-- End Breadcrumbs -->
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title" data-aos="fade-up">
+            <h2><strong>{{lang_data.VOLUNTEER_TITLE_LBL}}</strong></h2>
+          </div>
+          <div class="row justify-content-center">
+
+            <div class="col-md-12 entries">
+                <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col" width="5%">Nu.</th>
+                        <th scope="col" width="20%">{{lang_data.TABEL_LBL6}}</th>
+                        <th scope="col" width="25%">{{lang_data.TABEL_LBL2}}</th>
+                        <th scope="col" width="12%">{{lang_data.TABEL_LBL3}}</th>
+                        <th scope="col" width="12%">{{lang_data.TABEL_LBL4}}</th>
+                        <th scope="col" width="11%">Status</th>
+                        <th scope="col" width="15%">{{lang_data.TABEL_LBL5}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for object in  page_obj %}
+                        
+                      
+                      <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{% if lang == 'tt' %}
+                          {{object.title_tet}}
+                          {% elif lang == 'pt' %}
+                          {{object.title_por}}
+                          
+                          {% else %}
+                          {{object.title_eng}}
+                          
+                        {% endif %}</td>
+                        <td>{% if lang == 'tt' %}
+                          {{object.description_tet|safe}}
+                          {% elif lang == 'pt' %}
+                          {{object.description_por|safe}}
+                          
+                          {% else %}
+                          {{object.description_eng|safe}}
+                          
+                        {% endif %}</td>
+                        <td>{{object.start_period|date:"d/M/Y"}}</td>
+                        <td>{{object.end_period|date:"d/M/Y"}}</td>
+                        <td>
+                          {% if object.end_period >= today.date %}
+                            <i class="bi bi-check text-success"></i>  {{lang_data.ACTIVE_LBL}}
+                          {% else %}
+                            <i class="bi bi-x text-danger"></i> {{lang_data.EXPIRED_LBL}}
+                          {% endif %}
+                        </td>
+                        <td>
+                            <span class="download">
+                                <a href="{% url 'volunteer-download' object.hashed %}" target="_blank"><i class="bi bi-download"></i> Download</a>
+                            </span>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+    
+    
+              <div class="blog-pagination">
+                <ul class="justify-content-center">
+                  <li><a href="#">1</a></li>
+                  <li class="active"><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                </ul>
+              </div>
+    
+            </div><!-- End blog entries list -->
+    
+          </div>
+
+    </div>
+  </section>
+{% endblock content %}

@@ -5,8 +5,8 @@
     <div class="container">
         <ol>
         <li><a href="{% url 'redirect-home' %}">Home</a></li>
-        <li><a href="{% url 'news-list' l3 %}">Report List</a></li>
-        <li>Report Detail</li>
+        <li><a href="{% url 'news-list' lang %}">{{lang_data.REPORT_LIST_LBL}}</a></li>
+        <li>{{lang_data.REPORT_TITLE__DETAIL_LBL}}</li>
         </ol>
     </div>
 </section><!-- End Breadcrumbs -->
@@ -16,14 +16,23 @@
       <div class="row">
 
         <h2 class="section-title">
-          <a href="#">Annual Report 2021</a>
+          {% if lang == 'tt' %}
+          {{objects.name_tet}}
+          {% elif lang == 'pt' %}
+          {{objects.name_por}}
+          
+          {% else %}
+          {{objects.name_eng}}
+            
+          {% endif %}
+          
         </h2>
         <div class="col-md-5 entries">
 
           <article class="entry entry-single">
 
             <div class="entry-img">
-              <img src="{% static 'main/img/10.jpg' %}" alt="" class="img-fluid">
+              <img src="{{objects.image.url}}" alt="" class="img-fluid">
             </div>
 
 
@@ -36,19 +45,24 @@
         <div class="col-md-7">
 
           <div class="sidebar">
-              <h3 class="sidebar-title">Information about Report</h3>
+              <h3 class="sidebar-title">{{lang_data.REPORT_DESCRIPTION_LBL}}</h3>
               <hr>
               <div class="sidebar-item categories">
                 <ul>
                 </ul>
-                <p>Description about Event: 
-                </p>
                     <h6>
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta quia nisi, modi incidunt minus, hic magnam eum necessitatibus veniam commodi iusto sapiente! Reprehenderit.
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi labore harum beatae dolores, rerum illo blanditiis iusto? Reiciendis, illo sunt!
+                      {% if lang == 'tt' %}
+                      {{objects.overview_tet|safe}}
+                      {% elif lang == 'pt' %}
+                      {{objects.overview_por|safe}}
+                      
+                      {% else %}
+                      {{objects.overview_eng|safe}}
+                        
+                      {% endif %}
                     </h6>
                     <div class="download">
-                        <a href="#"><i class="bi bi-download"></i> Download</a>
+                        <a href="{% url 'report-download' objects.hashed %}" target="_blank"><i class="bi bi-download"></i> Download</a>
                     </div>
                     <!-- <button class="read-more"> <i class="bi bi-download"></i> Download</button> -->
             </div><!-- End sidebar categories-->

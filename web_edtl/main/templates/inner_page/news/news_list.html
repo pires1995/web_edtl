@@ -1,0 +1,134 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>{{legend|title}}</li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title" data-aos="fade-up">
+            <h2><strong>{{legend}}</strong></h2>
+          </div>
+      <div class="row">
+
+        <div class="col-lg-8 entries">
+          {% for obj in page_obj  %}
+            
+          
+          <article class="entry">
+
+            <div class="entry-img text-center">
+              <img src="{{obj.image.url}}" alt="" class="img-fluid">
+            </div>
+
+            <h2 class="entry-title">
+              <a href="{% url 'news-detail' lang obj.entered_date|date:'Y' obj.entered_date|date:'m' obj.hashed obj.title_seo  %}">{{obj.title}}</a>
+            </h2>
+
+            <div class="entry-meta">
+              <ul>
+                <li class="d-flex align-items-center"><i class="bi bi-person"></i>{{obj.author.first_name}} {{obj.author.last_name}}</li>
+                <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <time datetime="2020-01-01">{{obj.entered_date|date:"d/M/Y"}}</a></li>
+                <!-- <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#">12 Comments</a></li> -->
+              </ul>
+            </div>
+
+            <div class="entry-content">
+              <p>
+               {{obj.content|striptags|slice:':300'}}
+              </p>
+              <div class="read-more">
+                <a href="{% url 'news-detail' lang obj.entered_date|date:'Y' obj.entered_date|date:'m' obj.hashed obj.title_seo  %}">{{lang_data.BTN_READ_MORE}}</a>
+              </div>
+            </div>
+
+          </article>
+          {% endfor %}
+
+          
+          <!-- End blog entry -->
+
+
+          <!-- <li><a href="#">1</a></li>
+          <li class="active"><a href="#">2</a></li>
+          <li><a href="#">3</a></li> -->
+        
+      {% if page_obj %}
+      <div class="blog-pagination">
+          <ul class="justify-content-center">
+            {% if page_obj.has_previous %}
+              <li><a  href="?page=1"><i class="fa bi bi-chevron-double-left"></i></a></li>
+              <li></li><a  href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i></a></li>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+              <li class="active"><a c href="?page={{ num }}">{{ num }}</a></li>
+              {% elif num > page_obj.number|add:'-3' and num > page_obj.number|add:'3' %}
+                <li></li><a  href="?page={{ num }}">{{ num }}</a></li>
+              {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+              <li></li><a  href="?page={{ page_obj.next_page_number }}"><i class="bi bi-chevron-right"></i></a></li>
+              <li></li><a  href="?page={{ page_obj.paginator.num_pages }}"><i class="bi bi-chevron-double-right"></i></a></li>
+            {% endif %}
+          </ul>
+        </div>
+          {% endif %}
+        </div><!-- End blog entries list -->
+
+        <div class="col-lg-4">
+
+          <div class="sidebar">
+
+            <h3 class="sidebar-title">{{search}}</h3>
+            <div class="sidebar-item search-form">
+              <form action="">
+                <input type="text">
+                <button type="submit"><i class="bi bi-search"></i></button>
+              </form>
+            </div><!-- End sidebar search formn-->
+
+            <h3 class="sidebar-title">{{lang_data.CATEGORY}}</h3>
+            <div class="sidebar-item categories">
+              <ul>
+                {% for news_cat in  news_cat_count %}
+                  
+                <li><a href="#">{{news_cat.0}} <span>{{news_cat.1}}</span></a></li>
+                {% endfor %}
+              </ul>
+            </div><!-- End sidebar categories-->
+
+            <!-- <h3 class="sidebar-title">Recent Posts</h3>
+            <div class="sidebar-item recent-posts">
+              <div class="post-item clearfix">
+                <img src="{% static 'main/img/news4.jpg' %}" alt="">
+                <h4><a href="#">Departementu Rede Transmisaun, husi devizaun Manutensaun Sub-Estasaun EDTL,E.P</a></h4>
+                <time datetime="2020-01-01">Jan 5, 2022</time>
+              </div>
+
+              <div class="post-item clearfix">
+                <img src="{% static 'main/img/news6.jpg' %}" alt="">
+                <h4><a href="#">Ekipa Tékniku Rede Transmisaun EDTL,E.P. halo teste 150kV Trasmission Line, Maliana-Suai section, iha National Dispatch Center (NDC) Camea</a></h4>
+                <time datetime="2020-01-01">Jan 7, 2022</time>
+              </div>
+
+            </div> -->
+            <!-- End sidebar recent posts-->
+
+
+
+          </div><!-- End sidebar -->
+
+        </div><!-- End blog sidebar -->
+
+      </div>
+
+    </div>
+  </section>
+{% endblock content %}

@@ -8,6 +8,7 @@ class Department(models.Model):
     name_tet = models.CharField(max_length=254, null=False)
     name_por = models.CharField(max_length=254, null=True)
     name_eng = models.CharField(max_length=254, null=True)
+    title_seo = models.CharField(max_length=350, null=True, blank=True)
     overview_tet = models.TextField(null=True, blank=True)
     overview_por = models.TextField(null=True, blank=True)
     overview_eng = models.TextField(null=True, blank=True)
@@ -25,7 +26,7 @@ class Department(models.Model):
 
 
 class Division(models.Model):
-    department = models.OneToOneField(Department, on_delete=models.CASCADE)
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
     name_tet = models.CharField(max_length=254, null=False)
     name_por = models.CharField(max_length=254, null=True)
     name_eng = models.CharField(max_length=254, null=True)

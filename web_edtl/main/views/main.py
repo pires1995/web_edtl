@@ -7,17 +7,29 @@ from django.conf import settings
 from django.template.loader import get_template
 from main.utils_lang import lang_master
 from news.models import News, NewsCategory, NewsImage
-from departments.models import Department
+from departments.models import Department, Division
 from product.models import Product
-from gallery.models import GalleryCategory, Gallery, Album
+from gallery.models import GalleryCategory, Gallery, Album, Banner
+from announcement.models import Announcement
+from news.models import News
+from faq.models import Faq
+from procurament.models import Tender
+from datetime import datetime
+from django.core.paginator import Paginator
+from django.conf import settings
 
 def home(request, lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
+    banners = Banner.objects.filter(is_active=True)
+    news_main = News.objects.filter(is_active=True, is_approved=True, language="English").last()
+    news_recent = News.objects.filter(is_active=True, is_approved=True, language="English").order_by('-approved_date')[1:4]
+    faq_home = Faq.objects.filter(is_active=True, is_homepage=True)
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP','lang': lang, 'lang_data': lang_data,\
-            'page': 'varanda', 'departments': departments, 'products': products
+            'page': 'varanda', 'departments': departments, 'products': products, 'banners':banners, 
+            'news_main': news_main, 'news_recent':news_recent, 'faq_home':faq_home
     }
     template = 'main/home.html'
     return render(request, template, context)
@@ -27,60 +39,34 @@ def inicio(request, lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
+    banners = Banner.objects.filter(is_active=True)
+    news_main = News.objects.filter(is_active=True, is_approved=True, language="Portugues").last()
+    news_recent = News.objects.filter(is_active=True, is_approved=True, language="Portugues").order_by('-approved_date')[1:4]
+    faq_home = Faq.objects.filter(is_active=True, is_homepage=True)
     context = {
-         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', 'lang': lang, 'lang_data': lang_data,\
-             'page': 'varanda','products': products,'departments': departments
+        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP','lang': lang, 'lang_data': lang_data,\
+            'page': 'varanda', 'departments': departments, 'products': products, 'banners':banners, 
+            'news_main': news_main, 'news_recent':news_recent, 'faq_home':faq_home
     }
-    template = 'main/home.html'
+    template = 'main/inicio.html'
     return render(request, template, context)
 
 def varanda(request, lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
+    banners = Banner.objects.filter(is_active=True)
+    news_main = News.objects.filter(is_active=True, is_approved=True, language="Tetum").last()
+    news_recent = News.objects.filter(is_active=True, is_approved=True, language="Tetum").order_by('-approved_date')[1:4]
+    faq_home = Faq.objects.filter(is_active=True, is_homepage=True)
     context = {
-         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', 'lang':lang, 'lang_data': lang_data,\
-             'page': 'varanda','products': products,'departments': departments
+        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP','lang': lang, 'lang_data': lang_data,\
+            'page': 'varanda', 'departments': departments, 'products': products, 'banners':banners, 
+            'news_main': news_main, 'news_recent':news_recent, 'faq_home':faq_home
     }
     template = 'main/home.html'
     return render(request, template, context)
-
-def news_list(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    if lang == 'l3':
-        news_list = News.objects.filter(is_approved=True).order_by('-approved_date')
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/news_list.html'
-    return render(request, template, context)
-
-
-def news_detail(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP','products': products, 'departments':departments, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/news_detail.html'
-    return render(request, template, context)
-
-def resource_detail(request,lang, hashid):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    objects = get_object_or_404(Product, hashed=hashid)
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments, 'objects':objects, 'products': products,'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/resource.html'
-    return render(request, template, context)
-
+    
 def department(request,lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
@@ -96,187 +82,29 @@ def department_detail(request,lang, hashid):
     objects = get_object_or_404(Department, hashed=hashid)
     lang_data = lang_master(lang)
     departments = Department.objects.all()
+    division = Division.objects.filter(department=objects)
     products = Product.objects.filter(is_active=True)
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products,  'lang':lang, 'lang_data': lang_data,\
-            'objects': objects
+            'objects': objects, 'divisions':division
     }
     template = 'inner_page/department/department.html'
     return render(request, template, context)
 
-def division_detail(request,lang):
+def division_detail(request,lang, hashid, hashid2):
+    objects = get_object_or_404(Division, hashed=hashid)
+    department = get_object_or_404(Department, hashed=hashid2)
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
+            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,'objects': objects, \
+                'department':department
     }
     template = 'inner_page/department/division.html'
     return render(request, template, context)
-
-
-def event_list(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/event/list.html'
-    return render(request, template, context)
-
-
-def event_detail(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/event/detail.html'
-    return render(request, template, context)
-
-def report_list(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/report/list.html'
-    return render(request, template, context)
-
-
-def report_detail(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', \
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/report/detail.html'
-    return render(request, template, context)
-
-def documentary_list(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    gallery_categories = GalleryCategory.objects.all()
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', \
-            'departments':departments,'products': products,'gallery_categories': gallery_categories, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/documentary.html'
-    return render(request, template, context)
-
-def documentary_detail(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/documentary_detail.html'
-    return render(request, template, context)
-
-def tender_list(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/procurament/tender.html'
-    return render(request, template, context)
-
-def guideline_list(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/procurament/guideline.html'
-    return render(request, template, context)
-
-
-def project_ongoing_list(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/project/ongoing.html'
-    return render(request, template, context)
-
-def project_ongoing_detail(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', \
-            'departments':departments, 'products': products, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/project/ongoing_detail.html'
-    return render(request, template, context)
-
-def project_new_list(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', \
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/project/new.html'
-    return render(request, template, context)
-
-def project_new_detail(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', \
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/project/new_detail.html'
-    return render(request, template, context)
-
-def album_list(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    gallery_categories = GalleryCategory.objects.all()
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
-                'gallery_categories': gallery_categories
-    }
-    template = 'inner_page/gallery/album_list.html'
-    return render(request, template, context)
-
-def album_detail(request,lang):
-    lang_data = lang_master(lang)
-    departments = Department.objects.all()
-    products = Product.objects.filter(is_active=True)
-    context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
-    }
-    template = 'inner_page/gallery/album_detail.html'
-    return render(request, template, context)
-
 
 def video_list(request,lang):
     lang_data = lang_master(lang)
@@ -290,17 +118,36 @@ def video_list(request,lang):
     template = 'inner_page/gallery/video_list.html'
     return render(request, template, context)
 
-def faq_detail(request,lang):
+
+def faq_list(request,lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
+    objects = Faq.objects.filter(is_active=True)
+    paginator = Paginator(objects, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
+            'departments':departments,'products': products,\
+                'page_obj':page_obj, 'lang':lang, 'lang_data': lang_data,
+    }
+    template = 'inner_page/faq/faq_list.html'
+    return render(request, template, context)
+
+def faq_detail(request,lang,hashid):
+    lang_data = lang_master(lang)
+    departments = Department.objects.all()
+    products = Product.objects.filter(is_active=True)
+    objects = get_object_or_404(Faq, hashed=hashid)
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', \
-            'departments':departments,'products': products,'lang':lang, 'lang_data': lang_data,
+            'departments':departments,'products': products,'lang':lang, 'lang_data': lang_data, 'objects':objects
     }
     template = 'inner_page/faq/faq_detail.html'
     return render(request, template, context)
 
+# 
 def varanda2(request):
     form = NewsUserSignUpForm(request.POST or None)
 

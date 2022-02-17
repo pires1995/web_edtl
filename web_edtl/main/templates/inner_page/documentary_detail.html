@@ -4,9 +4,9 @@
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
         <ol>
-        <li><a href="{% url 'redirect-home' %}">Home</a></li>
-        <li><a href="{% url 'news-list' l3 %}">Documentary List</a></li>
-        <li>Detail</li>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li><a href="{% url 'documentary-list' lang %}">{{lang_data.VIDEO_LBL}}</a></li>
+        <li>{{lang_data.DETAIL_ALBUM_LBL}}</li>
         </ol>
     </div>
 </section><!-- End Breadcrumbs -->
@@ -16,23 +16,23 @@
   
           <div class="row gy-4">
             <h2 class="section-title">
-              <a href="#">Documentary Detail</a>
-            </h2>
+              {% if lang == 'tt' %}
+              {{objects.name_tet}}
+              {% elif lang == 'pt' %}
+              {{objects.name_por}}
+              {% else %}
+              {{objects.name_eng}}
+              {% endif %}
+              </h2>
             <div class="col-lg-8">
               <div class="portfolio-details-slider swiper">
                 <div class="swiper-wrapper align-items-center">
-  
+                  {% for object in gallery %}
+                    
                   <div class="swiper-slide">
-                    <img src="{% static 'main/img/1.jpg' %}" alt="">
+                    <img src="{{object.image.url}}" >
                   </div>
-  
-                  <div class="swiper-slide">
-                    <img src="{% static 'main/img/2.jpg' %}" alt="">
-                  </div>
-  
-                  <div class="swiper-slide">
-                    <img src="{% static 'main/img/3.jpg' %}" alt="">
-                  </div>
+                  {% endfor %}
   
                 </div>
                 <div class="swiper-pagination"></div>
@@ -41,12 +41,33 @@
   
             <div class="col-lg-4">
               <div class="portfolio-info">
-                <h3>Documentary information</h3>
+                <h3>{{lang_data.DETAIL_ALBUM_INFO_LBL}}</h3>
                 <ul>
-                  <li><strong>Title</strong>: Renewable energy at Betano</li>
-                  <li><strong>Category</strong>: Production and Renewable energy</li>
-                  <li><strong>Year</strong>: 2021</li>
-                  <li><strong>Description Album</strong>: Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias perspiciatis possimus officia assumenda vitae impedit adipisci et aut sint rerum, nesciunt consectetur sunt necessitatibus sapiente.</li>
+                  <li><strong>{{lang_data.DETAIL_ALBUM_LBL1}}</strong>:
+                    {% if lang == 'tt' %}
+                    {{objects.name_tet}}
+                    {% elif lang == 'pt' %}
+                    {{objects.name_por}}
+                    {% else %}
+                    {{objects.name_eng}}
+                    {% endif %}</li>
+                  <li>
+                    <i class="bi bi-person text-primary"></i> {{objects.author.first_name}} {{objects.author.last_name}}
+                    <i class="bi bi-person text-danger"></i> {{objects.datetime|date:"d/M/Y"}}
+                  </li>
+                  <li><strong>{{lang_data.DETAIL_ALBUM_LBL2}}</strong>: 
+                    {% if lang == 'tt' %}
+                    {{objects.overview_tet}}
+                    {% elif lang == 'pt' %}
+                    {{objects.overview_por}}
+                    {% else %}
+                    {{objects.overview_eng}}
+                    {% endif %}
+                  </li>
+                  <li><strong>{{lang_data.PROJECT_DETAIL7_LBL}}</strong>: 
+                   
+                    {{objects.datetime.year}}
+                  </li>
                 </ul>
               </div>
             </div>

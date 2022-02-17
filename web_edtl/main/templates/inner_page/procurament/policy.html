@@ -1,0 +1,106 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+<!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+  <div class="container">
+      <ol>
+      <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+      <li>{{lang_data.POLICY_LIST_LBL}}</li>
+      </ol>
+  </div>
+</section><!-- End Breadcrumbs -->
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title" data-aos="fade-up">
+            <h2><strong>{{lang_data.POLICY_TITLE_LBL}}</strong></h2>
+            {% if lang == 'tt' %}
+            {{policy_page.description_tet|safe}}
+            {% elif lang == 'pt' %}
+            {{policy_page.description_por|safe}}
+            {% else %}
+            {{policy_page.description_eng|safe}}
+              
+            {% endif %}
+          </h6>
+          </div>
+          <h6 class="entry-title">
+          <div class="row justify-content-center">
+            <div class="col-md-12 entries">
+                <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th scope="col" width="10%">Nu.</th>
+                        <th scope="col" width="30%">{{lang_data.TABEL_LBL6}}</th>
+                        <th scope="col" width="40%">{{lang_data.TABEL_LBL2}}</th>
+                        <th scope="col" width="20%">{{lang_data.TABEL_LBL5}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for object in page_obj %}
+                        
+                      <tr>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>
+                          {% if lang == 'tt' %}
+                          {{object.title_tet}}
+                          {% elif lang == 'pt' %}
+                          {{object.title_por}}
+                          
+                          {% else %}
+                          {{object.title_eng}}
+                          
+                        {% endif %}
+                        </td>
+                        <td>
+                          {% if lang == 'tt' %}
+                            {{object.description_tet|safe}}
+                            {% elif lang == 'pt' %}
+                            {{object.description_por|safe}}
+                            
+                            {% else %}
+                            {{object.description_eng|safe}}
+                            
+                          {% endif %}
+                        </td>
+                        <td>
+                            <span class="download">
+                              <a href="{% url 'policy-download' object.hashed %}" target="_blank"><i class="bi bi-download"></i> Download</a>
+                            </span>
+                          </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                  </table>
+    
+    
+                  {% if page_obj %}
+                  <div class="blog-pagination">
+                      <ul class="justify-content-center">
+                        {% if page_obj.has_previous %}
+                          <li><a  href="?page=1"><i class="fa bi bi-chevron-double-left"></i></a></li>
+                          <li></li><a  href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i></a></li>
+                        {% endif %}
+                        {% for num in page_obj.paginator.page_range %}
+                          {% if page_obj.number == num %}
+                          <li class="active"><a c href="?page={{ num }}">{{ num }}</a></li>
+                          {% elif num > page_obj.number|add:'-3' and num > page_obj.number|add:'3' %}
+                            <li></li><a  href="?page={{ num }}">{{ num }}</a></li>
+                          {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                          <li></li><a  href="?page={{ page_obj.next_page_number }}"><i class="bi bi-chevron-right"></i></a></li>
+                          <li></li><a  href="?page={{ page_obj.paginator.num_pages }}"><i class="bi bi-chevron-double-right"></i></a></li>
+                        {% endif %}
+                      </ul>
+                    </div>
+                      {% endif %}
+    
+            </div><!-- End blog entries list -->
+    
+          </div>
+
+    </div>
+  </section>
+{% endblock content %}

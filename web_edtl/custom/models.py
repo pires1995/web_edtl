@@ -20,3 +20,9 @@ class Village(models.Model):
 	def __str__(self):
 		template = '{0.name}'
 		return template.format(self)
+
+class Year(models.Model):
+	year = models.IntegerField()
+	def __str__(self):
+		template = '{0.year}'
+		return template.format(self)

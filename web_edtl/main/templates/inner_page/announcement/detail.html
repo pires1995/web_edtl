@@ -1,0 +1,86 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+  <!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li><a href="{% url 'announcement-list' lang %}">{{lang_data.ANNOUNCEMENT_LIST_LBL}}</a></li>
+        <li>{{lang_data.ANNOUNCEMENT_DETAIL_BREAKCUMB_LBL}}</li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+<section id="blog" class="blog">
+  <div class="container" data-aos="fade-up">
+
+    <div class="row">
+
+      <h2 class="section-title">
+          {% if lang == 'tt' %}
+          {{objects.title_tet}}
+          {% elif lang == 'pt' %}
+          {{objects.title_por}}
+          {% else %}
+          {{objects.title_eng}}
+          {% endif %}
+          
+
+      </h2>
+      <div class="col-md-5 entries">
+
+        <article class="entry entry-single">
+
+          <div class="entry-img pt-3 text-center">
+            <img src="{{objects.image.url}}" alt="" class="img-fluid">
+          </div>
+
+
+          
+      </article><!-- End blog entry -->
+
+        
+      </div><!-- End blog entries list -->
+      
+      <div class="col-md-7">
+
+        <div class="sidebar">
+            <h3 class="sidebar-title">{{lang_data.ANNOUNCEMENT_DETAIL_LBL}}</h3>
+            <div class="sidebar-item categories">
+              <hr>
+              <div class="">
+                <ul>
+                  <li class="d-flex align-items-center">
+                    <span>
+
+                      <i class="bi bi-person text-primary"></i>{{objects.author.first_name}} {{objects.author.last_name }}  
+                      <i class="bi bi-clock text-danger"></i> <time datetime="2020-01-01">{{objects.date_posted|date:"d/M/Y H:m"}}</li>
+                      </span>
+
+                  <!-- <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#">12 Comments</a></li> -->
+                </ul>
+              </div>
+             
+                  <h6>
+                     {% if lang == 'tt' %}
+                      {{objects.description_tet|safe}}
+                      {% elif lang == 'pt' %}
+                      {{objects.description_por|safe}}
+                      
+                      {% else %}
+                      {{objects.description_eng|safe}}
+                       
+                     {% endif %}
+                     
+                  </h6>
+          </div><!-- End sidebar categories-->
+      </div><!-- End sidebar -->
+      
+  </div><!-- End blog sidebar -->
+  
+</div>
+
+</div>
+</section>
+{% endblock content %}

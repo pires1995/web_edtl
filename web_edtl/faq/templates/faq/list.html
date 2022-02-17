@@ -40,8 +40,9 @@
                             <tr>
                                 <th scope="col" width="5%">Nu.</th>
                                 <th scope="col" width="40%">Title</th>
-                                <th scope="col" width="20%">Author</th>
+                                <th scope="col" width="10%">Author</th>
                                 <th scope="col" width="20%">Status</th>
+                                <th scope="col" width="10%">Homepage</th>
                                 <th scope="col" width="20%">Action</th>
                             </tr>
                         </thead>
@@ -55,10 +56,17 @@
                                 <td>{{object.author.first_name}} {{object.author.last_name}}</td>
                                 <td>{% if object.is_active == True %}
                                     <i class="bi bi-check-lg"></i> Activated
-                                  {% else %}
+                                    {% else %}
                                     <i class="bi bi-clock"></i> Waiting to Activate
-                                  {% endif %}
-                                  </td>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if object.is_homepage == True %}
+                                        <i class="bi bi-star-fill"></i> Already on Homepage
+                                    {% else %}
+                                        <i class="bi bi-star-half"></i> Not Homepage
+                                    {% endif %}
+                                </td>
                                   <td>
                                       {% if object.is_active == False %}
                                       <a href="{% url 'admin-faq-update' object.hashed %}" type="button" title="Update"
@@ -69,6 +77,8 @@
                                       {% else %}
                                       <a href="{% url 'admin-faq-deactivate' object.hashed %}" type="button" title="Deactivate"
                                           class="btn btn-danger"><i class="bi bi-x-circle"></i></a>
+                                      <a href="{% url 'admin-faq-set-homepage' object.hashed %}" type="button" title="Set To Homepage"
+                                          class="btn btn-warning"><i class="bi bi-star"></i></a>
   
   
                                       {% endif %}

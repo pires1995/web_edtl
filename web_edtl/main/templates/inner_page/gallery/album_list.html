@@ -4,8 +4,8 @@
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
         <ol>
-        <li><a href="{% url 'redirect-home' %}">Home</a></li>
-        <li>Album</li>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>{{lang_data.LIST_ALBUM_LBL}}</li>
         </ol>
     </div>
 </section><!-- End Breadcrumbs -->
@@ -13,7 +13,7 @@
     <section id="portfolio blog" class="blog portfolio">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2><strong>ALL ALBUM 2022</strong></h2>
+                <h2><strong>{{legend}}</strong></h2>
               </div>
         <div class="row justify-content-center">
             <div class="col-md-10">
@@ -23,8 +23,19 @@
                     <ul id="portfolio-flters">
                         <li data-filter="*" class="filter-active">All</li>
                         {% for gallery_cat in  gallery_categories %}
-                          
-                            <li data-filter=".filter-app">{{gallery_cat.name}}</li>
+                            
+                            <li data-filter=".{{gallery_cat.title_seo}}">
+
+                                {% if lang == 'tt' %}
+                                    {{gallery_cat.name_tet}}
+                                {% elif lang == 'pt' %}
+                                    {{gallery_cat.name_por}}
+                                    
+                                {% else %}
+                                    {{gallery_cat.name_eng}}
+                                
+                                {% endif %}
+                            </li>
                         {% endfor %}
                         
                     </ul>
@@ -32,99 +43,54 @@
                 </div>
         
                 <div class="row portfolio-container" data-aos="fade-up">
-        
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <img src="{% static 'main/img/1.jpg' %}" class="img-fluid" alt="">
+                    {% for obj in page_obj  %}
+                      
+                    
+                    <div class="col-md-4 portfolio-item {{obj.category.title_seo}}">
+                    <img src="{{obj.image.url}}" class="img-fluid" alt="">
                     <div class="portfolio-info">
-                        <h4>App 1</h4>
-                        <p>App</p>
-                        <a href="{% static 'main/img/1.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 1"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'album-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
+                        <h6>
+                            {% if lang == 'tt' %}
+                                {{obj.name_tet|truncatechars:50}}...
+                            {% elif lang == 'pt' %}
+                                {{obj.name_por|truncatechars:50}}...
+                            {% else %}
+                                {{obj.name_eng|truncatechars:50}}...
+                              
+                            {% endif %}
+                            
+                        </h6>
+                        <!-- <a href="{% static 'main/img/1.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" 
+                        title="App 1"><i class="bx bx-plus"></i></a> -->
+                        <a href="{% url 'album-detail' lang obj.hashed %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
                     </div>
                     </div>
-        
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-                    <img src="{% static 'main/img/2.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Web 3</h4>
-                        <p>Web</p>
-                        <a href="{% static 'main/img/2.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'album-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-        
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <img src="{% static 'main/img/3.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>App 2</h4>
-                        <p>App</p>
-                        <a href="{% static 'main/img/3.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 2"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'album-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-        
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-                    <img src="{% static 'main/img/4.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Card 2</h4>
-                        <p>Card</p>
-                        <a href="{% static 'main/img/4.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 2"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'album-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-        
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-                    <img src="{% static 'main/img/5.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Web 2</h4>
-                        <p>Web</p>
-                        <a href="{% static 'main/img/5.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 2"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'album-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-        
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                    <img src="{% static 'main/img/6.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>App 3</h4>
-                        <p>App</p>
-                        <a href="{% static 'main/img/6.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 3"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'album-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-        
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-                    <img src="{% static 'main/img/7.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Card 1</h4>
-                        <p>Card</p>
-                        <a href="{% static 'main/img/7.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 1"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'album-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-        
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-                    <img src="{% static 'main/img/8.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Card 3</h4>
-                        <p>Card</p>
-                        <a href="{% static 'main/img/8.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 3"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'album-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-        
-                    <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-                    <img src="{% static 'main/img/8.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Web 3</h4>
-                        <p>Web</p>
-                        <a href="{% static 'main/img/8.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'album-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
+
+                    {% endfor %}
         
                 </div>
             </div>
+            {% if page_obj %}
+            <div class="blog-pagination" data-aos="fade-up">
+                <ul class="justify-content-center">
+                  {% if page_obj.has_previous %}
+                    <li><a  href="?page=1"><i class="fa bi bi-chevron-double-left"></i></a></li>
+                    <li></li><a  href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i></a></li>
+                  {% endif %}
+                  {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="active"><a c href="?page={{ num }}">{{ num }}</a></li>
+                    {% elif num > page_obj.number|add:'-3' and num > page_obj.number|add:'3' %}
+                      <li></li><a  href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                    <li></li><a  href="?page={{ page_obj.next_page_number }}"><i class="bi bi-chevron-right"></i></a></li>
+                    <li></li><a  href="?page={{ page_obj.paginator.num_pages }}"><i class="bi bi-chevron-double-right"></i></a></li>
+                  {% endif %}
+                </ul>
+              </div>
+                {% endif %}
         </div>
         </div>
       </section><!-- End Portfolio Section -->

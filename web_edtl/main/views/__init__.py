@@ -4,3 +4,12 @@ from .employee import *
 from .about import *
 from .vacancy import *
 from .appointment import *
+from .news import *
+from .event import *
+from .resource import *
+from .report import *
+from .documentary import *
+from .tender import *
+from .project import *
+from .announcement import *
+from .album import *

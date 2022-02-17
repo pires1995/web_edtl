@@ -1,70 +1,96 @@
 <header id="header" class="d-flex align-items-center">
-  <div class="container d-flex justify-content-between">
-
-    <!-- <div class="logo">
-      <h1 class="text-light"><a href="index.html">Flattern</a></h1>
-    </div> -->
+  <div class="container d-flex justify-content-center">
 
     <nav id="navbar" class="navbar">
       <ul>
-        <li><a class="active" href="#">Home</a></li>
-        <li><a href="#">News</a></li>
-        <li class="dropdown"><a href="#"><span>About</span> <i class="bi bi-chevron-down"></i></a>
+        {% with url_name=request.resolver_match.url_name %}
+        <li><a class="{% if url_name == 'home' or url_name == 'inicio' or url_name == 'varanda' %}active{% endif %}" href="{% url 'inicio' l2 %}">Inicio</a></li>
+        <li><a href="{% url 'news-list' l2 %}" class="{% if url_name == 'news-list' %} active{% endif %}">Noticia</a></li>
+        <li class="{% if url_name == 'who-we-are' or url_name == 'what-we-do' or url_name == 'board-profile' %}
+          active 
+        {% endif %} dropdown"><a href="#"><span>Sobre</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="#">Who We Are</a></li>
-            <li><a href="#">What We Do</a></li>
-            <li><a href="#">Board Profile</a></li>
+            <li><a href="{% url 'who-we-are' l2 %}" >Sobre Nós</a></li>
+            <li><a href="{% url 'what-we-do' l2 %}">Nossos Serviços</a></li>
+            <li><a href="{% url 'board-profile' l2 %}">Perfil do Conselho</a></li>
           </ul>
         </li>
-        <li class="dropdown"><a href="#"><span>Resources</span> <i class="bi bi-chevron-down"></i></a>
+        <li><a href="{% url 'event-list' l2 %}" class="{% if url_name == 'event-list' %} active{% endif %}">Evento</a></li>
+        <li class="{% if url_name == 'resource-detail'  %}
+        active 
+      {% endif %} dropdown"><a href="#"><span>Produto</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="#">EDTL 24 Apps</a></li>
-            <li><a href="#">Solar PV</a></li>
-            <li><a href="#">Electricity Token</a></li>
+            {% for product in products  %}
+              
+              <li><a href="{% url 'resource-detail' l2 product.hashed %}">{{product.name_por}}</a></li>
+            {% endfor %}
           </ul>
         </li>
-        <li class="dropdown"><a href="#"><span>Departments</span> <i class="bi bi-chevron-down"></i></a>
+        <li class="{% if url_name == 'department-detail'  %}
+        active 
+      {% endif %} dropdown"><a href="#"><span>Departamento</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="#">Production and Renewable energy</a></li>
-            <li><a href="#">Transmision Line</a></li>
-            <li><a href="#">Distribution and Customer Services</a></li>
-            <li><a href="#">Electricity System Plan and Design</a></li>
-            <li><a href="#">Finance and Comercial</a></li>
-            <li><a href="#">Corporate Service</a></li>
+            {% for department in  departments %}              
+            <li><a href="{% url 'department-detail' l2 department.hashed %}">{{department.name_por}}</a></li>
+            {% endfor %}
           </ul>
         </li>
-        <li class="dropdown"><a href="#"><span>Publication</span> <i class="bi bi-chevron-down"></i></a>
+        <li class="{% if url_name == 'report-list' or url_name == 'documentary-list' %}
+        active 
+      {% endif %} dropdown"><a href="#"><span>Publicação</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="#">Event</a></li>
-            <li><a href="#">Reports</a></li>
-            <li><a href="#">Documentary</a></li>
+            <li><a href="{% url 'report-list' l2 %}">Relatorio</a></li>
+            <li><a href="{% url 'documentary-list' l2 %}">Documentação</a></li>
           </ul>
         </li>
-        <li class="dropdown"><a href="#"><span>Recruitments</span> <i class="bi bi-chevron-down"></i></a>
+
+        
+        <li class="{% if url_name == 'vacancy-list' or url_name == 'internships-list' or url_name == 'tender-list' or url_name == 'guideline-list' %}
+        active 
+      {% endif %} dropdown"><a href="#"><span>Oportunidade</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="#">Job Vacancies</a></li>
-            <li><a href="#">Internships</a></li>
+            <li class="dropdown"><a href="#"><span>Recrutamento</span> <i class="bi bi-chevron-down"></i></a>
+                  <ul>
+                    <li><a href="{% url 'vacancy-list' l2 %}">Vaga</a></li>
+                    <li><a href=" {% url 'internships-list' l2 %} ">Estagios</a></li>
+                    <li><a href="{% url 'volunteer-list' l2 %}">Voluntario</a></li>
+                  </ul>
+                </li>
+                <li class="dropdown"><a href="#"><span>Aquisições</span> <i class="bi bi-chevron-down"></i></a>
+                  <ul>
+                    <li><a href="{% url 'tender-list' l2 %}">Concurso Público</a></li>
+                    <li><a href="{% url 'guideline-list' l2 %}">Diretrizes de Aquisição</a></li>
+                    <li><a href="{% url 'policy-list' l2 %}">Política e Regras de Aquisições</a></li>
+                  </ul>
+                </li>
           </ul>
         </li>
-        <li class="dropdown"><a href="#"><span>Procuraments</span> <i class="bi bi-chevron-down"></i></a>
-          <ul>
-            <li><a href="#">Public Tender</a></li>
-            <li><a href="#">Procuraments Guidelines</a></li>
+
+
+        <li class="{% if url_name == 'ongoing-list' or url_name == 'new-list' %}
+        active 
+      {% endif %} dropdown"><a href="#"><span>Negócios e Investimentos</span> <i class="bi bi-chevron-down"></i></a>
+       <ul>
+        <li class="dropdown"><a href="#"><span>Projetos</span> <i class="bi bi-chevron-down"></i></a>
+         <ul>
+            
+            <li><a href="{% url 'ongoing-list' l2 %}">Em Andamento</a></li>
+            <li><a href="{% url 'new-list' l2 %}">Novo Projeto</a></li>
+                </ul> 
+            </li>
           </ul>
         </li>
-        <li class="dropdown"><a href="#"><span>Projects</span> <i class="bi bi-chevron-down"></i></a>
+        <li class="{% if url_name == 'album-list' or url_name == 'video-list' %}
+        active 
+      {% endif %} dropdown"><a href="#"><span>Galeria</span> <i class="bi bi-chevron-down"></i></a>
           <ul>
-            <li><a href="#">Ongoing</a></li>
-            <li><a href="#">Up Coming</a></li>
+            <li><a href="{% url 'album-list' l2 %}">Foto</a></li>
+            <li><a href="{% url 'video-list' l2 %}">Video</a></li>
           </ul>
         </li>
-        <li class="dropdown"><a href="#"><span>Gallery</span> <i class="bi bi-chevron-down"></i></a>
-          <ul>
-            <li><a href="#">Photo</a></li>
-            <li><a href="#">Video</a></li>
-          </ul>
-        </li>
-        <li><a href="#" class="read">Get in Touch</a></li>
+        <li><a href="{% url 'announcement-list' l2 %}" class="{% if url_name == 'announcement-list' %} active{% endif %}">Announcement</a></li>
+        <li><a href="{% url 'appointment' l2 %}" id="btn-appointment">Contato</a></li>
+        {% endwith %}
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav><!-- .navbar -->

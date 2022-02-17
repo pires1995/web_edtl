@@ -1,6 +1,5 @@
 {% load static %}
-<marquee style="color: #f03c02; font-size: 15px;">Welcome to Eletricidade de Timor Leste, Empresa Publika Website
-  <i class="bi bi-lightning-fill"></i> Provide electricity 24/7 hours to its customers hotline 80010000 / 3339258
+<marquee style="color: #f03c02; font-size: 15px;">{{lang_data.HOME_MARQUEE}}
   <i class="bi bi-lightning-fill"></i> </marquee>
 <section id="hero">
   
@@ -9,37 +8,28 @@
       <div class="carousel-inner" role="listbox">
 
         <!-- Slide 1 -->
-        <div class="carousel-item active" style="background-image: url({% static 'main/img/7.jpg' %});">
+        {% for banner  in  banners %}
+          {% if forloop.first %}
+          <div class="carousel-item active" style="background-image: url({{banner.image.url}});">
+            {% else %}
+            <div class="carousel-item" style="background-image: url({{banner.image.url}});">
+          {% endif %}
           <div class="carousel-container">
             <div class="carousel-content animate__animated animate__fadeInUp">
-              <h2>Welcome to <span>EDTL,EP</span></h2>
-              <p>Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
-              
+              {% if lang == 'en' %}
+              <h2>{{banner.title_eng}}</h2>
+              <p>{{banner.description_eng}}</p>
+              {% elif lang == 'pt' %}
+              <h2>{{banner.title_por}}</h2>
+              <p>{{banner.description_por}}</p>
+              {% else %}
+              <h2>{{banner.title_tet}}</h2>
+              <p>{{banner.description_tet}}</p>
+              {% endif %}
             </div>
           </div>
         </div>
-
-        <!-- Slide 2 -->
-        <div class="carousel-item" style="background-image: url({% static 'main/img/8.jpg' %});">
-          <div class="carousel-container">
-            <div class="carousel-content animate__animated animate__fadeInUp">
-              <h2>Lorem Ipsum Dolor</h2>
-              <p>Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
-              
-            </div>
-          </div>
-        </div>
-
-        <!-- Slide 3 -->
-        <div class="carousel-item" style="background-image: url({% static 'main/img/9.jpeg'  %});">
-          <div class="carousel-container">
-            <div class="carousel-content animate__animated animate__fadeInUp">
-              <h2>Sequi ea ut et est quaerat</h2>
-              <p>Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel. Minus et tempore modi architecto.</p>
-              
-            </div>
-          </div>
-        </div>
+        {% endfor %}
 
       </div>
 

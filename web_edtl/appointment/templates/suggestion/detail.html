@@ -1,0 +1,60 @@
+{% extends 'web_admin/layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
+            <!-- TODO -->
+            <li class="breadcrumb-item"><a href="{% url 'admin-faq-list' %}">Lista FAQ</a></li>
+
+            <li class="breadcrumb-item active">{{title}}</li>
+            <!-- <li class="breadcrumb-item">Users</li> -->
+        </ol>
+    </nav>
+</div>
+<section class="section profile">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body pt-3">
+                    <div class="card-title">
+                        <h2>Detail Suggestion</h2>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Suggestion Detail Information</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>
+                                        Name: <strong>{{objects.fullname}}</strong>
+                                    </h6>
+                                    <h6>
+                                        Email: <strong>{{objects.email}}</strong>
+                                    </h6>
+                                    <h6>
+                                        Phone Number: <strong>{{objects.mobile}}</strong>
+                                    </h6>
+                                    <h6>
+                                        Text: <strong>{{objects.text}}</strong>
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock content%}

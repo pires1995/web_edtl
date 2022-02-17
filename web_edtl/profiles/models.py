@@ -1,33 +1,63 @@
 from django.db import models
-from .utils import path_and_rename_orgchart, path_and_rename_about
+from .utils import path_and_rename_orgchart, path_and_rename_about, path_and_rename_service
 import hashlib
+from main.models import User
 
-
+GroupChoice = [
+    ('Board Member', 'Board Member'),
+    ('Department', 'Department'),
+    ('Division', 'Division'),
+]
 # Create your models here.
 class About(models.Model):
-    intro_tet=models.TextField(null=True, blank=True)
-    intro_por=models.TextField(null=True, blank=True)
-    intro_eng=models.TextField(null=True, blank=True)
-    wwa_tet = models.TextField(null=True, blank=True)
-    wwa_por = models.TextField(null=True, blank=True)
-    wwa_eng = models.TextField(null=True, blank=True)
-    wwd_tet = models.TextField(null=True, blank=True)
-    wwd_por = models.TextField(null=True, blank=True)
-    wwd_eng = models.TextField(null=True, blank=True)
-    motto_tet = models.TextField(null=True, blank=True)
-    motto_por = models.TextField(null=True, blank=True)
-    motto_eng = models.TextField(null=True, blank=True)
+    background_tet=models.TextField(null=True, blank=True)
+    background_por=models.TextField(null=True, blank=True)
+    background_eng=models.TextField(null=True, blank=True)
+    mission_tet = models.TextField(null=True, blank=True)
+    mission_por = models.TextField(null=True, blank=True)
+    mission_eng = models.TextField(null=True, blank=True)
+    vision_tet = models.TextField(null=True, blank=True)
+    vision_por = models.TextField(null=True, blank=True)
+    vision_eng = models.TextField(null=True, blank=True)
+    values_tet = models.TextField(null=True, blank=True)
+    values_por = models.TextField(null=True, blank=True)
+    values_eng = models.TextField(null=True, blank=True)
+    objective_tet = models.TextField(null=True, blank=True)
+    objective_por = models.TextField(null=True, blank=True)
+    objective_eng = models.TextField(null=True, blank=True)
     image = models.ImageField(default='default.jpg', upload_to=path_and_rename_about, null=True, blank=True)
-    org_chart = models.FileField(upload_to=path_and_rename_orgchart, null=True, blank=True)
     hashed = models.CharField(max_length=32, null=True, blank=True)
 
     def __str__(self):
-        template = '{0.wwa_tet}'
+        template = '{0.background_tet}'
         return template.format(self)
 
     def save(self, *args, **kwargs):
         self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
         return super(About, self).save(*args, **kwargs)
+
+class Service(models.Model):
+    title_tet=models.CharField(max_length=250,null=True, blank=True)
+    title_por=models.CharField(max_length=250,null=True, blank=True)
+    title_eng=models.CharField(max_length=250,null=True, blank=True)
+    description_tet = models.CharField(max_length=200,null=True, blank=True)
+    description_por = models.CharField(max_length=200,null=True, blank=True)
+    description_eng = models.CharField(max_length=200,null=True, blank=True)
+    icon = models.CharField(max_length=300, null=True, blank=True)
+    image = models.ImageField(default='default.jpg', upload_to=path_and_rename_service, null=True, blank=True)
+    is_active = models.BooleanField(default=False, null=True)
+    datetime = models.DateTimeField(auto_now_add=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    hashed = models.CharField(max_length=32, null=True, blank=True)
+
+    def __str__(self):
+        template = '{0.title_tet} - {0.title_eng}'
+        return template.format(self)
+
+    def save(self, *args, **kwargs):
+        self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
+        return super(Service, self).save(*args, **kwargs)
+
 
 
 # TEAM
@@ -54,6 +84,7 @@ class Employee(models.Model):
     hashed = models.CharField(max_length=32, null=True, blank=True)
     mobile = models.IntegerField(null=True)
     email = models.EmailField(max_length=254, null=True)
+    resume = models.TextField(null=True)
     def __str__(self):
         template = '{0.first_name} {0.last_name}'
         return template.format(self)
@@ -63,11 +94,25 @@ class Employee(models.Model):
 
 
 class Position(models.Model):
-    division = models.ForeignKey(Division, on_delete=models.CASCADE, null=True)
-    employee = models.OneToOneField(Employee, on_delete=models.CASCADE, null=True, related_name='position')
+    position = models.ForeignKey(Division, on_delete=models.CASCADE, null=True)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True, related_name='position')
+    is_active = models.BooleanField(default=False, null=True)
+    group = models.CharField(choices=GroupChoice, null=True, max_length=200)
+    hashed = models.CharField(max_length=32, null=True, blank=True)
+
+    def __str__(self):
+        template = '{0.position} | {0.employee}'
+        return template.format(self)
+    def save(self, *args, **kwargs):
+        self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
+        return super(Position, self).save(*args, **kwargs)
+
+class Department(models.Model):
+    position = models.ForeignKey(Division, on_delete=models.CASCADE, null=True)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
     start_period = models.DateField(null=True, blank=True)
     end_period = models.DateField(null=True, blank=True)
-    is_active = models.BooleanField(default=True, null=True)
+    is_active = models.BooleanField(default=False, null=True)
     hashed = models.CharField(max_length=32, null=True, blank=True)
 
     def __str__(self):
@@ -75,4 +120,20 @@ class Position(models.Model):
         return template.format(self)
     def save(self, *args, **kwargs):
         self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
-        return super(Position, self).save(*args, **kwargs)
+        return super(Department, self).save(*args, **kwargs)
+
+class Section(models.Model):
+    position = models.ForeignKey(Division, on_delete=models.CASCADE, null=True)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True)
+    start_period = models.DateField(null=True, blank=True)
+    end_period = models.DateField(null=True, blank=True)
+    is_active = models.BooleanField(default=False, null=True)
+    hashed = models.CharField(max_length=32, null=True, blank=True)
+
+    def __str__(self):
+        template = '{0.division} | {0.employee}'
+        return template.format(self)
+    def save(self, *args, **kwargs):
+        self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
+        return super(Section, self).save(*args, **kwargs)
+

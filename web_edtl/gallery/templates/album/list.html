@@ -45,9 +45,18 @@
                                     <hr>
                                 </div>
                                 <div class="row px-3 pb-4">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        {% if obj.is_active == True %}
+                                        <a href="{% url 'admin-album-deactivate' obj.hashed %}" type="button" title="Update"
+                                        class="btn btn-danger"><i class="bi bi-x-lg"></i></a>
+                                        
+                                        {% else %}
                                         <a href="{% url 'admin-album-update' obj.hashed %}" type="button" title="Update"
-                                            class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                        class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="{% url 'admin-album-activate' obj.hashed %}" type="button" title="Activate"
+                                        class="btn btn-success"><i class="bi bi-check"></i></a>
+
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

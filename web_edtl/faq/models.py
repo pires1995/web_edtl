@@ -12,6 +12,7 @@ class Faq(models.Model):
     overview_eng = models.TextField(null=True, blank=True)
     image = models.ImageField(default='default.jpg', upload_to=path_and_rename_faq_image, null=True, blank=True)
     is_active = models.BooleanField(default=False, null=True)
+    is_homepage = models.BooleanField(default=False, null=True)
     datetime = models.DateTimeField(auto_now_add=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     hashed = models.CharField(max_length=32, null=True, blank=True)

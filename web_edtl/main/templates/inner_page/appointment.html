@@ -4,8 +4,8 @@
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
         <ol>
-        <li><a href="{% url 'redirect-home' %}">Home</a></li>
-        <li>Appointment</li>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>{{lang_data.GET_IN_TOUCH_BREAKCUMB_LBL}}</li>
         </ol>
     </div>
 </section><!-- End Breadcrumbs -->
@@ -13,40 +13,40 @@
     <section id="portfolio blog" class="blog contact">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2><strong>MAKE APPOINTMENT</strong></h2>
+                <h2><strong>{{lang_data.APPOINTMENT_LBL}}</strong></h2>
               </div>
         <div class="row justify-content-center">
             <div class="col-md-10">
-                <div class="row mt-5 justify-content-center" data-aos="fade-up">
+                <div class="row justify-content-center" data-aos="fade-up">
                     <div class="col-lg-10">
                         <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-                            <h5 class="title">Please Fill Information Bellow</h5>
+                            <h5 class="title">{{lang_data.APPOINTMENT_LBL1}}</h5>
                             <hr>
                             <div class="row">
                                 <div class="col-md-4 form-group">
-                                    <label for="exampleInputEmail1" class="form-label">Fullname</label>
-                                    <input type="text" name="name" class="form-control" id="name" placeholder="Enter Your Fullname" required>
+                                    <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL2}}</label>
+                                    <input type="text" name="name" class="form-control" id="name" placeholder="{{lang_data.APPOINTMENT_LBL2_1}}" required>
                                 </div>
                             <div class="col-md-4 form-group ">
-                                <label for="exampleInputEmail1" class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="Enter Your Email" required>
+                                <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL3}}</label>
+                                <input type="email" class="form-control" name="email" id="email" placeholder="{{lang_data.APPOINTMENT_LBL3_1}}" required>
                             </div>
                             <div class="col-md-4 form-group">
-                                <label for="exampleInputEmail1" class="form-label">Phone Number</label>
-                                <input type="number" name="name" class="form-control" id="name" placeholder="Enter Your Phone Number" required>
+                                <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL4}}</label>
+                                <input type="number" name="name" class="form-control" id="name" placeholder="{{lang_data.APPOINTMENT_LBL4_1}}" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class=" col-md-4 form-group mt-3">
-                            <label for="exampleInputEmail1" class="form-label">Appointment Date</label>
+                            <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL5}}</label>
                             <input type="date" class="form-control" name="subject" id="subject" placeholder="Subject" required>
                             </div>
                             <div class=" col-md-4 form-group mt-3">
-                                <label for="exampleInputEmail1" class="form-label">Appointment Time</label>
+                                <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL6}}</label>
                                 <input type="time" class="form-control" name="subject" id="subject" placeholder="Subject" required>
                             </div>
                             <div class=" col-md-4 form-group mt-3">
-                            <label for="exampleInputEmail1" class="form-label">Appointment To</label>
+                            <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL7}}</label>
                             <select class="form-select form-select-md" aria-label=".form-select-lg example">
                                 <option selected>---------</option>
                                 <option value="1">President</option>
@@ -56,8 +56,53 @@
                         </div>
                         </div>
                         <div class="form-group mt-3">
-                            <label for="exampleInputEmail1" class="form-label">Subject</label>
-                          <textarea class="form-control" name="message" rows="5" placeholder="Enter subject" required></textarea>
+                            <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL8}}</label>
+                          <textarea class="form-control" name="message" rows="5" placeholder="{{lang_data.APPOINTMENT_LBL8_1}}" required></textarea>
+                        </div>
+                        <!-- <div class="my-3">
+                          <div class="loading">Loading</div>
+                          <div class="error-message"></div>
+                          <div class="sent-message">Your message has been sent. Thank you!</div>
+                        </div> -->
+                        <div class="text-center"><button type="submit">{{lang_data.APPOINTMENT_LBL9}}</button></div>
+                      </form>
+                    </div>
+          
+                  </div>
+            </div>
+        </div>
+        </div>
+      </section><!-- End APPOINTME Section -->
+
+    <section id="portfolio blog" class="blog contact">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2><strong>{{lang_data.SUGGESTION_LBL}}</strong></h2>
+              </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="row justify-content-center" data-aos="fade-up">
+                    <div class="col-lg-10">
+                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                            <h5 class="title">{{lang_data.APPOINTMENT_LBL10}}</h5>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-4 form-group">
+                                    <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL2}}</label>
+                                    <input type="text" name="name" class="form-control" id="name" placeholder="{{lang_data.APPOINTMENT_LBL2_1}}" required>
+                                </div>
+                            <div class="col-md-4 form-group ">
+                                <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL3}}</label>
+                                <input type="email" class="form-control" name="email" id="email" placeholder="{{lang_data.APPOINTMENT_LBL3_1}}" required>
+                            </div>
+                            <div class="col-md-4 form-group">
+                                <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL4}}</label>
+                                <input type="number" name="name" class="form-control" id="name" placeholder="{{lang_data.APPOINTMENT_LBL4_1}}" required>
+                            </div>
+                            </div>
+                        <div class="form-group mt-3">
+                            <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL11}}</label>
+                          <textarea class="form-control" name="message" rows="5" placeholder="{{lang_data.APPOINTMENT_LBL12_1}}" required></textarea>
                         </div>
                         <!-- <div class="my-3">
                           <div class="loading">Loading</div>
@@ -69,6 +114,116 @@
                     </div>
           
                   </div>
+            </div>
+        </div>
+        </div>
+      </section><!-- End Portfolio Section -->
+    
+      <section id="portfolio blog" class="blog contact">
+        <div class="container">
+            <div class="section-title" data-aos="fade-up">
+                <h2><strong>{{lang_data.CONTACT_MUNICIPALITY_LBL}}</strong></h2>
+              </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <table class="table table-bordered border-warning" data-aos="fade-up">
+                    <thead>
+                      <tr>
+                        <th scope="col">Nu</th>
+                        <th scope="col">{{lang_data.APPOINTMENT_LBL2}}</th>
+                        <th scope="col">{{lang_data.APPOINTMENT_LBL4}}</th>
+                        <th scope="col">{{lang_data.POSITION_LBL}}</th>
+                        <th scope="col">{{lang_data.PROJECT_DETAIL13_LBL}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>Elias Martins da Cunha</td>
+                        <td>+670 78385129</td>
+                        <td>Supervisor</td>
+                        <td>Dili</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>Tomás M.do Santos</td>
+                        <td>+670 76470488</td>
+                        <td>Supervisor</td>
+                        <td>Ainaro</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>Jorge F.C.Leite</td>
+                        <td>+670 76869050</td>
+                        <td>Supervisor</td>
+                        <td>Aileu</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">4</th>
+                        <td>Mário J.Soares</td>
+                        <td>+670 76694492</td>
+                        <td>Supervisor</td>
+                        <td>Bobonaro</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">5</th>
+                        <td>Edigar B.da Silva</td>
+                        <td>+670 77484571</td>
+                        <td>Supervisor</td>
+                        <td>Baucau</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">6</th>
+                        <td>Alexander Seran</td>
+                        <td>+670 78154751</td>
+                        <td>Supervisor</td>
+                        <td>Covalima</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">7</th>
+                        <td>Assuncao Pinto Baptista</td>
+                        <td>+670 78385130</td>
+                        <td>Supervisor</td>
+                        <td>Ermera</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">8</th>
+                        <td>Chiquito dos santos</td>
+                        <td>+670 77331153</td>
+                        <td>Supervisor</td>
+                        <td>Lautem</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">9</th>
+                        <td>Alexsander Jesus</td>
+                        <td>+670 78309050</td>
+                        <td>Supervisor</td>
+                        <td>Liquica</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">10</th>
+                        <td>Francisco Soares </td>
+                        <td>+670 78154830</td>
+                        <td>Supervisor</td>
+                        <td>Manatuto</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">11</th>
+                        <td>Julio P.Pinheiro</td>
+                        <td>+670 78102176</td>
+                        <td>Supervisor</td>
+                        <td>Manufahi</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">12</th>
+                        <td>Eduardo  Sarmento</td>
+                        <td>+670 77323265</td>
+                        <td>Supervisor</td>
+                        <td>Viqueque</td>
+                      </tr>
+                    </tbody>
+                  </table>
             </div>
         </div>
         </div>

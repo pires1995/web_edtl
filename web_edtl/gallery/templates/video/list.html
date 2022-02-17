@@ -1,0 +1,107 @@
+{% extends 'web_admin/layout.html' %}
+{% load static %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
+            <!-- <li class="breadcrumb-item"><a href="{% url 'admin-user-lists' %}">Users List</a></li> -->
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </nav>
+</div>
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mr-2">{{title }}
+                        <i class="bi bi-arrow-right"></i>
+                        <a href="{% url 'admin-video-add' %}" class="btn btn-primary"> <i class="bi-plus-lg"></i> Add
+                            Video</a>
+                    </h5>
+                    <hr>
+                    <div class="row">
+                        {% for obj in page_obj %}
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="row g-0">
+                                    <div class="col-md-12">
+                                        {% if obj.video_type.id == 2 %}
+                                        <iframe width="100%" height="280" src='https://www.youtube.com/embed/{{obj.url}}' title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        {% elif obj.video_type.id == 1 %}
+
+                                        <div id="fb-root"></div>
+                                        <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
+                                        <div class="fb-video" data-href="https://www.facebook.com/facebook/videos/{{obj.url}}/"  
+                                        data-allowfullscreen="true" data-width="500" data-height="280"></div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="card-body p-0">
+                                            <a href="{% url 'admin-video-detail' obj.hashed %}">
+                                                <h6 class="card-title text-center py-2">
+                                                    {{obj.title_tet|truncatechars:30}}
+                                                </h6>
+                                            </a>
+                                            <p class="text-center">Category: <i> {{obj.category}} </i></p>
+                                            <p class="text-center">Status: <i> 
+                                                {% if obj.is_active == True %}
+                                                  <i class="bi bi-check text-primary"></i> Activated
+                                                {% else %}
+                                                  <i class="bi bi-clock text-danger"></i> Waiting to Activate
+                                                {% endif %}
+                                                 
+                                            </i></p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                                <div class="row px-3 pb-4">
+                                    <div class="col-md-12">
+                                        {% if obj.is_active == True %}
+                                        <a href="{% url 'admin-video-deactivate' obj.hashed %}" type="button" title="Update"
+                                        class="btn btn-danger"><i class="bi bi-x-lg"></i></a>
+                                        
+                                        {% else %}
+                                        <a href="{% url 'admin-video-update' obj.hashed %}" type="button" title="Update"
+                                        class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="{% url 'admin-video-activate' obj.hashed %}" type="button" title="Activate"
+                                        class="btn btn-success"><i class="bi bi-check"></i></a>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <!-- End Table with stripped rows -->
+                    {% if page_obj %}
+                        {% if page_obj.has_previous %}
+                        <a class="" href="?page={{ page_obj.previous_page_number }}"><i
+                                class="bi bi-caret-left-fill"></i></a>
+                        {% endif %} 
+                        {% for num in page_obj.paginator.page_range %} 
+                            {% if page_obj.number == num %}
+                                <a class="btn btn-primary" href="?page={{ num }}">{{ num }}</a>
+                            {% elif num > page_obj.number|add:'-3' and num > page_obj.number|add:'3' %}
+                                <a class="" href="?page={{ num }}">{{ num }}</a>
+                            {% endif %} 
+                        {% endfor %} 
+                            {% if page_obj.has_next %}
+                                <a  href="?page={{ page_obj.next_page_number }}"><i
+                                class="bi bi-caret-right-fill"></i></a>
+                            {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock content %}

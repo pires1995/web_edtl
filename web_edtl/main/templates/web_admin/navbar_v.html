@@ -22,13 +22,33 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'admin-pagemanegament-list' %}">
+                <i class="bi bi-file-earmark-diff"></i><span>Page Manegament</span><i class=""></i>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link collapsed" href="{% url 'admin-product-list' %}">
                 <i class="bi bi-box-seam"></i><span>Products</span><i class=""></i>
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'admin-announcement-list' %}">
+                <i class="bi bi-megaphone"></i><span>Announcement</span><i class=""></i>
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link collapsed" href="{% url 'admin-faq-list' %}">
                 <i class="bi bi-question-circle"></i><span>FAQ</span><i class=""></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'admin-contact-list' %}">
+                <i class="bi bi-person"></i><span>Contact Municipality</span><i class=""></i>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="{% url 'admin-suggestion-list' %}">
+                <i class="bi bi-chat-right-text"></i><span>Suggestions</span><i class=""></i>
             </a>
         </li>
         <!-- End Components Nav -->
@@ -40,10 +60,13 @@
             <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
                     <a href="{% url 'admin-about-list' %}">
-                        <i class="bi bi-circle"></i><span>About Us</span>
+                        <i class="bi bi-circle"></i><span>Who We Are</span>
+                    </a>
+                    <a href="{% url 'admin-service-list' %}">
+                        <i class="bi bi-circle"></i><span>What We Do</span>
                     </a>
                     <a href="{% url 'admin-team-list' %}">
-                        <i class="bi bi-circle"></i><span>Team</span>
+                        <i class="bi bi-circle"></i><span>Board Member</span>
                     </a>
                 </li>
             </ul>
@@ -61,6 +84,9 @@
                     <a href="{% url 'admin-internships-list' %}">
                         <i class="bi bi-circle"></i><span>Internships</span>
                     </a>
+                    <a href="{% url 'admin-volunteer-list' %}">
+                        <i class="bi bi-circle"></i><span>Volunteer</span>
+                    </a>
                 </li>
             </ul>
         </li>
@@ -75,6 +101,9 @@
                     </a>
                     <a href="{% url 'admin-guidelines-list' %}">
                         <i class="bi bi-circle"></i><span>Guidelines</span>
+                    </a>
+                    <a href="{% url 'admin-policy-list' %}">
+                        <i class="bi bi-circle"></i><span>Policy</span>
                     </a>
                 </li>
             </ul>
@@ -152,8 +181,13 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{% url 'admin-ongoing-project-list' %}">
+                    <a href="{% url 'admin-video-list' %}">
                         <i class="bi bi-circle"></i><span>Video</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'admin-banner-list' %}">
+                        <i class="bi bi-circle"></i><span>Banner</span>
                     </a>
                 </li>
             </ul>

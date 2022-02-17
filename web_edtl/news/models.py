@@ -8,11 +8,13 @@ from news.utils import path_and_rename_news
 
 
 class NewsCategory(models.Model):
-    name = models.CharField(max_length=100)
+    name_tet = models.CharField(max_length=100, null=True)
+    name_por = models.CharField(max_length=100, null=True)
+    name_eng = models.CharField(max_length=100, null=True)
     hashed = models.CharField(max_length=100, blank=True)
 
     def __str__(self):
-        template = '{0.name}'
+        template = '{0.name_tet} - {0.name_eng}'
         return template.format(self)
 
     def save(self, *args, **kwargs):
@@ -24,7 +26,7 @@ class News(models.Model):
     language = models.CharField(choices=[('Tetum', 'Tetum'), ('Portugues', 'Portugues'), (
         'English', 'English')], max_length=10, null=True, verbose_name="News Languages")
     news_category = models.ForeignKey(
-        NewsCategory, on_delete=models.CASCADE, verbose_name="News Category", null=True)
+        NewsCategory, on_delete=models.CASCADE, verbose_name="News Category", null=True, related_name='news_cat')
     title = models.CharField(max_length=300, null=True)
     title_seo = models.CharField(max_length=350, null=True, blank=True)
     headline = models.TextField(null=True)

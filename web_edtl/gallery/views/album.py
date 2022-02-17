@@ -8,7 +8,7 @@ from django.conf import settings
 from main.utils import getnewid
 from django.contrib import messages
 from django.core.paginator import Paginator
-
+from datetime import datetime
 @login_required
 def album_list(request):
     group = request.user.groups.all()[0].name
@@ -32,6 +32,7 @@ def album_add(request):
 			instance = form.save(commit=False)
 			instance.id = newid
 			instance.hashed = new_hashid
+			instance.datetime = datetime.now()
 			instance.author = request.user
 			instance.save()
 			messages.success(request, f'Successfully add Album')
@@ -52,7 +53,9 @@ def album_update(request, hashid):
 	if request.method == 'POST':
 		form = AlbumForm(request.POST, request.FILES, instance=objects)
 		if form.is_valid():
-			form.save()
+			instance = form.save(commit=False)
+			instance.datetime = datetime.now()
+			instance.save()
 			messages.success(request, f'Successfully update Album')
 			return redirect('admin-album-list')
 	else:
@@ -75,3 +78,19 @@ def album_detail(request, hashid):
         'title': 'Detalla Album', 'objects': objects, 'album': hashid , 'gallery': gallery
     }
     return render(request, 'album/detail.html', context)
+
+@login_required
+def album_activate(request, hashid):
+    objects = get_object_or_404(Album, hashed=hashid)
+    objects.is_active = True
+    objects.save()
+    messages.success(request, 'Successfully Activate Album')
+    return redirect('admin-album-list')
+
+@login_required
+def album_deactivate(request, hashid):
+    objects = get_object_or_404(Album, hashed=hashid)
+    objects.is_active = False
+    objects.save()
+    messages.success(request, 'Successfully Deactivate Album')
+    return redirect('admin-album-list')

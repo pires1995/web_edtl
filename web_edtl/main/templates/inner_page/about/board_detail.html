@@ -1,0 +1,55 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+  <!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+        <li><a href="{% url 'redirect-home' %}">Home</a></li>
+        <li>Member Detail</li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+<section id="team" class="team section-bg blog">
+    <div class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2><strong>MEMBER DETAIL</strong></h2>
+          </div>  
+      <div class="row justify-content-center">
+        <div class="col-md-12">
+          <div class="card">
+              <div class="card-body">
+                  <div class="row">
+                      <div class="col-md-3">
+                        <img src="{{objects.employee.image.url}}" class="img-fluid" alt="">
+                      </div>
+                      <div class="col-md-9">
+                          <div class="card-title">
+                              <h2>
+                                {{objects.employee.first_name}} {{objects.employee.last_name}}
+                              </h2>
+                          </div>
+                            <div>Position: <span class="card-title"><strong>{{objects.position.name_eng}}</strong></span> </div>
+                            <div>Email: <span class="card-title"><strong>{{objects.employee.email}}</strong></span> </div>
+                            <div>Mobile Number: <span class="card-title"><strong>{{objects.employee.mobile}}</strong></span> </div>
+                            <hr>
+                            <div class="card-title">
+                                <h4>RESUME:</h4>
+                                <div>
+                                    {{objects.employee.resume|safe}}
+                                </div>
+                            </div>
+                      </div>
+                      
+                  </div>
+              </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+</section>
+
+
+{% endblock %}

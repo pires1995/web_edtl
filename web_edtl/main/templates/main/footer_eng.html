@@ -11,31 +11,30 @@
             Rua Caicoli <br>
             Dili, 11000<br>
             Timor Leste <br><br>
-            <strong>Phone:</strong> 80010000 / 3339258<br>
+            <strong>{{lang_data.FOOTER_LBL1}}:</strong> 80010000 / 3339258<br>
             <strong>Email:</strong> edtlep@gmail.com<br>
           </p>
         </div>
 
         <div class="col-md-3 footer-links">
-          <h4>Useful Links</h4>
+          <h4>{{lang_data.FOOTER_LBL2}}</h4>
           <ul>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Client Financial Management System</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">User Subscribe Management</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Frequently Asked Questions</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">{{lang_data.FOOTER_LBL3}}</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">{{lang_data.FOOTER_LBL4}}</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'faq-list' lang %}">{{lang_data.FOOTER_LBL5}}</a></li>
           </ul>
         </div>
 
         <div class="col-md-3 footer-links">
-          <h4>Our Systems</h4>
+          <h4>{{lang_data.FOOTER_LBL6}}</h4>
           <ul>
             <li ><i class="bx bx-chevron-right"></i> Finance Management System (Local)</li>
-            <li><i class="bx bx-chevron-right"></i> EDTL Website</li>
           </ul>
         </div>
 
         <div class="col-md-4 footer-newsletter">
-          <h4>Join Our Newsletter</h4>
-          <p>To get our lastest News, Event, Publication, Please enter your email on field bellow</p>
+          <h4>{{lang_data.FOOTER_LBL7}}</h4>
+          <p>{{lang_data.FOOTER_LBL8}}</p>
           <form action="" method="post">
             <input type="email" name="email"><input type="submit" value="Subscribe">
           </form>

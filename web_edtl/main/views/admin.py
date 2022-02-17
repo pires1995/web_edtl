@@ -28,12 +28,8 @@ def dashboard(request):
     client = Client.objects.filter(is_active=True).count()
     appointment = Appointment.objects.filter(is_done=True).count()
     subusers = NewsUser.objects.all().count()
-    dataset = News.objects\
-        .values('news_category__name')\
-            .annotate(geral_count=Count('news_category', filter=Q(is_approved=True, is_active=True, news_category__id=1))\
-                ,project_count=Count('news_category', filter=Q(is_approved=True, is_active=True, news_category__id=2)))
-    context = {
-        'group': group, 'title': 'Dashboard', 'news': dataset,\
+    context ={
+        'group': group, 'title': 'Dashboard', \
             'client': client, 'appointment': appointment, 'subusers': subusers
     }
     return render(request, 'web_admin/home.html', context)

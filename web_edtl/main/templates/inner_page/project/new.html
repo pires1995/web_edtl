@@ -5,15 +5,15 @@
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
         <ol>
-        <li><a href="{% url 'redirect-home' %}">Home</a></li>
-        <li>New Project List</li>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>{{lang_data.PROJECT_NEW_LIST_LBL}}</li>
         </ol>
     </div>
 </section><!-- End Breadcrumbs -->
 <section id="blog" class="blog">
     <div class="container" data-aos="fade-up">
         <div class="section-title" data-aos="fade-up">
-            <h2><strong>NEW PROJECT (PLAN)</strong></h2>
+            <h2><strong>{{lang_data.PROJECT_NEW_TITLE_LBL}}</strong></h2>
           </div>
           <div class="row justify-content-center">
 
@@ -22,39 +22,55 @@
                     <thead>
                       <tr>
                         <th scope="col" width="5%">Nu</th>
-                        <th scope="col" width="35%">Project Name</th>
-                        <th scope="col" width="15%">Category</th>
-                        <th scope="col" width="9%">Fund</th>
-                        <th scope="col" width="12%">Type of Procurament</th>
-                        <th scope="col" width="9%">Year</th>
-                        <th scope="col" width="15%">Action</th>
+                        <th scope="col" width="35%">{{lang_data.PROJECT_DETAIL4_LBL}}</th>
+                        <th scope="col" width="15%">{{lang_data.PROJECT_DETAIL5_LBL}}</th>
+                        <th scope="col" width="9%">{{lang_data.PROJECT_DETAIL6_LBL}}</th>
+                        <th scope="col" width="12%">{{lang_data.PROJECT_DETAIL16_LBL}}</th>
+                        <th scope="col" width="9%">{{lang_data.PROJECT_DETAIL7_LBL}}</th>
+                        <th scope="col" width="15%">{{lang_data.TABEL_LBL5}}</th>
                       </tr>
                     </thead>
                     <tbody>
+                      {% for object in page_obj  %}
                       <tr>
-                        <th scope="row">1</th>
-                        <td>Supply and Installation of Sollar Panel</td>
-                        <td>Fundu Infrastutura</td>
-                        <td>OGE</td>
-                        <td>RFQ</td>
-                        <td>2022</td>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{object.name}}</td>
+                        <td>{{object.project_category}}</td>
+                        <td>{{object.fund}}</td>
+                        <td>{{object.typeofprocurament}}</td>
+                        <td>{{object.year}}</td>
                         <td>
                             <span class="download">
-                                <a href="{% url 'new-detail' l3 %}"><i class="bi bi-eye"></i> Detail</a>
+                                <a href="{% url 'new-detail' lang object.hashed %}"><i class="bi bi-eye"></i> Detail</a>
                             </span>
                         </td>
                       </tr>
+                      {% endfor %}
                     </tbody>
                   </table>
     
     
-              <div class="blog-pagination">
-                <ul class="justify-content-center">
-                  <li><a href="#">1</a></li>
-                  <li class="active"><a href="#">2</a></li>
-                  <li><a href="#">3</a></li>
-                </ul>
-              </div>
+                  {% if page_obj %}
+                  <div class="blog-pagination">
+                      <ul class="justify-content-center">
+                    {% if page_obj.has_previous %}
+                      <li><a  href="?page=1"><i class="fa bi bi-chevron-double-left"></i></a></li>
+                      <li></li><a  href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i></a></li>
+                    {% endif %}
+                    {% for num in page_obj.paginator.page_range %}
+                      {% if page_obj.number == num %}
+                      <li class="active"><a c href="?page={{ num }}">{{ num }}</a></li>
+                      {% elif num > page_obj.number|add:'-3' and num > page_obj.number|add:'3' %}
+                        <li></li><a  href="?page={{ num }}">{{ num }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                      <li></li><a  href="?page={{ page_obj.next_page_number }}"><i class="bi bi-chevron-right"></i></a></li>
+                      <li></li><a  href="?page={{ page_obj.paginator.num_pages }}"><i class="bi bi-chevron-double-right"></i></a></li>
+                    {% endif %}
+                  </ul>
+                </div>
+                {% endif %}
     
             </div><!-- End blog entries list -->
     

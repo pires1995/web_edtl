@@ -3,7 +3,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column, Button, HTML
 from django.db.models import Q, fields
 from django.contrib.auth.models import User
-from gallery.models import  Album, Gallery
+from gallery.models import  Album, Gallery, Banner, Video, VideoCategory
 from departments.models import Department
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 
@@ -69,4 +69,58 @@ class GalleryForm(forms.ModelForm):
             HTML(
                 """ <a class="btn btn-secondary" href="{% url 'admin-album-list' %}"><i class="fa fa-close"></i> Fila</a> """),
             HTML(""" <button class="btn btn-primary" type="submit"> Rai <i class="fa fa-save"></i></button> """)
+        )
+
+class BannerForm(forms.ModelForm):
+    class Meta:
+        model = Banner
+        fields = ['title_tet','title_por','title_eng',
+        'description_tet', 'description_por', 'description_eng', 'image']
+    def __init__(self, *args, **kwargs):
+        super(BannerForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.layout = Layout(
+            Row(
+                Column('title_tet', css_class='form-group col-md-4 mb-0'),
+                Column('title_por', css_class='form-group col-md-4 mb-0'),
+                Column('title_eng', css_class='form-group col-md-4 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('image', css_class='form-group col-md-12 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('description_tet', css_class='form-group col-md-4 mb-0'),
+                Column('description_por', css_class='form-group col-md-4 mb-0'),
+                Column('description_eng', css_class='form-group col-md-4 mb-0'),
+                css_class='form-row'
+            ),
+            HTML(""" <button class="btn btn-primary" type="submit"><i class="bi bi-lock text-white"></i> Rai</button> """)
+        )
+
+class VideoForm(forms.ModelForm):
+    class Meta:
+        model = Video
+        fields = ['title_tet', 'title_por', 'title_eng', 'category','url', 'video_type']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.layout = Layout(
+            Row(
+                Column('category', css_class='form-group col-md-4 mb-0'),
+                Column('url', css_class='form-group col-md-4 mb-0'),
+                Column('video_type', css_class='form-group col-md-4 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('title_tet', css_class='form-group col-md-4 mb-0'),
+                Column('title_por', css_class='form-group col-md-4 mb-0'),
+                Column('title_eng', css_class='form-group col-md-4 mb-0'),	
+                css_class='form-row'
+            ),
+            HTML(""" <button class="btn btn-primary" type="submit"><i class="bi bi-lock text-white"></i> Rai</button> """)
         )

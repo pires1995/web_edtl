@@ -4,8 +4,8 @@
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
         <ol>
-        <li><a href="{% url 'redirect-home' %}">Home</a></li>
-        <li>Documentary</li>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>{{lang_data.VIDEO_LBL}}</li>
         </ol>
     </div>
 </section><!-- End Breadcrumbs -->
@@ -13,7 +13,7 @@
     <section id="portfolio blog" class="blog portfolio">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2><strong>ALL EDTL,EP DOCUMENTARY</strong></h2>
+                <h2><strong>{{legend}}</strong></h2>
               </div>
         <div class="row">
             <div class="col-md-9">
@@ -24,106 +24,61 @@
                         <li data-filter="*" class="filter-active">All</li>
                         {% for gallery_cat in gallery_categories %}
                           
-                        <li data-filter=".filter-app">{{gallery_cat.name}}</li>
+                        <li data-filter=".{{gallery_cat.title_seo}}">
+                            {% if lang == 'tt' %}
+                                    {{gallery_cat.name_tet}}
+                                {% elif lang == 'pt' %}
+                                    {{gallery_cat.name_por}}
+                                    
+                                {% else %}
+                                    {{gallery_cat.name_eng}}
+                                
+                                {% endif %}
+                        </li>
                         {% endfor %}
                     </ul>
                     </div>
                 </div>
         
                 <div class="row portfolio-container" data-aos="fade-up">
-        
-                    <div class="col-md-4 portfolio-item filter-app">
-                    <img src="{% static 'main/img/1.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>App 1</h4>
-                        <p>App</p>
-                        <a href="{% static 'main/img/1.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 1"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'documentary-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-                    <div class="col-md-4 portfolio-item filter-web">
-                        <iframe width="260" height="170" src="https://www.youtube.com/embed/1J4kVtdjDKs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-        
-                    <div class="col-md-4 portfolio-item filter-web">
-                    <img src="{% static 'main/img/2.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Web 3</h4>
-                        <p>Web</p>
-                        <a href="{% static 'main/img/2.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'documentary-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-        
-                    <div class="col-md-4 portfolio-item filter-app">
-                    <img src="{% static 'main/img/3.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>App 2</h4>
-                        <p>App</p>
-                        <a href="{% static 'main/img/3.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 2"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'documentary-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-        
-                    <div class="col-md-4 portfolio-item filter-card">
-                    <img src="{% static 'main/img/4.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Card 2</h4>
-                        <p>Card</p>
-                        <a href="{% static 'main/img/4.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 2"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'documentary-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-        
-                    <div class="col-md-4 portfolio-item filter-web">
-                    <img src="{% static 'main/img/5.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Web 2</h4>
-                        <p>Web</p>
-                        <a href="{% static 'main/img/5.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 2"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'documentary-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-        
-                    <div class="col-md-4 portfolio-item filter-app">
-                    <img src="{% static 'main/img/6.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>App 3</h4>
-                        <p>App</p>
-                        <a href="{% static 'main/img/6.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="App 3"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'documentary-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-        
-                    <div class="col-md-4 portfolio-item filter-card">
-                    <img src="{% static 'main/img/7.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Card 1</h4>
-                        <p>Card</p>
-                        <a href="{% static 'main/img/7.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 1"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'documentary-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-        
-                    <div class="col-md-4 portfolio-item filter-card">
-                    <img src="{% static 'main/img/8.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Card 3</h4>
-                        <p>Card</p>
-                        <a href="{% static 'main/img/8.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Card 3"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'documentary-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
-        
-                    <div class="col-md-4 portfolio-item filter-web">
-                    <img src="{% static 'main/img/8.jpg' %}" class="img-fluid" alt="">
-                    <div class="portfolio-info">
-                        <h4>Web 3</h4>
-                        <p>Web</p>
-                        <a href="{% static 'main/img/8.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" title="Web 3"><i class="bx bx-plus"></i></a>
-                        <a href="{% url 'documentary-detail' l3 %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
-                    </div>
-                    </div>
+                    {% for documentary in page_obj %}
+                        {% if documentary.model_name == 'Album' %}
+                        <div class="col-md-4 portfolio-item {{documentary.category.title_seo}}">
+                            <img src="{{documentary.image.url}}" class="img-fluid" alt="">
+                            <div class="portfolio-info">
+                                <h6>
+                                    {% if lang == 'tt' %}
+                                        {{documentary.name_tet|truncatechars:50}}...
+                                    {% elif lang == 'pt' %}
+                                        {{documentary.name_por|truncatechars:50}}...
+                                    {% else %}
+                                        {{documentary.name_eng|truncatechars:50}}...
+                                      
+                                    {% endif %}
+                                    
+                                </h6>
+                                <!-- <a href="{% static 'main/img/1.jpg' %}" data-gallery="portfolioGallery" class="portfolio-lightbox preview-link" 
+                                title="App 1"><i class="bx bx-plus"></i></a> -->
+                                <a href="{% url 'documentary-detail' lang documentary.hashed %}" class="details-link" title="More Details"><i class="bi bi-eye"></i></a>
+                            </div>
+                            </div>
+                        {% elif documentary.model_name == 'Video' %}
+                                <div class="col-md-4 portfolio-item {{documentary.category.title_seo}}">
+                                    {% if documentary.video_type.id == 2 %}
+                                    <iframe width="100%" height="280" src='https://www.youtube.com/embed/{{documentary.url}}' 
+                                    title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    {% elif documentary.video_type.id == 1 %}
+                                    <div id="fb-root"></div>
+                                    <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
+                                    <div class="fb-video" data-href="https://www.facebook.com/facebook/videos/{{documentary.url}}/"  
+                                    data-allowfullscreen="true" data-width="500" data-height="280"></div>
+                                    {% endif %}
+            
+                                </div>
+                        {% endif %}
+                        
+                    {% endfor %}
+                    
         
                 </div>
             </div>
@@ -132,14 +87,11 @@
                     <h3 class="sidebar-title">VIEW BY YEAR</h3>
                     <div class="sidebar-item2 categories">
                         <ul>
-                          <li><a href="#">2019</a></li>
-                          <li><a href="#">2020</a></li>
-                          <li><a href="#">2021</a></li>
+                            {% for obj in  year %}
+                                <li><a href="{% url 'documentary-list-filter' lang obj.year %}">{{obj}}</a></li>
+                            {% endfor %}
                       </ul>
                   </div><!-- End sidebar categories-->
-                  
-                  
-                  
                 </div><!-- End sidebar -->
             </div>
         </div>

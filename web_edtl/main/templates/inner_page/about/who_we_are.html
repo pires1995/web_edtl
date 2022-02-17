@@ -5,56 +5,99 @@
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
         <ol>
-        <li><a href="{% url 'redirect-home' %}">Home</a></li>
-        <li>Who We Are</li>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>{{lang_data.ABOUT_LBL1}}</li>
         </ol>
     </div>
 </section><!-- End Breadcrumbs -->
-    <!-- ======= About Us Section ======= -->
-    <section id="about-us" class="about-us">
-      <div class="container">
-        <div class="section-title" data-aos="fade-up">
-          <h2><strong>ELETRISIDADE DE TIMOR LESTE, EMPRESA PUBLIKA</strong></h2>
-        </div>
-        <div class="row no-gutters">
-          <div class="image col-xl-5 d-flex align-items-stretch justify-content-center justify-content-lg-start" data-aos="fade-right"></div>
-          <div class="col-xl-7 ps-0 ps-lg-5 pe-lg-1 d-flex align-items-stretch">
-            <div class="content d-flex flex-column justify-content-center">
-              <h3 data-aos="fade-up">Background</h3>
-              <p data-aos="fade-up">
-                EDTL, E.P. is Timor-Leste’s State-Owned Company in Electricity and Energy Sector.  EDTL, E.P. was established as a State-Owned Enterprise (SOE) based on the Decree Law No. 29/2020, of 22 July 2020. 
-                The Company became fully operation in January 2021. The objectives of the EDTL, E.P. is to create a set of restructuring measures in reforming the electricity sector aimed at expanding the supply of electricity and modernizing the National Electricity System. This also includes implementing a management system with the goal of improving the public service provided by EDTL, raising standard and quality of power supply and its
-                reliability at the affordable prices, considering the feasibility and sustainability of its operation. 
-              </p>
-              <h3 data-aos="fade-up">Vision and Mission</h3>
-              <p data-aos="fade-up">
-                <strong>Mission</strong><br>
-                Mission is to provide its customers with safe, reliable, sustainable, and affordable electricity service.
-              </p>
-              <p data-aos="fade-up">
-                <strong>Its Vision is to:</strong><br>
-                (a) Put people first. <br>
-                (b) Pursue excellence. <br>
-                (c) Embrace change; and <br>
-                (d) Serve the people of Timor-Leste. <br> 
-              </p>
-              <p data-aos="fade-up">
-                <strong>Its Values are:</strong><br>
-                (a) Ensuring Financial Sustainability. <br>
-                (b) Consistently Delivering Quality Services. <br>
-                (c) Promoting Economic Growth. <br>
-                (d) Extending and improving grid electricity supply to all people in the country; and  <br>
-                (e) Considering future generations. <br>
-              </p>
-              <h3 data-aos="fade-up">Objective</h3>
-              <p data-aos="fade-up">
-                EDTL objectives, such as improving reliability, reducing losses, increasing collections, introducing lower-cost RE generation, and expanding electricity access to 100% of the population 
-              </p>
-            </div><!-- End .content-->
-          </div>
-        </div>
+<!-- ======= About Us Section ======= -->
+<section id="blog" class="blog about-us">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <h2><strong>{{legend}}</strong></h2>
+    </div>
+    <div class="row">
 
+      <div class="col-md-12">
+        <article class="entry entry-single">
+          <div class="row">
+              <div class="col-md-6"> 
+                  <div class="img-fluid" data-aos="fade-up">
+                    <a href="{{ objects.image.url }}" target="_blank"><img
+                      class="img-fluid rounded mx-auto d-block pt-5"
+                      src="{{objects.image.url}}" alt=""></a>
+                  </div>
+              </div>
+              <div class="col-md-6">
+              <div class="entry-content">
+                <div class="section-title" data-aos="fade-up">
+                  <h2><strong>{{lang_data.BACKGROUND_LBL}}</strong></h2>
+                  <p>
+                    {% if lang == 'tt' %}
+                    {{objects.background_tet|safe}}
+                    {% elif lang == 'pt' %}
+                    {{objects.background_por|safe}}
+                    {% else %}
+                    {{objects.background_eng|safe}}
+                    {% endif %}
+                  </p>
+                </div>
+                
+
+                
+              </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="section-title" data-aos="fade-up">
+                    <h2><strong>{{lang_data.MISSION_LBL}}</strong></h2>
+                    <p>
+                      {% if lang == 'tt' %}
+                      {{objects.mission_tet|safe}}
+                      {% elif lang == 'pt' %}
+                      {{objects.mission_por|safe}}
+                      {% else %}
+                      {{objects.mission_eng|safe}}
+                      {% endif %}
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="section-title" data-aos="fade-up">
+                    <h2><strong>{{lang_data.VISION_LBL}}</strong></h2>
+                    <p>
+                      {% if lang == 'tt' %}
+                      {{objects.vision_tet|safe}}
+                      {% elif lang == 'pt' %}
+                      {{objects.vision_por|safe}}
+                      {% else %}
+                      {{objects.vision_eng|safe}}
+                      {% endif %}
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="section-title" data-aos="fade-up">
+                    <h2><strong>{{lang_data.VALUES_LBL}}</strong></h2>
+                    <p>
+                      {% if lang == 'tt' %}
+                      {{objects.values_tet|safe}}
+                      {% elif lang == 'pt' %}
+                      {{objects.values_por|safe}}
+                      {% else %}
+                      {{objects.values_eng|safe}}
+                      {% endif %}
+                    </p>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </article>
       </div>
-    </section><!-- End About Us Section -->
+      
+    </div>
+    
+  </div>
+</section><!-- End About Us Section -->
 
 {% endblock content %}

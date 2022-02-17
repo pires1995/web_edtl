@@ -43,8 +43,10 @@ INSTALLED_APPS = [
     'main',
     'notification',
     'departments',
+    'announcement',
     'finance',
     'recruitment',
+    'pagemanegament',
     'procurament',
     'product',
     'faq',
@@ -102,7 +104,7 @@ WSGI_APPLICATION = 'web_edtl.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'web_edtl_2',
+        'NAME': 'edtl',
         'USER': 'admin',
         'PASSWORD': 'Leste_123',
         'HOST': 'database-kinos.cx862xedog9t.ap-southeast-1.rds.amazonaws.com',

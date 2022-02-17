@@ -1,0 +1,92 @@
+{% extends 'web_admin/layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
+            <!-- TODO -->
+            <li class="breadcrumb-item"><a href="{% url 'admin-video-list' %}">List Video</a></li>
+
+            <li class="breadcrumb-item active">{{title}}</li>
+            <!-- <li class="breadcrumb-item">Users</li> -->
+        </ol>
+    </nav>
+</div>
+<section class="section profile">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body pt-3">
+                    <div class="card-title">
+                        <h2 class="pb-4">Detalla Video</h2>
+                        <h6>Category: <i>{{objects.category}}</i> </h6>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">Video</h5>
+                                    <hr>
+                                    {% if objects.category.id == 2 %}
+                                    <iframe width="100%" height="480" src="https://www.youtube.com/embed/{{objects.url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    {% elif objects.video_type.id == 1 %}
+                                    
+                                    <div id="fb-root"></div>
+                                    <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
+                                    <div class="fb-video" data-href="https://www.facebook.com/facebook/videos/{{objects.url}}/"  
+                                    data-allowfullscreen="true" data-width="600" data-height="280"></div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-4 align-self-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Naran Video (Tetum)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.title_tet}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 align-self-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Naran Video (Portugues)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.title_por}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 align-self-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Naran Video (Ingles)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.title_eng}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock content%}

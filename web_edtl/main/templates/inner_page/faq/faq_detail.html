@@ -4,8 +4,8 @@
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
         <ol>
-        <li><a href="{% url 'redirect-home' %}">Home</a></li>
-        <li>FAQ Detail</li>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>{{lang_data.FAQ_DETAIL_LBL}}</li>
         </ol>
     </div>
 </section><!-- End Breadcrumbs -->
@@ -13,110 +13,28 @@
     <section id="portfolio blog" class="blog contact">
         <div class="container">
             <div class="section-title" data-aos="fade-up">
-                <h2><strong>FAQ DETAIL</strong></h2>
-                <h6><strong>How to contact staff EDTL, EP on Municipality ?</strong></h6>
-                <p style="font-style: italic;"> We have main staff to all municipality in the list bellow :</p>
+                <h2><strong>{{lang_data.FAQ_DETAIL_LBL}}</strong></h2>
+                <h6><strong>
+                  {% if lang == 'tt' %}
+                        {{objects.name_tet}}
+                        {% elif lang == 'pt' %}
+                        {{objects.name_por}}
+                        {% else %}
+                        {{objects.name_eng}}
+                          
+                        {% endif %}
+                </strong></h6>
               </div>
-        <div class="row justify-content-center">
+        <div class="row justify-content-center" data-aos="fade-up">
             <div class="col-md-10">
-                <table class="table table-bordered border-warning" data-aos="fade-up">
-                    <thead>
-                      <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Phone Number</th>
-                        <th scope="col">Position</th>
-                        <th scope="col">Municipality</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      
-                      <tr>
-                        <th scope="row">1</th>
-                        <td>Elias Martins da Cunha</td>
-                        <td>+670 78385129</td>
-                        <td>Supervisor</td>
-                        <td>Dili</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Tomás M.do Santos</td>
-                        <td>+670 76470488</td>
-                        <td>Supervisor</td>
-                        <td>Ainaro</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Jorge F.C.Leite</td>
-                        <td>+670 76869050</td>
-                        <td>Supervisor</td>
-                        <td>Aileu</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">4</th>
-                        <td>Mário J.Soares</td>
-                        <td>+670 76694492</td>
-                        <td>Supervisor</td>
-                        <td>Bobonaro</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">5</th>
-                        <td>Edigar B.da Silva</td>
-                        <td>+670 77484571</td>
-                        <td>Supervisor</td>
-                        <td>Baucau</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">6</th>
-                        <td>Alexander Seran</td>
-                        <td>+670 78154751</td>
-                        <td>Supervisor</td>
-                        <td>Covalima</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">7</th>
-                        <td>Assuncao Pinto Baptista</td>
-                        <td>+670 78385130</td>
-                        <td>Supervisor</td>
-                        <td>Ermera</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">8</th>
-                        <td>Chiquito dos santos</td>
-                        <td>+670 77331153</td>
-                        <td>Supervisor</td>
-                        <td>Lautem</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">9</th>
-                        <td>Alexsander Jesus</td>
-                        <td>+670 78309050</td>
-                        <td>Supervisor</td>
-                        <td>Liquica</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">10</th>
-                        <td>Francisco Soares </td>
-                        <td>+670 78154830</td>
-                        <td>Supervisor</td>
-                        <td>Manatuto</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">11</th>
-                        <td>Julio P.Pinheiro</td>
-                        <td>+670 78102176</td>
-                        <td>Supervisor</td>
-                        <td>Manufahi</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">12</th>
-                        <td>Eduardo  Sarmento</td>
-                        <td>+670 77323265</td>
-                        <td>Supervisor</td>
-                        <td>Viqueque</td>
-                      </tr>
-                    </tbody>
-                  </table>
+              {% if lang == 'tt' %}
+              {{objects.overview_tet|safe}}
+              {% elif lang == 'pt' %}
+              {{objects.overview_por|safe}}
+              {% else %}
+              {{objects.overview_eng|safe}}
+                
+              {% endif %}
             </div>
         </div>
         </div>

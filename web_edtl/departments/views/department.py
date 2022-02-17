@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import FileResponse, Http404
 from django.conf import settings
-from main.utils import getnewid
+from main.utils import getnewid, title_seo
 from django.contrib import messages
 
 
@@ -25,6 +25,7 @@ def department_add(request):
         if form.is_valid():
             instance = form.save(commit=False)
             instance.id = newid
+            instance.title_seo = title_seo(form.cleaned_data.get('name_eng'))
             instance.author = request.user
             instance.hashed = new_hashed
             instance.save()
@@ -44,6 +45,7 @@ def department_update(request, hashid):
         form = DepartmentForm(request.POST, request.FILES, instance=objects)
         if form.is_valid():
             instance = form.save(commit=False)
+            instance.title_seo = title_seo(form.cleaned_data.get('name_eng'))
             instance.author = request.user
             instance.save()
             messages.success(request, f'Successfully Update Department')

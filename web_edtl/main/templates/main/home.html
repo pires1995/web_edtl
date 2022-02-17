@@ -5,72 +5,69 @@
       <section id="blog" class="blog">
         <div class="container" data-aos="fade-up">
           <div class="section-title" data-aos="fade-up">
-            <h2><strong>LASTEST NEWS</strong></h2>
+            <h2><strong>{{lang_data.HOME_LAST_NEWS}}</strong></h2>
           </div>
+          {% if news_main %}
           <div class="row">
   
             <div class="col-md-8 entries">
+                
+              
               <article class="entry">
   
                 <div class="entry-img text-center">
-                  <img src="{% static 'main/img/home1.jpg' %}" alt="" class="img-fluid">
+                  <img src="{{news_main.image.url}}" alt="" class="img-fluid">
                 </div>
   
                 <h2 class="entry-title">
-                  <a href="#">EDTL,E.P.   PRESENTED THE REPORT OF THE EXECUTION GENERAL BUDGETING OF THE STATE 2021 AND DEMINING THE GENERAL BUDGETING OF THE STATE 2022</a>
+                  <a href="#">{{news_main.title}}</a>
                 </h2>
   
                 <div class="entry-meta">
                   <ul>
-                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#">Media EDTL</a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-                    <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#">12 Comments</a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#">{{news_main.author.first_name}} {{news_main.author.last_name}}</a></li>
+                    <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time datetime="2020-01-01">{{news_main.entered_date|date:"d/M/Y"}}</time></a></li>
+                    <!-- <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#">12 Comments</a></li> -->
                   </ul>
                 </div>
   
                 <div class="entry-content">
                   <p>
-                    Dili on 24 January 2022: President of EDTL, E.P. Dr. Paulo da Silva accompanied by the Executive Commission for Service of coorporative EDTL, E.P. Mr. Jose Marcelino Cabral Belo and the pce Office support team participated in an assessment of work progress, implementation of program and Budget for 2021 in the city Hall 8, Manleuana
+                   {{news_main.content|striptags|slice:':300'}}...
                   </p>
                   <div class="read-more">
-                    <a href="#">Read More</a>
+                    <a href="#">{{lang_data.BTN_READ_MORE}}</a>
                   </div>
                 </div>
   
               </article>
+              
             </div>
             <div class="col-md-4">
               <div class="sidebar">
-                <h3 class="sidebar-title">Recent Posts</h3>
+                <h3 class="sidebar-title">{{lang_data.HOME_RECENT}}</h3>
                 <div class="sidebar-item recent-posts">
+                  {% for object in  news_recent %}
+
                   <div class="post-item clearfix">
-                    <img src="{% static 'assets/img/blog/blog-recent-1.jpg' %}" alt="">
-                    <h4><a href="blog-single.html">Nihil blanditiis at in nihil autem</a></h4>
-                    <time datetime="2020-01-01">Jan 1, 2020</time>
+                    <img src="{{object.image.url}}" alt="">
+                    <h4><a href="#">{{object.title|truncatechars:100}}</a></h4>
+                    <time datetime="2020-01-01">{{object.entered_date|date:"d/M/Y"}}</time>
                   </div>
-  
-                  <div class="post-item clearfix">
-                    <img src="{% static 'assets/img/blog/blog-recent-2.jpg' %}" alt="">
-                    <h4><a href="blog-single.html">Quidem autem et impedit</a></h4>
-                    <time datetime="2020-01-01">Jan 1, 2020</time>
-                  </div>
-                  <div class="post-item clearfix">
-                    <img src="{% static 'assets/img/blog/blog-recent-2.jpg' %}" alt="">
-                    <h4><a href="blog-single.html">Quidem autem et impedit</a></h4>
-                    <time datetime="2020-01-01">Jan 1, 2020</time>
-                  </div>
+                  {% endfor %}
                 </div>
                 <hr>
-                <h3 class="sidebar-title">Visitor</h3>
+                <h3 class="sidebar-title">{{lang_data.HOME_VISITOR}}</h3>
                 <div class="sidebar-item ">
                   <div class="post-item">
-                    <h6><i class="bi bi-clock"></i> Today: <strong> 102 </strong></h6>
-                    <h6><i class="bi bi-clock-history"></i> All: <strong> 202 </strong></h6>
+                    <h6><i class="bi bi-clock"></i> {{lang_data.HOME_VISITOR_TODAY}}: <strong> 102 </strong></h6>
+                    <h6><i class="bi bi-clock-history"></i> {{lang_data.HOME_VISITOR_ALL}}: <strong> 202 </strong></h6>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          {% endif %}
         </div>
       </section>
   
@@ -79,30 +76,42 @@
         <div class="container" data-aos="fade-up">
   
           <div class="section-title" data-aos="fade-up">
-            <h2><strong>Frequently Asked Questions</strong></h2>
+            <h2><strong>{{lang_data.HOME_FAQ_TITLE}}</strong></h2>
           </div>
   
           <ul class="faq-list">
-  
+            {% for faq in  faq_home %}
             <li>
-              <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">How to become EDTL agent (Oinsa sai Agente faan Pulsa Eletrisidade ?) <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+              <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">
+                {% if lang == 'en' %}
+                {{faq.name_eng}} 
+                {% elif lang == 'pt' %}
+                {{faq.name_por}} 
+                {% else %}
+                  
+                {{faq.name_tet}} 
+                {% endif %}
+                
+              <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
               <div id="faq1" class="collapse" data-bs-parent=".faq-list">
                 <p>
-                  Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
+
+                  {% if lang == 'en' %}
+                  {{faq.overview_eng|striptags|slice:':100'}}..
+                  
+                  {% elif lang == 'pt' %}
+
+                  {{faq.overview_por|striptags|slice:':100'}}..
+                  {% else %}
+                    
+                  {{faq.overview_tet|striptags|slice:':100'}}..
+                  {% endif %}
+                  
+                  <a href="{% url 'faq-detail' lang faq.hashed %}">{{lang_data.BTN_READ_MORE}}</a>
                 </p>
               </div>
             </li>
-  
-  
-            <li>
-              <div data-bs-toggle="collapse" href="#faq6" class="collapsed question">How to Connect With Supervisor in Municipality ?<i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
-              <div id="faq6" class="collapse" data-bs-parent=".faq-list">
-                <p>
-                  We have main staff to all municipality, to view please click this <strong><a href="{% url 'faq-detail' l3 %}">Link</a></strong>
-                </p>
-              </div>
-            </li>
-  
+            {% endfor %}
           </ul>
   
         </div>

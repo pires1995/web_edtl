@@ -4,15 +4,15 @@
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
         <ol>
-        <li><a href="{% url 'redirect-home' %}">Home</a></li>
-        <li>Event List</li>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>{{lang_data.EVENT_LBL}}</li>
         </ol>
     </div>
 </section><!-- End Breadcrumbs -->
 <section id="blog" class="blog team section-bg">
     <div class="container" data-aos="fade-up">
         <div class="section-title" data-aos="fade-up">
-            <h2><strong>EVENTS</strong></h2>
+            <h2><strong>{{lang_data.EVENT_TITLE_LBL}}</strong></h2>
           </div>
       <div class="row justify-content-center">
 
@@ -21,44 +21,67 @@
             
             <div class="container">
               <div class="row">
-      
+                {% for object in page_obj %}
+                  
+                
                 <div class="col-md-4 d-flex align-items-stretch">
                   <div class="member" data-aos="fade-up">
                     <div class="member-img">
-                      <img src="{% static 'main/img/3.jpg' %}" class="img-fluid" alt="">
+                      <img src="{{object.image.url}}" class="img-fluid" alt="">
                       
                     </div>
                     <div class="member-info">
-                      <h4><a href="{% url 'event-detail' l3 %}">Pameran ba Komemorasaun 20 de Maio</a></h4>
-                      <span>Date: 18/05/2022</span>
+                      <h4><a href="{% url 'event-detail' lang object.hashed %}">
+                        {% if lang == 'tt' %}
+                        {{object.name_tet}}
+                        {% elif lang == 'pt' %}
+                        {{object.name_por}}
+                        {% else %}
+                        {{object.name_eng}}
+                          
+                        {% endif %}
+                        
+                      </a></h4>
+                      <span>{{lang_data.EVENT_START_DATE_LBL}} :
+                        {{object.start_date|date:"d/M/Y"}}
+                      </span>
+                      {% if object.end_date %}
+                        
+                      <span>{{lang_data.EVENT_END_DATE_LBL}} :
+                        {{object.end_date|date:"d/M/Y"}}
+                        
+                      </span>
+                      {% endif %}
                     </div>
                   </div>
                 </div>
-      
-                <div class="col-md-4 d-flex align-items-stretch">
-                  <div class="member" data-aos="fade-up" data-aos-delay="100">
-                    <div class="member-img">
-                      <img src="{% static 'main/img/about.jpg' %}" class="img-fluid" alt="">
-    
-                    </div>
-                    <div class="member-info">
-                        <h4><a href="{% url 'event-detail' l3 %}">Konkursu ba Estudante Finalista</a></h4>
-                        <span>Date: 10/06/2022</span>
-                    </div>
-                  </div>
-                </div>
+                
+                {% endfor %}
       
               </div>
       
             </div>
-
-          <div class="blog-pagination">
-            <ul class="justify-content-center">
-              <li><a href="#">1</a></li>
-              <li class="active"><a href="#">2</a></li>
-              <li><a href="#">3</a></li>
-            </ul>
-          </div>
+            {% if page_obj %}
+            <div class="blog-pagination">
+                <ul class="justify-content-center">
+                  {% if page_obj.has_previous %}
+                    <li><a  href="?page=1"><i class="fa bi bi-chevron-double-left"></i></a></li>
+                    <li></li><a  href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i></a></li>
+                  {% endif %}
+                  {% for num in page_obj.paginator.page_range %}
+                    {% if page_obj.number == num %}
+                    <li class="active"><a c href="?page={{ num }}">{{ num }}</a></li>
+                    {% elif num > page_obj.number|add:'-3' and num > page_obj.number|add:'3' %}
+                      <li></li><a  href="?page={{ num }}">{{ num }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  {% if page_obj.has_next %}
+                    <li></li><a  href="?page={{ page_obj.next_page_number }}"><i class="bi bi-chevron-right"></i></a></li>
+                    <li></li><a  href="?page={{ page_obj.paginator.num_pages }}"><i class="bi bi-chevron-double-right"></i></a></li>
+                  {% endif %}
+                </ul>
+              </div>
+                {% endif %}
 
         </div><!-- End blog entries list -->
 

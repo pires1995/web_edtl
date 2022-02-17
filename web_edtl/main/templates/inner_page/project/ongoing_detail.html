@@ -5,29 +5,29 @@
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
         <ol>
-            <li><a href="{% url 'redirect-home' %}">Home</a></li>
-            <li><a href="{% url 'ongoing-list' l3 %}">Ongoing Project List</a></li>
-            <li>Detail</li>
+            <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+            <li><a href="{% url 'ongoing-list' lang %}">{{lang_data.PROJECT_LIST_LBL}}</a></li>
+            <li>{{lang_data.PROJECT_DETAIL_LBL}}</li>
         </ol>
     </div>
 </section><!-- End Breadcrumbs -->
 <section id="blog" class="blog">
     <div class="container" data-aos="fade-up">
         <div class="section-title" data-aos="fade-up">
-            <h2><strong>DETAIL PROJECT</strong></h2>
+            <h2><strong>{{lang_data.PROJECT_DETAIL_LBL|upper}}</strong></h2>
           </div>
       <div class="row">
         <div class="col-md-6 entries">
           <article class="entry entry-single">
             <div class="entry-content">
                 
-                <h6 class="title">Project Information</h6>
+                <h6 class="title">{{lang_data.PROJECT_DETAIL1_LBL}}</h6>
                 <hr>
-              <h6>Name Project: <strong>Provision of Internet Service for EDTL,E.P. Caicoli and Comoro</strong></h6>
-              <h6>Category: <strong>Fundu Infrastutura</strong></h6>
-              <h6>Fund: <strong>OGE</strong></h6>
-              <h6>Year: <strong>2022</strong></h6>
-              <h6>Status: <strong>Ongoing</strong></h6>
+              <h6>{{lang_data.PROJECT_DETAIL4_LBL}}: <strong>{{objects.name}}</strong></h6>
+              <h6>{{lang_data.PROJECT_DETAIL5_LBL}}: <strong>{{objects.project_category}}</strong></h6>
+              <h6>{{lang_data.PROJECT_DETAIL6_LBL}}: <strong>{{objects.fund}}</strong></h6>
+              <h6>{{lang_data.PROJECT_DETAIL7_LBL}}: <strong>{{objects.year}}</strong></h6>
+              <h6>Status: <strong>{{objects.project_status}}</strong></h6>
             </div>
 
             
@@ -40,14 +40,14 @@
 
                 <div class="entry-content">
                     
-                    <h6 class="title">Contract Information</h6>
+                    <h6 class="title">{{lang_data.PROJECT_DETAIL2_LBL}}</h6>
                     <hr>
-                    <h6>Company: <strong>Omega Eletric</strong></h6>
-                    <h6>Contract Number: <strong>RFQ/0075/EDTL-E-P-2021</strong></h6>
-                    <h6>Start Period: <strong>20 / Aug / 2020</strong></h6>
-                    <h6>End Period: <strong>20 / Aug / 2021</strong></h6>
-                    <h6>Amount: <strong>$50,000.00</strong></h6>
-                    <h6>Type of Procurament: <strong>RFQ</strong></h6>
+                    <h6>{{lang_data.PROJECT_DETAIL8_LBL}}: <strong>{{objects.company}}</strong></h6>
+                    <h6>{{lang_data.PROJECT_DETAIL9_LBL}}: <strong>{{objects.contract_number}}</strong></h6>
+                    <h6>{{lang_data.PROJECT_DETAIL10_LBL}}: <strong>{{objects.start_period|date:"d/M/Y"}}</strong></h6>
+                    <h6>{{lang_data.PROJECT_DETAIL11_LBL}}: <strong>{{objects.end_period|date:"d/M/Y"}}</strong></h6>
+                    <h6>{{lang_data.PROJECT_DETAIL12_LBL}}: <strong>${{budget.budget}}</strong></h6>
+                    <h6>{{lang_data.PROJECT_DETAIL16_LBL}}: <strong>{{objects.typeofprocurament}}</strong></h6>
                 </div>
                 </article><!-- End blog entry -->
         
@@ -57,13 +57,13 @@
 
                 <div class="entry-content">
                     
-                    <h6 class="title">Project Location Information</h6>
+                    <h6 class="title">{{lang_data.PROJECT_DETAIL3_LBL}}</h6>
                     <hr>
-                    <h6>Municipality: <strong>Dili</strong></h6>
-                    <h6>Administrative Post: <strong>Dom Aleixo</strong></h6>
-                    <h6>Village: <strong>--</strong></h6>
-                    <h6>Latitude: <strong>--</strong></h6>
-                    <h6>Longitude: <strong>--</strong></h6>
+                    <h6>{{lang_data.PROJECT_DETAIL13_LBL}}: <strong>{{location.municipality}}</strong></h6>
+                    <h6>{{lang_data.PROJECT_DETAIL14_LBL}}: <strong>{{location.administrativepost}}</strong></h6>
+                    <h6>{{lang_data.PROJECT_DETAIL15_LBL}}: <strong>{{location.village}}</strong></h6>
+                    <h6>Latitude: <strong>{{location.latitude}}</strong></h6>
+                    <h6>Longitude: <strong>{{location.longitude}}</strong></h6>
                 </div>
                 </article><!-- End blog entry -->
         

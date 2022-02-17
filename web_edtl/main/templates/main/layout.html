@@ -9,7 +9,9 @@
   <title>Home - EDTL,EP</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
-
+  {% block head %}
+    
+  {% endblock head %}
   <!-- Favicons -->
   <link href="{% static 'main/img/logo.png' %}" rel="icon">
   <link href="{% static 'main/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
@@ -86,15 +88,7 @@
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
-  {% if lang == 'tt' %}
-  {% include 'main/footer_tet.html' %}
-  {% elif lang == 'en' %}
   {% include 'main/footer_eng.html' %}
-  
-  {% else %}
-  {% include 'main/footer_por.html' %}
-    
-  {% endif %}
   <!-- End Footer -->
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>

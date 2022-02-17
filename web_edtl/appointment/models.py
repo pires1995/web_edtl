@@ -9,6 +9,18 @@ class AppointmentTo(models.Model):
         template = '{0.name}'
         return template.format(self)
 
+class Municipality(models.Model):
+    name = models.CharField(max_length=250)
+    def __str__(self):
+        template = '{0.name}'
+        return template.format(self)
+
+class Position(models.Model):
+    name = models.CharField(max_length=250)
+    def __str__(self):
+        template = '{0.name}'
+        return template.format(self)
+
 class Appointment(models.Model):
     appointment_to = models.ForeignKey(AppointmentTo, on_delete=models.CASCADE, null=True)
     first_name = models.CharField(max_length=254, null=False)
@@ -38,3 +50,36 @@ class Appointment(models.Model):
     def save(self, *args, **kwargs):
         self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
         return super(Appointment, self).save(*args, **kwargs)
+
+
+class Suggestion(models.Model):
+    fullname = models.CharField(max_length=254, null=False)
+    email = models.CharField(max_length=254, null=True)
+    mobile = models.IntegerField(null=True,blank=False)
+    text = models.TextField(null=True)
+    submit_date = models.DateTimeField(null=True)
+    hashed = models.CharField(max_length=32, null=True, blank=True)
+    def __str__(self):
+        template = '{0.fullname} {0.submit_date}'
+        return template.format(self)
+
+    def save(self, *args, **kwargs):
+        self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
+        return super(Suggestion, self).save(*args, **kwargs)
+
+class ContactMunicipality(models.Model):
+    name = models.CharField(max_length=500)
+    phone_number = models.IntegerField()
+    position = models.ForeignKey(Position, on_delete=models.CASCADE)
+    municipality = models.ForeignKey(Municipality, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    is_active = models.BooleanField(default=False, null=True)
+    datetitme = models.DateTimeField(auto_now_add=True, null=True)
+    hashed = models.CharField(max_length=32, null=True, blank=True)
+    def __str__(self):
+        template = '{0.name} {0.municipality}'
+        return template.format(self)
+    
+    def save(self, *args, **kwargs):
+        self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
+        return super(ContactMunicipality, self).save(*args, **kwargs)

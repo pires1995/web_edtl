@@ -16,4 +16,11 @@ urlpatterns = [
     path('internships-detail/<str:hashid>/', views.internships_detail, name='admin-internships-detail'),
     path('internships-activate/<str:hashid>/', views.internships_activate, name='admin-internships-activate'),
     path('internships-deactivate/<str:hashid>/', views.internships_deactivate, name='admin-internships-deactivate'),
+    # VOLUNTEER
+    path('volunteer-list/', views.volunteer_list, name='admin-volunteer-list'),
+    path('volunteer-add/', views.volunteer_add, name='admin-volunteer-add'),
+    path('volunteer-update/<str:hashid>/', views.volunteer_update, name='admin-volunteer-update'),
+    path('volunteer-detail/<str:hashid>/', views.volunteer_detail, name='admin-volunteer-detail'),
+    path('volunteer-activate/<str:hashid>/', views.volunteer_activate, name='admin-volunteer-activate'),
+    path('volunteer-deactivate/<str:hashid>/', views.volunteer_deactivate, name='admin-volunteer-deactivate'),
 ]

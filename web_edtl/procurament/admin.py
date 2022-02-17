@@ -1,3 +1,6 @@
 from django.contrib import admin
+from procurament.models import Tender, Guidelines, Policy
 
-# Register your models here.
+admin.site.register(Tender)
+admin.site.register(Guidelines)
+admin.site.register(Policy)

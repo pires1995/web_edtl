@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from departments.models import Department, Division
-from departments.forms import DepartmentForm, DivisionForm
+from departments.models import  Division
+from departments.forms import  DivisionForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import FileResponse, Http404
@@ -19,7 +19,7 @@ def division_list(request):
 @login_required
 def division_add(request):
     if request.method == 'POST':
-        newid, new_hashed = getnewid(Department)
+        newid, new_hashed = getnewid(Division)
         form = DivisionForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save(commit=False)

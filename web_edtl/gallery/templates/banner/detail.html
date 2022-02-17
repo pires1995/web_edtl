@@ -1,0 +1,119 @@
+{% extends 'web_admin/layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
+            <!-- TODO -->
+            <li class="breadcrumb-item"><a href="{% url 'admin-banner-list' %}">List Banner</a></li>
+
+            <li class="breadcrumb-item active">{{title}}</li>
+            <!-- <li class="breadcrumb-item">Users</li> -->
+        </ol>
+    </nav>
+</div>
+<section class="section profile">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body pt-3">
+                    <div class="card-title">
+                        <h2 class="pb-4">Detalla Banner</h2>
+                        <hr>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Cover Imagen</h5>
+                                    <hr>
+                                    <a href="{{ objects.image.url }}" target="_blank">
+                                        <img class="" width="100%" src="{{objects.image.url}}" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-md-4 align-self-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Naran Album (Tetum)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.title_tet}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 align-self-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Naran Album (Portugues)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.title_por}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 align-self-center">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Naran Album (Ingles)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.title_eng}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Deskrisaun (Tetum)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.description_tet|safe}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Deskrisaun (Portugues)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.description_por|safe}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="card-title">
+                                        <h6>Deskrisaun (Ingles)</h6>
+                                        <hr>
+                                    </div>
+                                    <h6>{{objects.description_eng|safe}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{% endblock content%}

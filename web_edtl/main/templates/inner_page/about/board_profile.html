@@ -5,42 +5,72 @@
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
         <ol>
-        <li><a href="{% url 'redirect-home' %}">Home</a></li>
-        <li>Board Member</li>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>{{lang_data.ABOUT_LBL3}}</li>
         </ol>
     </div>
 </section><!-- End Breadcrumbs -->
 
-    <!-- ======= Our Team Section ======= -->
-    <section id="team" class="team section-bg">
-        <div class="container">
-            <div class="section-title" data-aos="fade-up">
-                <h2><strong>BOARD MEMBER</strong></h2>
-              </div>
-
-  
-          <div class="row justify-content-center">
-            {% for object  in  objects %}
-              
+  <!-- ======= Our Team Section ======= -->
+  <section id="team" class="team section-bg blog">
+      <div class="container">
+          <div class="section-title" data-aos="fade-up">
+              <h2><strong>{{lang_data.BOARD_MEMBER_LBL}}</strong></h2>
+            </div>  
+        <div class="row justify-content-center">
+          {% for object  in  boardmembers %}
             
-            <div class="col-md-2 d-flex align-items-stretch">
-              <div class="member" data-aos="fade-up">
-                <div class="member-img">
-                  <img src="{{object.employee.image.url}}" class="img-fluid" alt="">
-                  
-                </div>
-                <div class="member-info">
-                  <h4>{{object.employee.first_name}} {{object.employee.last_name}} </h4>
-                  <span>{{object.division.name_eng}}</span>
-                  <span>{{object.employee.email}}</span>
-                  <span>+670 {{object.employee.mobile}}</span>
-                </div>
+          
+          <div class="col-md-2 d-flex align-items-stretch">
+            <div class="member" data-aos="fade-up">
+              <div class="member-img">
+                <img src="{{object.employee.image.url}}" class="img-fluid" alt="">
+                
+              </div>
+              <div class="member-info">
+                <h4> <a href="{% url 'board-detail' object.hashed l3 %}"> {{object.employee.first_name}} {{object.employee.last_name}}</a> </h4>
+                <span>{{object.division.name_eng}}</span>
+                <span>{{object.position.name_eng}}</span>
+                <span>{{object.employee.email}}</span>
+                <span>+670 {{object.employee.mobile}}</span>
               </div>
             </div>
-            {% endfor %}
-  
           </div>
-  
+          {% endfor %}
+
         </div>
-      </section><!-- End Our Team Section -->
+
+      </div>
+      <div class="container">
+          <div class="section-title" data-aos="fade-up">
+              <h2><strong>{{lang_data.BOARD_MEMBER_DEPARTMENT_LBL}}</strong></h2>
+            </div>
+
+
+        <div class="row justify-content-center">
+          {% for object  in  departments_board %}
+            
+          
+          <div class="col-md-2 d-flex align-items-stretch">
+            <div class="member" data-aos="fade-up">
+              <div class="member-img">
+                <img src="{{object.employee.image.url}}" class="img-fluid" alt="">
+                
+              </div>
+              <div class="member-info">
+                <h4> <a href="{% url 'board-detail' object.hashed  l3 %}"> {{object.employee.first_name}} {{object.employee.last_name}}</a> </h4>
+                <span>{{object.division.name_eng}}</span>
+                <span>{{object.position.name_eng}}</span>
+                <span>{{object.employee.email}}</span>
+                <span>+670 {{object.employee.mobile}}</span>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+
+        </div>
+
+      </div>
+    </div>
+    </section><!-- End Our Team Section -->
 {% endblock content %}

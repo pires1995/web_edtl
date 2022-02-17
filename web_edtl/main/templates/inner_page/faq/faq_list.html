@@ -1,0 +1,77 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block content %}
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>{{lang_data.FAQ_LBL}}</li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+  <section id="faq" class="faq blog">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title" data-aos="fade-up">
+        <h2><strong>{{lang_data.HOME_FAQ_TITLE}}</strong></h2>
+      </div>
+
+      <ul class="faq-list">
+        {% for faq in  page_obj %}
+        <li>
+          <div data-bs-toggle="collapse" class="collapsed question" href="#faq1">
+            {% if lang == 'en' %}
+            {{faq.name_eng}} 
+            {% elif lang == 'pt' %}
+            {{faq.name_por}} 
+            {% else %}
+              
+            {{faq.name_tet}} 
+            {% endif %}
+            
+          <i class="bi bi-chevron-down icon-show"></i><i class="bi bi-chevron-up icon-close"></i></div>
+          <div id="faq1" class="collapse" data-bs-parent=".faq-list">
+            <p>
+
+              {% if lang == 'en' %}
+              {{faq.overview_eng|striptags|slice:':100'}}..
+              
+              {% elif lang == 'pt' %}
+
+              {{faq.overview_por|striptags|slice:':100'}}..
+              {% else %}
+                
+              {{faq.overview_tet|striptags|slice:':100'}}..
+              {% endif %}
+              
+              <a href="{% url 'faq-detail' lang faq.hashed %}">{{lang_data.BTN_READ_MORE}}</a>
+            </p>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% if page_obj %}
+      <div class="blog-pagination">
+          <ul class="justify-content-center">
+            {% if page_obj.has_previous %}
+              <li><a  href="?page=1"><i class="fa bi bi-chevron-double-left"></i></a></li>
+              <li></li><a  href="?page={{ page_obj.previous_page_number }}"><i class="bi bi-chevron-left"></i></a></li>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+              <li class="active"><a c href="?page={{ num }}">{{ num }}</a></li>
+              {% elif num > page_obj.number|add:'-3' and num > page_obj.number|add:'3' %}
+                <li></li><a  href="?page={{ num }}">{{ num }}</a></li>
+              {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+              <li></li><a  href="?page={{ page_obj.next_page_number }}"><i class="bi bi-chevron-right"></i></a></li>
+              <li></li><a  href="?page={{ page_obj.paginator.num_pages }}"><i class="bi bi-chevron-double-right"></i></a></li>
+            {% endif %}
+          </ul>
+        </div>
+          {% endif %}
+    </div>
+  </section>
+{% endblock content %}

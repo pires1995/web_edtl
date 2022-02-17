@@ -79,3 +79,19 @@ def faq_deactivate(request, hashid):
     objects.save()
     messages.success(request, 'Successfully Deactivate Faq')
     return redirect('admin-faq-list')
+
+@login_required
+def faq_set_homepage(request, hashid):
+    objects = get_object_or_404(Faq, hashed=hashid)
+    objects.is_homepage = True
+    objects.save()
+    messages.success(request, 'Successfully Set Faq to Homepage')
+    return redirect('admin-faq-list')
+
+@login_required
+def faq_remove_homepage(request, hashid):
+    objects = get_object_or_404(Faq, hashed=hashid)
+    objects.is_homepage = False
+    objects.save()
+    messages.success(request, 'Successfully Remove Faq from Homepage')
+    return redirect('admin-faq-list')

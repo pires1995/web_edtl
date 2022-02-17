@@ -1,5 +1,5 @@
 from django import forms
-from procurament.models import Tender, Guidelines
+from procurament.models import Tender, Guidelines, Policy
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column, Button, HTML
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
@@ -83,6 +83,43 @@ class GuidelinesForm(forms.ModelForm):
             Row(
                 Column('image', css_class='form-group col-md-6 mb-0'),
                 Column('file', css_class='form-group col-md-6 mb-0'),
+                css_class='form-row'
+            ),
+            HTML(""" <button class="btn btn-primary" type="submit"><i class="bi bi-lock text-white"></i> Rai</button> """)
+        )
+
+
+class PolicyForm(forms.ModelForm):
+    title_tet = forms.CharField(label="Titulu Policy (Tetum)", required=True)
+    title_por = forms.CharField(label="Titulu Policy (Portugues)", required=False)
+    title_eng = forms.CharField(label="Titulu Policy (Ingles)", required=True)
+    description_tet = forms.CharField(required=False,label="Deskrisaun Policy (Tetum)", widget=SummernoteWidget(attrs={'summernote': {'width': '100%', 'height': '400px'}}))
+    description_por = forms.CharField(required=False,label="Deskrisaun Policy (Portugues)", widget=SummernoteWidget(attrs={'summernote': {'width': '100%', 'height': '400px'}}))
+    description_eng = forms.CharField(required=False,label="Deskrisaun Policy (Ingles)", widget=SummernoteWidget(attrs={'summernote': {'width': '100%', 'height': '400px'}}))
+    class Meta: 
+        model = Policy
+        fields = ['title_tet', 'title_por', 'title_eng', 'description_tet',\
+             'description_por','description_eng', 'file']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.layout = Layout(
+            Row(
+                Column('title_tet', css_class='form-group col-md-4 mb-0'),
+                Column('title_por', css_class='form-group col-md-4 mb-0'),
+                Column('title_eng', css_class='form-group col-md-4 mb-0'),	
+                css_class='form-row'
+            ),
+            Row(
+                Column('description_tet', css_class='form-group col-md-4 mb-0'),
+                Column('description_por', css_class='form-group col-md-4 mb-0'),
+                Column('description_eng', css_class='form-group col-md-4 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('file', css_class='form-group col-md-12 mb-0'),
                 css_class='form-row'
             ),
             HTML(""" <button class="btn btn-primary" type="submit"><i class="bi bi-lock text-white"></i> Rai</button> """)

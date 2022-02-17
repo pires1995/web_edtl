@@ -2,7 +2,7 @@ from __future__ import division
 from cmath import log
 from django.shortcuts import render, redirect, get_object_or_404
 from profiles.models import About, Division, Employee, Position
-from profiles.forms import EmployeeForm, DivisionForm, PositionForm
+from profiles.forms import EmployeeForm, DivisionProfileForm, PositionForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import FileResponse, Http404
@@ -49,9 +49,12 @@ def list_team(request):
     organograma = Position.objects.all()
     employees = Employee.objects.all()
     divisions = Division.objects.all()
+    boardmembers = Position.objects.filter(group='Board Member')
+    departments = Position.objects.filter(group='Department')
+    divisions_board = Position.objects.filter(group='Division')
     context = {
-        'title': 'Lista Organograma', 'group': group, 'organograma': organograma,
-        'employees': employees, 'divisions': divisions
+        'title': 'Lista Organograma', 'group': group, 'boardmembers': boardmembers, 'departments':departments,
+        'employees': employees, 'divisions': divisions, 'divisions_board':divisions_board
     }
     return render(request, 'team/team_list.html', context)
 
@@ -92,10 +95,10 @@ def update_team(request, hashid):
 
 
 @login_required
-def add_division(request):
+def add_division_profile(request):
     if request.method == 'POST':
         newid, new_hashed = getnewid(Division)
-        form = DivisionForm(request.POST)
+        form = DivisionProfileForm(request.POST)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.id = newid
@@ -104,23 +107,23 @@ def add_division(request):
             messages.success(request, f'Successfully Create Division')
             return redirect('admin-team-list')
     else:   
-        form = DivisionForm()
+        form = DivisionProfileForm()
     context = {
         'form': form, 'title': 'Aumenta Informasaun Divisaun', 'subtitle': 'Divisaun'
     }
     return render(request, 'team/form.html', context)
 
 @login_required
-def update_division(request, hashid):
+def update_division_profile(request, hashid):
   objects = get_object_or_404(Division, hashed=hashid)
   if request.method == 'POST':
-      form = DivisionForm(request.POST,instance=objects)
+      form = DivisionProfileForm(request.POST,instance=objects)
       if form.is_valid():
           form.save()
           messages.success(request, f'Successfully Update Division')
           return redirect('admin-team-list')
   else:   
-      form = DivisionForm(instance=objects)
+      form = DivisionProfileForm(instance=objects)
   context = {
       'form': form, 'title': 'Altera Informasaun Divisaun', 'subtitle': 'Divisaun'
   }

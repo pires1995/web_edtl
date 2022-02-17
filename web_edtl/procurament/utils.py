@@ -38,3 +38,13 @@ def path_and_rename_guidelines_pdf(instance, filename):
 	else:
 		filename = '{}.{}'.format(uuid4().hex, ext)
 	return os.path.join(upload_to, filename)
+
+def path_and_rename_policy_pdf(instance, filename):
+	upload_to = 'report/policy/pdf/'
+	field = 'policy'
+	ext = filename.split('.')[-1]
+	if instance.pk:
+		filename = '{}_{}.{}'.format(field,instance.pk, ext)
+	else:
+		filename = '{}.{}'.format(uuid4().hex, ext)
+	return os.path.join(upload_to, filename)

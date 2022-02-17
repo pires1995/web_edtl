@@ -5,14 +5,21 @@ urlpatterns = [
     path('about-list/', views.about_list, name='admin-about-list'),
     path('about-add/', views.about_add, name='admin-about-add'),
     path('about-update/<str:hashid>/', views.about_update, name='admin-about-update'),
+    path('service-list/', views.service_list, name='admin-service-list'),
+    path('service-add/', views.service_add, name='admin-service-add'),
+    path('service-update/<str:hashid>/', views.service_update, name='admin-service-update'),
+    path('service-detail/<str:hashid>/', views.service_detail, name='admin-service-detail'),
+    path('service-activate/<str:hashid>/', views.service_activate, name='admin-service-activate'),
+    path('service-deactivate/<str:hashid>/', views.service_deactivate, name='admin-service-deactivate'),
     path('view-pdf/<str:hashid>/', views.view_pdf, name='admin-view-pdf'),
+
 
 
     # TEAM
     path('team-list/', views.list_team, name='admin-team-list'),
     # DIVISON
-    path('division-add/', views.add_division, name='admin-division-add'),
-    path('division-update/<str:hashid>/', views.update_division, name='admin-division-update'),
+    path('division-profile-add/', views.add_division_profile, name='admin-division-profile-add'),
+    path('division-profile-update/<str:hashid>/', views.update_division_profile, name='admin-division-profile-update'),
     # EMPLOYEE
     path('employee-add/', views.add_employee, name='admin-employee-add'),
     path('employee-update/<str:hashid>/', views.update_employee, name='admin-employee-update'),

@@ -5,8 +5,8 @@
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
         <ol>
-        <li><a href="{% url 'redirect-home' %}">Home</a></li>
-        <li>Department Detail</li>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>{{lang_data.DEPARTMENT_TITLE_LBL}}</li>
         </ol>
     </div>
 </section><!-- End Breadcrumbs -->
@@ -16,8 +16,17 @@
 
       <div class="row">
 
-        <h2 class="section-title">
-          <a href="blog-single.html">{{objects.name_eng}}</a>
+        <h2 class="section-title"> 
+          {% if lang == 'tt' %}
+          {{objects.name_tet}}
+          {% elif lang == 'pt' %}
+          {{objects.name_por}}
+          
+          {% else %}
+          {{objects.name_eng}}
+            
+          {% endif %}
+          
         </h2>
         <div class="col-lg-8 entries">
 
@@ -26,21 +35,17 @@
             <div class="entry-img text-center">
               <img src="{{objects.image.url}}" alt="" class="img-fluid">
             </div>
-
-<!-- 
-            <div class="entry-meta">
-              <ul>
-                <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>
-                <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">Jan 1, 2020</time></a></li>
-                <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
-              </ul>
-            </div> -->
-
             <div class="entry-content">
+              {% if lang == 'tt' %}
+              {{objects.overview_tet|safe}}
+              {% elif lang == 'pt' %}
+              {{objects.overview_por|safe}}
+              
+              {% else %}
               {{objects.overview_eng|safe}}
+                
+              {% endif %}
             </div>
-
-            
         </article><!-- End blog entry -->
           
         </div><!-- End blog entries list -->
@@ -48,16 +53,24 @@
         <div class="col-lg-4">
 
           <div class="sidebar">
-              <h3 class="sidebar-title">LIST DIVISION</h3>
+              <h3 class="sidebar-title">{{lang_data.LIST_DIVISION_TITLE_LBL}}</h3>
               <div class="sidebar-item2 categories">
                   <ul>
-                    <li><a href="{% url 'division-detail' l3 %}">Division A</a></li>
-                    <li><a href="{% url 'division-detail' l3 %}">Division B</a></li>
+                    {% for division in  divisions %}
+                      
+                    <li><a href="{% url 'division-detail' lang division.hashed objects.hashed %}">
+                      {% if lang == 'tt' %}
+                      {{division.name_tet}}
+                      {% elif lang == 'pt' %}
+                      {{division.name_por}}
+                      
+                      {% else %}
+                      {{division.name_eng}}
+                      {% endif %}
+                    </a></li>
+                    {% endfor %}
                 </ul>
             </div><!-- End sidebar categories-->
-            
-            
-            
           </div><!-- End sidebar -->
         
     </div><!-- End blog sidebar -->

@@ -5,8 +5,8 @@
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
         <ol>
-        <li><a href="{% url 'redirect-home' %}">Home</a></li>
-        <li>Resource Detail</li>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>{{lang_data.RESOURCE_TITLE_LBL}}</li>
         </ol>
     </div>
 </section><!-- End Breadcrumbs -->
@@ -17,7 +17,18 @@
     <div class="row justify-content-center">
 
       <h2 class="section-title">
-        <a href="blog-single.html">{{objects.name_eng}}</a>
+        <a href="blog-single.html">
+          {% if lang == 'tt' %}
+          {{objects.name_tet}}
+          {% elif lang == 'pt' %}
+          {{objects.name_por}}
+          
+          {% else %}
+          {{objects.name_eng}}
+            
+          {% endif %}
+          
+        </a>
       </h2>
       <div class="col-lg-12 entries">
 
@@ -30,7 +41,19 @@
 
 
           <div class="entry-content">
-           {{objects.overview_eng|safe}}
+          {% if lang == 'tt' %}
+          
+          {{objects.overview_tet|safe}}
+          {% elif lang == 'pt' %}
+          {{objects.overview_por|safe}}
+          
+          {% else %}
+          {{objects.overview_eng|safe}}
+            
+          {% endif %}
+
+
+           
 
           </div>
 

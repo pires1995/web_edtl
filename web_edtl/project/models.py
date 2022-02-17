@@ -43,6 +43,7 @@ class Project(models.Model):
     typeofprocurament = models.ForeignKey(TypeOfProcurament, on_delete=models.CASCADE, null=True, verbose_name="Type of Procurament")
     is_active = models.BooleanField(default=True)
     company = models.CharField(max_length=200, null=True, blank=True)
+    contract_number = models.CharField(max_length=300, null=True, blank=True)
     is_completed = models.BooleanField(default=False, null=True)
     description_tet = models.TextField(null=True, blank=True)
     description_por = models.TextField(null=True, blank=True)

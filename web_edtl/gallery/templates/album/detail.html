@@ -125,9 +125,12 @@
                         <h2>Imagen Sira Seluk</h2>
                     </div>
                     <hr>
+                    {% if objects.is_active == False %}
+                      
                     <a href="{% url 'admin-gallery-add' album %}" class="btn btn-primary"> <i class="bi-plus-lg"></i>
                         Add More
                         Image</a>
+                    {% endif %}
                     <div class="row mt-3">
                         <div class="col-lg-12 align-self-center">
                             <div class="basic">
@@ -158,8 +161,11 @@
                                         {% endif %}
                                     </p>
                                 </div>
+                                {% if objects.is_active == False %}
+                                  
                                 <a href="{% url 'admin-gallery-update' image.hashed %}" type="button" title="Update"
-                                    class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                                {% endif %}
                                 <!-- <a href="#" type="button" title="Delete" class="btn btn-danger"><i
                                         class="bi bi-trash"></i></a> -->
                                 <hr>
