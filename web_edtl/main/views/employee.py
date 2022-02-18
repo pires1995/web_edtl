@@ -8,16 +8,18 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def user_lists(request):
-    users = User.objects.all()
+    group = request.user.groups.all()[0].name
+    users = User.objects.all().exclude(groups__name='client')
     # usergroup = request.user.groups.all()[0].name
     context = {
-        'users': users, 'title': 'Users List',
+        'users': users,'group': group, 'title': 'Users List',
     }
     return render(request, 'employee/users_list.html', context)
 
 
 @login_required
 def user_add(request):
+    group = request.user.groups.all()[0].name
     form = CustomUserForm()
     if request.method == 'POST':
         form = CustomUserForm(request.POST)
@@ -32,13 +34,14 @@ def user_add(request):
                 request, f'User {instance.email} Successfully Created')
             return redirect('admin-user-lists')
     context = {
-        'form': form, 'title': 'Add User',
+        'form': form,'group': group, 'title': 'Add User',
     }
     return render(request, 'employee/add.html', context)
 
 
 @login_required
 def user_update(request, hashid):
+    group = request.user.groups.all()[0].name
     object = get_object_or_404(User, hashed=hashid)
     if request.method == 'POST':
         form = CustomUserForm(request.POST, instance=object)
@@ -55,7 +58,7 @@ def user_update(request, hashid):
     else:
         form = CustomUserForm(instance=object)
     context = {
-        'form': form, 'title': 'Update User',
+        'form': form,'group': group, 'title': 'Update User',
     }
     return render(request, 'employee/add.html', context)
 

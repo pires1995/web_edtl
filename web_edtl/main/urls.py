@@ -97,4 +97,17 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(redirect_authenticated_user=True, template_name='web_admin/login.html',
          authentication_form=UserLoginForm), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='web_admin/logout.html'), name='logout'),
+
+    # FMS
+    path('fcm/login/', views.fms_login , name='fsm-login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='web_admin/logout.html'), name='fsm-logout'),
+    path('client-home/', views.client_home, name='client-home'),
+    path('client-logout/', auth_views.LogoutView.as_view(template_name='fms/logout.html'), name='fsm-logout'),
+    path('client-bill-list/', views.client_bill_list, name='bill-list'),
+    path('client-bill-add/', views.client_bill_add, name='bill-add'),
+    path('client-bill-detail/<str:hashid>', views.client_bill_detail, name='client-bill-detail'),
+
+
+    # USM
+    path('usm/login/<str:lang>/', views.usm_login , name='usm-login'),
 ]

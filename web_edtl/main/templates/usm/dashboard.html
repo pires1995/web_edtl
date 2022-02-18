@@ -1,0 +1,62 @@
+{% extends "main/layout.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block content %}
+
+<section id="blog" class="blog">
+    <div class="container" data-aos="fade-up">
+
+      <div class="row">
+
+        <h2 class="section-title">User Subscribe Management Dashboard</h2>
+        
+        <div class="col-md-7">
+
+          <div class="sidebar">
+              <h3 class="sidebar-title">Informations:</h3>
+              <hr>
+              <div class="sidebar-item categories">
+                <ul>
+                </ul>
+                <h6>Tes3 </h6>
+                <h6>TES2</h6>
+                <hr>
+                    <h6>
+                       Test
+                       
+                    </h6>
+            </div><!-- End sidebar categories-->
+            
+            
+            
+        </div><!-- End sidebar -->
+        
+        </div><
+        <div class="col-md-2">
+
+          <div class="sidebar">
+              <h3 class="sidebar-title">Unsubscribe</h3>
+              <hr>
+              <div class="sidebar-item categories">
+                <ul>
+                </ul>
+                <h6>If You want to Unsubscribe, Click Button Bellow:</h6>
+              
+                <hr>
+                <form method="POST" enctype="multipart/form-data" class="php-email-form">
+                    {% csrf_token %}
+                    {% crispy form %}
+                  </form>
+            </div><!-- End sidebar categories-->
+            
+            
+            
+        </div><!-- End sidebar -->
+        
+        </div><
+    
+</div>
+
+</div>
+</section>
+{% endblock content %}

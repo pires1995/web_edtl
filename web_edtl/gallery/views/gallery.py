@@ -8,9 +8,10 @@ from django.conf import settings
 from main.utils import getnewid
 from django.contrib import messages
 from django.core.paginator import Paginator
-
+from custom.decorators import allowed_users
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def gallery_add(request, hashid):
     objects = get_object_or_404(Album, hashed=hashid)
     group = request.user.groups.all()[0].name
@@ -34,12 +35,13 @@ def gallery_add(request, hashid):
     else:
         form = GalleryForm()
     context = {
-        'form': form,
+        'form': form, 'group':group,
         'title': f'Add One or More image to Album " {objects.name_tet} "  ', 'subtitle': 'Album'
     }
     return render(request, 'gallery/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def gallery_update(request, hashid):
     objects = get_object_or_404(Gallery, hashed=hashid)
     album = get_object_or_404(Album, hashed=objects.album.hashed)
@@ -54,7 +56,7 @@ def gallery_update(request, hashid):
     else:
         form = GalleryForm(instance=objects)
     context = {
-        'form': form,
+        'form': form, 'group':group,
         'title': f'Add One or More image to Album " {album.name_tet} "  ', 'subtitle': 'Album'
     }
     return render(request, 'gallery/form.html', context)

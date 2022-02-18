@@ -1,0 +1,187 @@
+<ul class="sidebar-nav" id="sidebar-nav">
+
+    <li class="nav-item">
+        <a class="nav-link " href="{% url 'admin-dashboard' %}">
+            <i class="bi bi-grid"></i>
+            <span>Dashboard</span>
+        </a>
+    </li><!-- End Dashboard Nav -->
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'admin-event-list' %}">
+            <i class="bi bi-calendar4-week"></i><span>Events</span><i class=""></i>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'admin-report-list' %}">
+            <i class="bi bi-journal-bookmark-fill"></i><span>Reports</span><i class=""></i>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'admin-pagemanegament-list' %}">
+            <i class="bi bi-file-earmark-diff"></i><span>Page Managament</span><i class=""></i>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'admin-product-list' %}">
+            <i class="bi bi-box-seam"></i><span>Products</span><i class=""></i>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'admin-announcement-list' %}">
+            <i class="bi bi-megaphone"></i><span>Announcement</span><i class=""></i>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'admin-faq-list' %}">
+            <i class="bi bi-question-circle"></i><span>FAQ</span><i class=""></i>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'admin-contact-list' %}">
+            <i class="bi bi-person"></i><span>Contact Municipality</span><i class=""></i>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'admin-suggestion-list' %}">
+            <i class="bi bi-chat-right-text"></i><span>Suggestions</span><i class=""></i>
+        </a>
+    </li>
+    <!-- End Components Nav -->
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-person-video2"></i><span>Profiles</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+                <a href="{% url 'admin-about-list' %}">
+                    <i class="bi bi-circle"></i><span>Who We Are</span>
+                </a>
+                <a href="{% url 'admin-service-list' %}">
+                    <i class="bi bi-circle"></i><span>What We Do</span>
+                </a>
+                <a href="{% url 'admin-team-list' %}">
+                    <i class="bi bi-circle"></i><span>Board Member</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav-2" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-person-plus-fill"></i><span>Recruitments</span><i
+                class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav-2" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+                <a href="{% url 'admin-vacancy-list' %}">
+                    <i class="bi bi-circle"></i><span>Vacancy</span>
+                </a>
+                <a href="{% url 'admin-internships-list' %}">
+                    <i class="bi bi-circle"></i><span>Internships</span>
+                </a>
+                <a href="{% url 'admin-volunteer-list' %}">
+                    <i class="bi bi-circle"></i><span>Volunteer</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav-3" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-journal-richtext"></i><span>Procurament</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav-3" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+                <a href="{% url 'admin-tender-list' %}">
+                    <i class="bi bi-circle"></i><span>Tender</span>
+                </a>
+                <a href="{% url 'admin-guidelines-list' %}">
+                    <i class="bi bi-circle"></i><span>Guidelines</span>
+                </a>
+                <a href="{% url 'admin-policy-list' %}">
+                    <i class="bi bi-circle"></i><span>Policy</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#charts-nav1" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-people"></i><span>Departments</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="charts-nav1" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+                <a href="{% url 'admin-department-list' %}">
+                    <i class="bi bi-circle"></i><span>Departments</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'admin-division-list' %}">
+                    <i class="bi bi-circle"></i><span>Division</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-newspaper"></i><span>News</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+                <a href="{% url 'admin-news-list' %}">
+                    <i class="bi bi-circle"></i><span>News List</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#project" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-motherboard"></i><span>Project</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="project" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+                <a href="{% url 'admin-new-project-list' %}">
+                    <i class="bi bi-circle"></i><span>New Project</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'admin-ongoing-project-list' %}">
+                    <i class="bi bi-circle"></i><span>Ongoing Project</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- GALLERY -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#gallery" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-images"></i><span>Gallery</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="gallery" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <li>
+                <a href="{% url 'admin-album-list' %}">
+                    <i class="bi bi-circle"></i><span>Album</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'admin-video-list' %}">
+                    <i class="bi bi-circle"></i><span>Video</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'admin-banner-list' %}">
+                    <i class="bi bi-circle"></i><span>Banner</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+
+    <li class="nav-heading">User Management</li>
+
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="{% url 'admin-user-lists' %}">
+            <i class="bi bi-person"></i>
+            <span>Users</span>
+        </a>
+    </li><!-- End Users -->
+
+</ul>

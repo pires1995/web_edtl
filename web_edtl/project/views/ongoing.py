@@ -3,22 +3,24 @@ from project.models import Project, ProjectBudget, ProjectLocation
 from project.forms import OngoingProjectForm, ProjectBudgetForm, ProjectLocationForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import FileResponse, Http404
-from django.conf import settings
 from main.utils import getnewid
 from django.contrib import messages
-
+from custom.decorators import allowed_users
 
 @login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
 def ongoing_project_list(request):
+    group = request.user.groups.all()[0].name
     objects = Project.objects.filter(project_status = 2).order_by('-datetime')
     context = {
-        'objects': objects, 'title': 'Lista Projetu Ongoing',
+        'objects': objects, 'title': 'Lista Projetu Ongoing', 'group': group,
     }
     return render(request, 'ongoing/list.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def ongoing_project_add(request):
+    group = request.user.groups.all()[0].name
     if request.method == 'POST':
         newid, new_hashed = getnewid(Project)
         form = OngoingProjectForm(request.POST, request.FILES)
@@ -33,12 +35,14 @@ def ongoing_project_add(request):
     else:
         form = OngoingProjectForm()
     context = {
-        'title': 'Aumenta Projetu Ongoing','subtitle': 'Projetu', 'form': form
+        'title': 'Aumenta Projetu Ongoing','subtitle': 'Projetu', 'form': form, 'group': group,
     }
     return render(request, 'ongoing/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def ongoing_project_update(request, hashid):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(Project, hashed=hashid)
     if request.method == 'POST':
         form = OngoingProjectForm(request.POST, request.FILES, instance=objects)
@@ -51,12 +55,14 @@ def ongoing_project_update(request, hashid):
     else:
         form = OngoingProjectForm(instance=objects)
     context = {
-        'title': 'Altera Projetu Ongoing','subtitle': 'Projetu', 'form': form
+        'title': 'Altera Projetu Ongoing','subtitle': 'Projetu', 'form': form, 'group': group,
     }
     return render(request, 'ongoing/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
 def ongoing_project_detail(request, hashid):
+    group = request.user.groups.all()[0].name
     location = None
     budget = None
     try:
@@ -68,12 +74,14 @@ def ongoing_project_detail(request, hashid):
     
     context = {
         'title': 'Detalla Projetu', 'subtitle': 'Projetu', \
-            'objects': objects, 'location': location, 'budget': budget
+            'objects': objects, 'location': location, 'budget': budget, 'group': group,
     }
     return render(request, 'ongoing/detail.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def ongoing_project_add_budget(request, hashid):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(Project, hashed=hashid)
     if request.method == 'POST':
         newid, new_hashed = getnewid(ProjectBudget)
@@ -90,12 +98,14 @@ def ongoing_project_add_budget(request, hashid):
     else:
         form = ProjectBudgetForm()
     context = {
-        'title': 'Aumenta Project Budget','subtitle': 'Budget Projetu', 'form': form
+        'title': 'Aumenta Project Budget','subtitle': 'Budget Projetu', 'form': form, 'group': group,
     }
     return render(request, 'budget/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def ongoing_project_add_location(request, hashid):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(Project, hashed=hashid)
     if request.method == 'POST':
         newid, new_hashed = getnewid(ProjectLocation)
@@ -112,12 +122,14 @@ def ongoing_project_add_location(request, hashid):
     else:
         form = ProjectLocationForm()
     context = {
-        'title': 'Aumenta Project Location','subtitle': 'Project Location', 'form': form
+        'title': 'Aumenta Project Location','subtitle': 'Project Location', 'form': form, 'group': group,
     }
     return render(request, 'location/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def ongoing_project_update_location(request, hashid, hashid2):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(Project, hashed=hashid)
     objectloc = get_object_or_404(ProjectLocation, hashed=hashid2)
     if request.method == 'POST':
@@ -132,12 +144,14 @@ def ongoing_project_update_location(request, hashid, hashid2):
     else:
         form = ProjectLocationForm(instance=objectloc)
     context = {
-        'title': 'Altera Project Location','subtitle': 'Project Location', 'form': form
+        'title': 'Altera Project Location','subtitle': 'Project Location', 'form': form, 'group': group,
     }
     return render(request, 'location/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def ongoing_project_update_budget(request, hashid, hashid2):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(Project, hashed=hashid)
     objectloc = get_object_or_404(ProjectBudget, hashed=hashid2)
     if request.method == 'POST':
@@ -152,13 +166,15 @@ def ongoing_project_update_budget(request, hashid, hashid2):
     else:
         form = ProjectBudgetForm(instance=objectloc)
     context = {
-        'title': 'Altera Project Budget','subtitle': 'Project Budget', 'form': form
+        'title': 'Altera Project Budget','subtitle': 'Project Budget', 'form': form, 'group': group,
     }
     return render(request, 'budget/form.html', context)
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def ongoing_project_add_budget(request, hashid):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(Project, hashed=hashid)
     if request.method == 'POST':
         newid, new_hashed = getnewid(ProjectBudget)
@@ -175,12 +191,14 @@ def ongoing_project_add_budget(request, hashid):
     else:
         form = ProjectBudgetForm()
     context = {
-        'title': 'Aumenta Project Budget','subtitle': 'Budget Projetu', 'form': form
+        'title': 'Aumenta Project Budget','subtitle': 'Budget Projetu', 'form': form, 'group': group,
     }
     return render(request, 'budget/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def ongoing_project_add_location(request, hashid):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(Project, hashed=hashid)
     if request.method == 'POST':
         newid, new_hashed = getnewid(ProjectLocation)
@@ -197,12 +215,14 @@ def ongoing_project_add_location(request, hashid):
     else:
         form = ProjectLocationForm()
     context = {
-        'title': 'Aumenta Project Location','subtitle': 'Project Location', 'form': form
+        'title': 'Aumenta Project Location','subtitle': 'Project Location', 'form': form, 'group': group,
     }
     return render(request, 'location/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def ongoing_project_update_location(request, hashid, hashid2):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(Project, hashed=hashid)
     objectloc = get_object_or_404(ProjectLocation, hashed=hashid2)
     if request.method == 'POST':
@@ -217,12 +237,14 @@ def ongoing_project_update_location(request, hashid, hashid2):
     else:
         form = ProjectLocationForm(instance=objectloc)
     context = {
-        'title': 'Altera Project Location','subtitle': 'Project Location', 'form': form
+        'title': 'Altera Project Location','subtitle': 'Project Location', 'form': form, 'group': group,
     }
     return render(request, 'location/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def ongoing_project_update_budget(request, hashid, hashid2):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(Project, hashed=hashid)
     objectloc = get_object_or_404(ProjectBudget, hashed=hashid2)
     if request.method == 'POST':
@@ -237,11 +259,12 @@ def ongoing_project_update_budget(request, hashid, hashid2):
     else:
         form = ProjectBudgetForm(instance=objectloc)
     context = {
-        'title': 'Altera Project Budget','subtitle': 'Project Budget', 'form': form
+        'title': 'Altera Project Budget','subtitle': 'Project Budget', 'form': form, 'group': group,
     }
     return render(request, 'budget/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def ongoing_project_activate(request, hashid):
     objects = get_object_or_404(Project, hashed=hashid)
     objects.is_active = True
@@ -250,6 +273,7 @@ def ongoing_project_activate(request, hashid):
     return redirect('admin-ongoing-project-list')
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def ongoing_project_deactivate(request, hashid):
     objects = get_object_or_404(Project, hashed=hashid)
     objects.is_active = False

@@ -4,26 +4,12 @@ from announcement.forms import AnnoucementForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from main.utils import title_seo, getnewid
-from datetime import datetime
-import datetime
-from django.contrib.auth.models import Group
-import os
-from django.template.loader import get_template
-from django.core import serializers
-
-from django.core.mail import EmailMessage, EmailMultiAlternatives
-from django.template.loader import render_to_string
-from django.conf import settings
-import re
-from email.mime.image import MIMEImage
-from django.contrib.staticfiles import finders
-# Create your views here.
-
-# NEWS USER
+from custom.decorators import allowed_users
 
 
 # NEWS MANAGEMENT
 @login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
 def announcement_list(request):
     group = request.user.groups.all()[0].name
     objects = Announcement.objects.all().order_by('-datetime')
@@ -34,7 +20,9 @@ def announcement_list(request):
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def announcement_add(request):
+    group = request.user.groups.all()[0].name
     if request.method == 'POST':
         newid, new_hashed = getnewid(Announcement)
         form = AnnoucementForm(request.POST, request.FILES)
@@ -49,12 +37,13 @@ def announcement_add(request):
     else:
         form = AnnoucementForm()
     context = {
-        'form': form, 'title': 'Add Announcement'
+        'form': form, 'title': 'Add Announcement', 'group': group,
     }
     return render(request, 'announcement/form.html', context)
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
 def announcement_detail(request, hashid):
     group = request.user.groups.all()[0].name
     objects = get_object_or_404(Announcement, hashed=hashid)
@@ -66,7 +55,9 @@ def announcement_detail(request, hashid):
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def announcement_update(request, hashid):
+    group = request.user.groups.all()[0].name
     object = get_object_or_404(Announcement, hashed=hashid)
     if request.method == 'POST':
         form = AnnoucementForm(request.POST, request.FILES, instance=object)
@@ -81,13 +72,15 @@ def announcement_update(request, hashid):
     else:
         form = AnnoucementForm(instance=object)
     context = {
-        'form': form, 'title': 'Update Announcement', 'object': object
+        'form': form, 'title': 'Update Announcement', 'object': object, 'group': group,
     }
     return render(request, 'announcement/form.html', context)
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def announcement_activate(request, hashid):
+    group = request.user.groups.all()[0].name
     object = get_object_or_404(Announcement, hashed=hashid)
     object.is_active = True
     object.save()
@@ -96,7 +89,9 @@ def announcement_activate(request, hashid):
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def announcement_deactivate(request, hashid):
+    group = request.user.groups.all()[0].name
     object = get_object_or_404(Announcement, hashed=hashid)
     object.is_active = False
     object.save()

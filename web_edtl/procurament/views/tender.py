@@ -7,18 +7,22 @@ from django.http import FileResponse, Http404
 from django.conf import settings
 from main.utils import getnewid
 from django.contrib import messages
-
+from custom.decorators import allowed_users
 
 @login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
 def tender_list(request):
+    group = request.user.groups.all()[0].name
     objects = Tender.objects.all().order_by('-datetime')
     context = {
-        'objects': objects, 'title': 'Lista Tender',
+        'objects': objects, 'title': 'Lista Tender', 'group':group
     }
     return render(request, 'tender/list.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def tender_add(request):
+    group = request.user.groups.all()[0].name
     if request.method == 'POST':
         newid, new_hashed = getnewid(Tender)
         form = TenderForm(request.POST, request.FILES)
@@ -33,12 +37,14 @@ def tender_add(request):
     else:
         form = TenderForm()
     context = {
-        'title': 'Aumenta Tender','subtitle': 'Tender', 'form': form
+        'title': 'Aumenta Tender', 'group':group, 'subtitle': 'Tender', 'form': form
     }
     return render(request, 'tender/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def tender_update(request, hashid):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(Tender, hashed=hashid)
     if request.method == 'POST':
         form = TenderForm(request.POST, request.FILES, instance=objects)
@@ -51,19 +57,22 @@ def tender_update(request, hashid):
     else:
         form = TenderForm(instance=objects)
     context = {
-        'title': 'Altera Tender','subtitle': 'Tender', 'form': form
+        'title': 'Altera Tender', 'group':group, 'subtitle': 'Tender', 'form': form
     }
     return render(request, 'tender/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
 def tender_detail(request, hashid):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(Tender, hashed=hashid)
     context = {
-        'title': 'Detail Tender', 'subtitle': 'Tender', 'objects': objects
+        'title': 'Detail Tender', 'group':group, 'subtitle': 'Tender', 'objects': objects
     }
     return render(request, 'tender/detail.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def tender_activate(request, hashid):
     objects = get_object_or_404(Tender, hashed=hashid)
     objects.is_active = True
@@ -72,6 +81,7 @@ def tender_activate(request, hashid):
     return redirect('admin-tender-list')
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def tender_deactivate(request, hashid):
     objects = get_object_or_404(Tender, hashed=hashid)
     objects.is_active = False

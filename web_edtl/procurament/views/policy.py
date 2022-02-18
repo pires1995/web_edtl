@@ -7,18 +7,23 @@ from django.http import FileResponse, Http404
 from django.conf import settings
 from main.utils import getnewid
 from django.contrib import messages
+from custom.decorators import allowed_users
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
 def policy_list(request):
+    group = request.user.groups.all()[0].name
     objects = Policy.objects.all().order_by('-datetime')
     context = {
-        'objects': objects, 'title': 'Lista Policy',
+        'objects': objects, 'title': 'Lista Policy', 'group':group
     }
     return render(request, 'policy/list.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def policy_add(request):
+    group = request.user.groups.all()[0].name
     if request.method == 'POST':
         newid, new_hashed = getnewid(Policy)
         form = PolicyForm(request.POST, request.FILES)
@@ -33,12 +38,14 @@ def policy_add(request):
     else:
         form = PolicyForm()
     context = {
-        'title': 'Aumenta Policy','subtitle': 'Policy', 'form': form
+        'title': 'Aumenta Policy', 'group':group, 'subtitle': 'Policy', 'form': form
     }
     return render(request, 'policy/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def policy_update(request, hashid):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(Policy, hashed=hashid)
     if request.method == 'POST':
         form = PolicyForm(request.POST, request.FILES, instance=objects)
@@ -51,19 +58,22 @@ def policy_update(request, hashid):
     else:
         form = PolicyForm(instance=objects)
     context = {
-        'title': 'Altera Policy','subtitle': 'Policy', 'form': form
+        'title': 'Altera Policy', 'group':group, 'subtitle': 'Policy', 'form': form
     }
     return render(request, 'policy/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
 def policy_detail(request, hashid):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(Policy, hashed=hashid)
     context = {
-        'title': 'Detail Policy', 'subtitle': 'Policy', 'objects': objects
+        'title': 'Detail Policy', 'group':group, 'subtitle': 'Policy', 'objects': objects
     }
     return render(request, 'policy/detail.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def policy_activate(request, hashid):
     objects = get_object_or_404(Policy, hashed=hashid)
     objects.is_active = True
@@ -72,6 +82,7 @@ def policy_activate(request, hashid):
     return redirect('admin-policy-list')
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def policy_deactivate(request, hashid):
     objects = get_object_or_404(Policy, hashed=hashid)
     objects.is_active = False

@@ -1,16 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from appointment.models import Appointment
-from appointment.forms import AppointmentForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import FileResponse, Http404
-from django.conf import settings
-from main.utils import getnewid
 from django.contrib import messages
 from datetime import datetime
+from custom.decorators import allowed_users
 
 @login_required
+@allowed_users(allowed_roles=['secretary'])
 def appointment_list(request):
+    group = request.user.groups.all()[0].name
     objects = Appointment.objects.filter(is_approved=False, is_reject=False)
     if request.method == 'POST':
         id = request.POST.get('id')
@@ -43,32 +42,37 @@ def appointment_list(request):
         messages.success(request, f'Successfully Send Messages')
         return redirect('admin-appointment-list')
     context = {
-        'objects': objects, 'title': 'Lista Appointment'
+        'objects': objects, 'title': 'Lista Appointment', 'group': group, 
     }
     return render(request, 'appointment/list.html',context)
 
 
 
 @login_required
+@allowed_users(allowed_roles=['secretary'])
 def appointment_approved_list(request):
+    group = request.user.groups.all()[0].name
     objects = Appointment.objects.filter(is_approved=True, is_done=False, is_cancelled=False).order_by('-approved_date')
     done = Appointment.objects.filter(is_approved=True, is_done=True).order_by('-done_date')
     not_done = Appointment.objects.filter(is_approved=True, is_done=False,  is_cancelled=True)
     context = {
         'objects': objects, 'title': 'List Approved Appointment ', 'done': 'Done Appointment', 'not_done': 'Cancel Appointment',\
-            'done_list': done, 'not_done_list': not_done
+            'done_list': done, 'not_done_list': not_done, 'group': group, 
     }
     return render(request, 'appointment/appointment_approved.html',context)
 
 @login_required
+@allowed_users(allowed_roles=['secretary'])
 def appointment_reject_list(request):
+    group = request.user.groups.all()[0].name
     objects = Appointment.objects.filter(is_approved=False, is_reject=True).order_by('-reject_date')
     context = {
-        'objects': objects, 'title': 'List Reject Appointment '
+        'objects': objects, 'title': 'List Reject Appointment ', 'group': group, 
     }
     return render(request, 'appointment/appointment_reject.html',context)
 
 @login_required
+@allowed_users(allowed_roles=['secretary'])
 def appointment_approved_done(request, hashid):
     objects = get_object_or_404(Appointment, hashed=hashid)
     objects.is_done = True
@@ -78,6 +82,7 @@ def appointment_approved_done(request, hashid):
     return redirect('admin-appointment-approved-list')
 
 @login_required
+@allowed_users(allowed_roles=['secretary'])
 def appointment_approved_not_done(request, hashid):
     objects = get_object_or_404(Appointment, hashed=hashid)
     objects.is_approved =True
@@ -89,10 +94,12 @@ def appointment_approved_not_done(request, hashid):
 
 
 @login_required
+@allowed_users(allowed_roles=['secretary'])
 def appointment_detail(request, hashid):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(Appointment, hashed=hashid)
     context = {
-        'title': 'Detail Appointment', 'subtitle': 'Appointment', 'objects': objects
+        'title': 'Detail Appointment', 'subtitle': 'Appointment', 'objects': objects, 'group': group, 
     }
     return render(request, 'appointment/detail.html', context)
 

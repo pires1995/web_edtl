@@ -13,3 +13,5 @@ from .tender import *
 from .project import *
 from .announcement import *
 from .album import *
+from .fms import *
+from .usm import *

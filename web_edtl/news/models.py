@@ -1,3 +1,4 @@
+from random import choice
 from django.db import models
 import hashlib
 from django.utils import timezone
@@ -88,10 +89,26 @@ class NewsImage(models.Model):
         self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
         return super(NewsImage, self).save(*args, **kwargs)
 
+class SubscribeChoice(models.Model):
+    name = models.CharField(max_length=300, null=True)
+    hashed = models.CharField(max_length=32, null=True, blank=True)
+    def __str__(self):
+        template = '{0.name}'
+        return template.format(self)
+    def save(self, *args, **kwargs):
+        self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
+        return super(SubscribeChoice, self).save(*args, **kwargs)
 
 class NewsUser(models.Model):
     email = models.EmailField()
+    is_active = models.BooleanField(default=False, null=True)
     date_created = models.DateTimeField(auto_now_add=True)
+    choices = models.ManyToManyField(SubscribeChoice, blank=True)
+    hashed = models.CharField(max_length=32, null=True, blank=True)
 
     def __str__(self):
         return self.email
+
+    def save(self, *args, **kwargs):
+        self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
+        return super(NewsUser, self).save(*args, **kwargs)                   

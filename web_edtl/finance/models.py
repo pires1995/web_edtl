@@ -24,7 +24,7 @@ class Client(models.Model):
 
 class Bill(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    bill_number=models.IntegerField()
+    bill_number=models.CharField(max_length=500,null=True)
     payment_date = models.DateField(null=True)
     file = models.ImageField(default='default.jpg', upload_to=path_and_rename_bill, null=True, blank=True)
     upload_date = models.DateField(null=True)

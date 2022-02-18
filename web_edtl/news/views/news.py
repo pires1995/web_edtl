@@ -18,6 +18,7 @@ from django.conf import settings
 import re
 from email.mime.image import MIMEImage
 from django.contrib.staticfiles import finders
+from custom.decorators import allowed_users
 # Create your views here.
 
 # NEWS USER
@@ -25,6 +26,7 @@ from django.contrib.staticfiles import finders
 
 @login_required
 def news_unsubscribed(request):
+    group = request.user.groups.all()[0].name
     form = NewsUserSignUpForm(request.POST or None)
     if form.is_valid():
         instance = form.save(commit=False)
@@ -36,7 +38,7 @@ def news_unsubscribed(request):
             messages.warning(
                 request, 'Your Email is not in the database', 'alert alert-warning alert-dismissible')
     context = {
-        'form': form
+        'form': form, 'group':group
     }
     template = 'main/index.html'
     return render(request, template, context)
@@ -44,6 +46,7 @@ def news_unsubscribed(request):
 
 # NEWS MANAGEMENT
 @login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
 def news_list(request):
 
     group = request.user.groups.all()[0].name
@@ -55,7 +58,9 @@ def news_list(request):
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def news_add(request):
+    group = request.user.groups.all()[0].name
     if request.method == 'POST':
         newid, new_hashed = getnewid(News)
         form = NewsForm(request.POST, request.FILES)
@@ -71,12 +76,13 @@ def news_add(request):
     else:
         form = NewsForm()
     context = {
-        'form': form, 'title': 'Add News'
+        'form': form, 'title': 'Add News', 'group':group
     }
     return render(request, 'news/add.html', context)
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
 def news_detail(request, hashid):
     group = request.user.groups.all()[0].name
     object = get_object_or_404(News, hashed=hashid)
@@ -89,7 +95,9 @@ def news_detail(request, hashid):
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def news_update(request, hashid):
+    group = request.user.groups.all()[0].name
     object = get_object_or_404(News, hashed=hashid)
     if request.method == 'POST':
         form = NewsForm(request.POST, request.FILES, instance=object)
@@ -103,12 +111,13 @@ def news_update(request, hashid):
     else:
         form = NewsForm(instance=object)
     context = {
-        'form': form, 'title': 'Update News', 'object': object
+        'form': form, 'group':group, 'title': 'Update News', 'object': object
     }
     return render(request, 'news/add.html', context)
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def news_activate(request, hashid):
     object = get_object_or_404(News, hashed=hashid)
     object.is_active = True
@@ -118,6 +127,7 @@ def news_activate(request, hashid):
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def news_deactivate(request, hashid):
     object = get_object_or_404(News, hashed=hashid)
     object.is_active = False
@@ -127,6 +137,7 @@ def news_deactivate(request, hashid):
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def news_sent(request, hashid):
     object = get_object_or_404(News, hashed=hashid)
     object.is_sent = True
@@ -139,6 +150,7 @@ def news_sent(request, hashid):
 
 
 @login_required
+@allowed_users(allowed_roles=['coordinator'])
 def news_approval_request_list(request):
     group = request.user.groups.all()[0].name
     news = News.objects.filter(
@@ -161,6 +173,7 @@ def news_approval_request_list(request):
 
 
 @login_required
+@allowed_users(allowed_roles=['coordinator'])
 def news_approved_list(request):
     group = request.user.groups.all()[0].name
     news = News.objects.filter(is_approved=True).order_by('-entered_date')
@@ -172,6 +185,7 @@ def news_approved_list(request):
 
 
 @login_required
+@allowed_users(allowed_roles=['coordinator'])
 def news_approved2(request, hashid):
     objects = get_object_or_404(News, hashed=hashid)
     objects.approved_by = request.user
@@ -204,6 +218,7 @@ def news_approved2(request, hashid):
     return redirect('admin-news-request-list')
 
 @login_required
+@allowed_users(allowed_roles=['coordinator'])
 def news_approved(request, hashid):
     objects = get_object_or_404(News, hashed=hashid)
     objects.approved_by = request.user
@@ -221,7 +236,9 @@ def news_approved(request, hashid):
 
 # NEWS IMAGES
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def news_image_add(request, hashid):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(News, hashed=hashid)
     if request.method == 'POST':
         data = request.POST
@@ -243,14 +260,16 @@ def news_image_add(request, hashid):
     else:
         form = NewsImageForm()
     context = {
-        'hashid': hashid, 'objects': objects, 'form': form,
+        'hashid': hashid,'group':group, 'objects': objects, 'form': form,
         'title': f'Add Image to news "{objects.title}"" ', 'subtitle': 'Please Fill News Image Information and Select Image'
     }
     return render(request, 'news/add.html', context)
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def news_image_update(request, hashid, hashid2):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(NewsImage, hashed=hashid)
     if request.method == 'POST':
         form = NewsImageUpdateForm(
@@ -262,13 +281,14 @@ def news_image_update(request, hashid, hashid2):
     else:
         form = NewsImageUpdateForm(instance=objects)
     context = {
-        'hashid': hashid, 'objects': objects, 'form': form, 'hashid2': hashid2,
+        'hashid': hashid,'group':group, 'objects': objects, 'form': form, 'hashid2': hashid2,
         'title': 'Update News Image', 'legend': 'Update Image'
     }
     return render(request, 'news/news_image_update.html', context)
 
 
 @login_required
+@allowed_users(allowed_roles=['coordinator'])
 def news_image_delete(request, hashid, hashid2):
     objects = NewsImage.objects.get(hashed=hashid)
     objects.delete()
@@ -276,7 +296,9 @@ def news_image_delete(request, hashid, hashid2):
     return redirect('admin-news-detail', hashid2)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def news_send(request, hashid):
+    group = request.user.groups.all()[0].name
     objects = get_object_or_404(News, hashed=hashid)
     template = render_to_string('email/send.html')
     email = EmailMessage(

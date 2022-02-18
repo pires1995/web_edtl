@@ -57,7 +57,7 @@ class Suggestion(models.Model):
     email = models.CharField(max_length=254, null=True)
     mobile = models.IntegerField(null=True,blank=False)
     text = models.TextField(null=True)
-    submit_date = models.DateTimeField(null=True)
+    submit_date = models.DateTimeField(auto_now_add=True,null=True)
     hashed = models.CharField(max_length=32, null=True, blank=True)
     def __str__(self):
         template = '{0.fullname} {0.submit_date}'

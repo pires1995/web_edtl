@@ -19,8 +19,8 @@
         <div class="col-md-3 footer-links">
           <h4>{{lang_data.FOOTER_LBL2}}</h4>
           <ul>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">{{lang_data.FOOTER_LBL3}}</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">{{lang_data.FOOTER_LBL4}}</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'fsm-login' %}">{{lang_data.FOOTER_LBL3}}</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'usm-login' lang %}">{{lang_data.FOOTER_LBL4}}</a></li>
             <li><i class="bx bx-chevron-right"></i> <a href="{% url 'faq-list' lang %}">{{lang_data.FOOTER_LBL5}}</a></li>
           </ul>
         </div>

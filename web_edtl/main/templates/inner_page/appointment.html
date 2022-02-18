@@ -1,4 +1,5 @@
 {% extends "main/layout.html" %}
+{% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
 <section id="breadcrumbs" class="breadcrumbs">
@@ -19,52 +20,9 @@
             <div class="col-md-10">
                 <div class="row justify-content-center" data-aos="fade-up">
                     <div class="col-lg-10">
-                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-                            <h5 class="title">{{lang_data.APPOINTMENT_LBL1}}</h5>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-4 form-group">
-                                    <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL2}}</label>
-                                    <input type="text" name="name" class="form-control" id="name" placeholder="{{lang_data.APPOINTMENT_LBL2_1}}" required>
-                                </div>
-                            <div class="col-md-4 form-group ">
-                                <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL3}}</label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="{{lang_data.APPOINTMENT_LBL3_1}}" required>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL4}}</label>
-                                <input type="number" name="name" class="form-control" id="name" placeholder="{{lang_data.APPOINTMENT_LBL4_1}}" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class=" col-md-4 form-group mt-3">
-                            <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL5}}</label>
-                            <input type="date" class="form-control" name="subject" id="subject" placeholder="Subject" required>
-                            </div>
-                            <div class=" col-md-4 form-group mt-3">
-                                <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL6}}</label>
-                                <input type="time" class="form-control" name="subject" id="subject" placeholder="Subject" required>
-                            </div>
-                            <div class=" col-md-4 form-group mt-3">
-                            <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL7}}</label>
-                            <select class="form-select form-select-md" aria-label=".form-select-lg example">
-                                <option selected>---------</option>
-                                <option value="1">President</option>
-                                <option value="2">Vice President</option>
-                                <option value="3">Other</option>
-                              </select>
-                        </div>
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL8}}</label>
-                          <textarea class="form-control" name="message" rows="5" placeholder="{{lang_data.APPOINTMENT_LBL8_1}}" required></textarea>
-                        </div>
-                        <!-- <div class="my-3">
-                          <div class="loading">Loading</div>
-                          <div class="error-message"></div>
-                          <div class="sent-message">Your message has been sent. Thank you!</div>
-                        </div> -->
-                        <div class="text-center"><button type="submit">{{lang_data.APPOINTMENT_LBL9}}</button></div>
+                      <form method="POST" enctype="multipart/form-data" class="php-email-form">
+                        {% csrf_token %}
+                        {% crispy form %}
                       </form>
                     </div>
           
@@ -83,33 +41,9 @@
             <div class="col-md-10">
                 <div class="row justify-content-center" data-aos="fade-up">
                     <div class="col-lg-10">
-                        <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-                            <h5 class="title">{{lang_data.APPOINTMENT_LBL10}}</h5>
-                            <hr>
-                            <div class="row">
-                                <div class="col-md-4 form-group">
-                                    <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL2}}</label>
-                                    <input type="text" name="name" class="form-control" id="name" placeholder="{{lang_data.APPOINTMENT_LBL2_1}}" required>
-                                </div>
-                            <div class="col-md-4 form-group ">
-                                <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL3}}</label>
-                                <input type="email" class="form-control" name="email" id="email" placeholder="{{lang_data.APPOINTMENT_LBL3_1}}" required>
-                            </div>
-                            <div class="col-md-4 form-group">
-                                <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL4}}</label>
-                                <input type="number" name="name" class="form-control" id="name" placeholder="{{lang_data.APPOINTMENT_LBL4_1}}" required>
-                            </div>
-                            </div>
-                        <div class="form-group mt-3">
-                            <label for="exampleInputEmail1" class="form-label">{{lang_data.APPOINTMENT_LBL11}}</label>
-                          <textarea class="form-control" name="message" rows="5" placeholder="{{lang_data.APPOINTMENT_LBL12_1}}" required></textarea>
-                        </div>
-                        <!-- <div class="my-3">
-                          <div class="loading">Loading</div>
-                          <div class="error-message"></div>
-                          <div class="sent-message">Your message has been sent. Thank you!</div>
-                        </div> -->
-                        <div class="text-center"><button type="submit">Submit</button></div>
+                        <form method="POST" enctype="multipart/form-data" class="php-email-form">
+                          {% csrf_token %}
+                          {% crispy form2 %}
                       </form>
                     </div>
           

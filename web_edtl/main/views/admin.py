@@ -6,6 +6,7 @@ from django.db.models import Count, Q
 from appointment.models import Appointment
 from news.models import NewsUser
 from finance.models import Client
+from custom.decorators import allowed_users
 def month():
     month_name = {
         '1': 'January',
@@ -23,6 +24,7 @@ def month():
     }
 
 @login_required
+@allowed_users(allowed_roles=['admin','media','coordinator', 'finance', 'secretary'])
 def dashboard(request):
     group = request.user.groups.all()[0].name
     client = Client.objects.filter(is_active=True).count()

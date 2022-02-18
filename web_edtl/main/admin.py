@@ -29,7 +29,7 @@ class MyUserAdmin(UserAdmin):
 
         }),
         (_('Permissions'), {
-            'fields': ('is_active', 'is_staff', 'is_superuser', 'groups',),
+            'fields': ('is_active', 'is_staff', 'is_superuser', 'is_client', 'groups',),
         }),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )

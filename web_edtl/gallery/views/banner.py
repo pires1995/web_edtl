@@ -8,8 +8,10 @@ from django.conf import settings
 from main.utils import getnewid
 from django.contrib import messages
 from django.core.paginator import Paginator
+from custom.decorators import allowed_users
 
 @login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
 def banner_list(request):
     group = request.user.groups.all()[0].name
     objects = Banner.objects.all().order_by('-datetime')
@@ -18,11 +20,12 @@ def banner_list(request):
     page_obj = paginator.get_page(page_number)
     context = {
         'objects': objects, 'page_obj': page_obj, \
-        'title': 'Lista Banner', 'subtitle': 'Banner'
+        'title': 'Lista Banner', 'subtitle': 'Banner','group':group
     }
     return render(request, 'banner/list.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def banner_add(request):
 	group = request.user.groups.all()[0].name
 	if request.method == 'POST':
@@ -40,12 +43,13 @@ def banner_add(request):
 		form = BannerForm()
 	context = {
 		'form': form,
-		'title': 'Add Banner', 'subtitle': 'Banner'
+		'title': 'Add Banner', 'subtitle': 'Banner', 'group':group
 	}
 	return render(request, 'banner/form.html', context)
 
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def banner_update(request, hashid):
 	group = request.user.groups.all()[0].name
 	objects = get_object_or_404(Banner, hashed=hashid)
@@ -59,19 +63,22 @@ def banner_update(request, hashid):
 		form = BannerForm(instance=objects)
 	context = {
 		'hashid': hashid, 'objects': objects,'form': form,
-		'title': 'Altera Banner', 'subtitle': 'Banner'
+		'title': 'Altera Banner', 'subtitle': 'Banner', 'group':group
 	}
 	return render(request, 'banner/form.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
 def banner_detail(request, hashid):
-    objects = get_object_or_404(Banner, hashed=hashid)
-    context = {
-        'title': 'Detalla Banner', 'objects': objects, 'banner': hashid 
-    }
-    return render(request, 'banner/detail.html', context)
+	group = request.user.groups.all()[0].name
+	objects = get_object_or_404(Banner, hashed=hashid)
+	context = {
+		'title': 'Detalla Banner', 'group':group, 'objects': objects, 'banner': hashid 
+	}
+	return render(request, 'banner/detail.html', context)
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def banner_activate(request, hashid):
     objects = get_object_or_404(Banner, hashed=hashid)
     objects.is_active = True
@@ -80,6 +87,7 @@ def banner_activate(request, hashid):
     return redirect('admin-banner-list')
 
 @login_required
+@allowed_users(allowed_roles=['admin','media'])
 def banner_deactivate(request, hashid):
     objects = get_object_or_404(Banner, hashed=hashid)
     objects.is_active = False
