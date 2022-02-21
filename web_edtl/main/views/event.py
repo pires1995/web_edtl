@@ -14,10 +14,16 @@ def event_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    if lang == 'tt':
+        titlepage='Eventu'
+    elif lang == 'pt':
+        titlepage='Evento'
+    else:
+        titlepage='Event'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products,\
-                'page_obj':page_obj, 'lang':lang, 'lang_data': lang_data,
+                'page_obj':page_obj, 'lang':lang, 'lang_data': lang_data, 'titlepage':titlepage
     }
     template = 'inner_page/event/list.html'
     return render(request, template, context)
@@ -28,15 +34,19 @@ def event_detail(request,lang, hashid):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Event, hashed=hashid)
+    titlepage = ''
     if lang == 'tt':
         title2 = f"Eventu: {objects.name_tet}"
+        titlepage='Detalla Eventu'
     elif lang == 'pt':
         title2 = f"Evento: {objects.name_por}"
+        titlepage='Detalha Evento'
     elif lang == 'en':
         title2 = f"Event: {objects.name_eng}"
+        titlepage='Event Detail'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
-                'objects': objects, 'title2':title2
+                'objects': objects, 'title2':title2, 'titlepage':titlepage
     }
     return render(request, 'inner_page/event/detail.html', context)

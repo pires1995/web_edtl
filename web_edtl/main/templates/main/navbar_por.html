@@ -13,6 +13,13 @@
             <li><a href="{% url 'who-we-are' l2 %}" >Sobre Nós</a></li>
             <li><a href="{% url 'what-we-do' l2 %}">Nossos Serviços</a></li>
             <li><a href="{% url 'board-profile' l2 %}">Perfil do Conselho</a></li>
+            <li class="dropdown"><a href="#"><span>Gabineti CA & Executive Diretors</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li><a href="{% url 'board-cabinet' l2 %}">Gabineti Apoiu Servisu</a></li>
+                <li><a href="{% url 'board-pmu' l2 %}">Project Management Unit (PMU)</a></li>
+                <li><a href="{% url 'board-audit' l2 %}">Auditória</a></li>
+              </ul>
+            </li>
           </ul>
         </li>
         <li><a href="{% url 'event-list' l2 %}" class="{% if url_name == 'event-list' %} active{% endif %}">Evento</a></li>

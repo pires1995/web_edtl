@@ -1,11 +1,14 @@
 {% extends "main/layout.html" %}
 {% load static %}
+{% block title %}
+  {{titlepage}}
+{% endblock title %}
 {% block content %}
     <!-- ======= Breadcrumbs ======= -->
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
         <ol>
-        <li><a href="{% url 'redirect-home' %}">Home</a></li>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
         <li><a href="{% url 'department-detail' lang  department.hashed %}">
           {% if lang == 'tt' %}
             {{department.name_tet}}
@@ -25,19 +28,21 @@
 <section id="blog" class="blog">
   <div class="container" data-aos="fade-up">
 
+    <div class="section-title">
+      <h2><strong>
+        {% if lang == 'tt' %}
+        {{objects.name_tet}}
+        {% elif lang == 'pt' %}
+        {{objects.name_por}}
+        {% else %}
+        {{objects.name_eng}}
+        {% endif %}
+      </strong></h2>
+        
+
+    </div>
     <div class="row">
 
-      <h2 class="section-title">
-          {% if lang == 'tt' %}
-          {{objects.name_tet}}
-          {% elif lang == 'pt' %}
-          {{objects.name_por}}
-          {% else %}
-          {{objects.name_eng}}
-          {% endif %}
-          
-
-      </h2>
       <div class="col-md-5 entries">
 
         <article class="entry entry-single">

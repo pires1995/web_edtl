@@ -1,8 +1,11 @@
 {% extends "main/layout.html" %}
 {% load static %}
 {% load crispy_forms_tags %}
-{% block content %}
 {% load social_share %}
+{% block title %}
+  EDTL.EP - {{titlepage}}
+{% endblock title %}
+{% block content %}
 
 {% block head %}
 <meta property="og:title"         content="{{objects.title}}" />

@@ -40,10 +40,17 @@ def appointment(request,lang):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     contactMunicipality = ContactMunicipality.objects.filter(is_active=True).order_by('-municipality')
+    titlepage = ''
+    if lang == 'tt':
+        titlepage='EDTL.EP - Kontaktu'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Contacto'
+    else:
+        titlepage='EDTL.EP - Contact'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'Appointment', \
             'departments':departments,'form':form,'form2':form2, 'products': products, 'lang':lang, 'lang_data': lang_data,\
-                'contactMunicipality':contactMunicipality
+                'contactMunicipality':contactMunicipality, 'titlepage':titlepage
     }
     template = 'inner_page/appointment.html'
     return render(request, template, context)

@@ -13,6 +13,13 @@
             <li><a href="{% url 'who-we-are' l1 %}" >Se mak Ami</a></li>
             <li><a href="{% url 'what-we-do' l1 %}">Saida mak Ami Halo</a></li>
             <li><a href="{% url 'board-profile' l1 %}">Membru</a></li>
+            <li class="dropdown"><a href="#"><span>Gabineti CA & Executive Diretors</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li><a href="{% url 'board-cabinet' l1 %}">Gabineti Apoiu Servisu</a></li>
+                <li><a href="{% url 'board-pmu' l1 %}">Project Management Unit (PMU)</a></li>
+                <li><a href="{% url 'board-audit' l1 %}">Auditória</a></li>
+              </ul>
+            </li>
           </ul>
         </li>
         <li><a href="{% url 'event-list' l1 %}" class="{% if url_name == 'event-list' %} active{% endif %}">Eventu</a></li>

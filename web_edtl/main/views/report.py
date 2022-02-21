@@ -16,8 +16,14 @@ def report_list(request,lang):
     paginator = Paginator(objects, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Lista Relatoriu'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Lista Relatorio'
+    else:
+        titlepage='EDTL.EP - Report List'
     context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
+        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', 'titlepage':titlepage,\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data, 'page_obj': page_obj
     }
     template = 'inner_page/report/list.html'
@@ -29,8 +35,14 @@ def report_detail(request,lang, hashid):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Report, hashed=hashid)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Detalla Relatoriu'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Detalha Relatorio'
+    else:
+        titlepage='EDTL.EP - Report Detail'
     context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', \
+        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', 'titlepage':titlepage, \
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data, 'objects': objects
     }
     template = 'inner_page/report/detail.html'

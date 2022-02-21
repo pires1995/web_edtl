@@ -21,6 +21,13 @@ def usm_login(request,lang):
     subscribechoices = SubscribeChoice.objects.all()
     products = Product.objects.filter(is_active=True)
     form = USMForm(request.POST or None)
+    titlepage = ''
+    if lang == 'tt':
+        titlepage='EDTL.EP - Subscribe Login'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Subscribe Login'
+    else:
+        titlepage='EDTL.EP - Subscribe Login'
     if 'usm_form' in request.POST:
         if form.is_valid():
             email = form.cleaned_data['email']
@@ -52,18 +59,23 @@ def usm_login(request,lang):
 
     context = {
         'form': form,'departments':departments,'products': products, 'lang_data': lang_data, \
-            'lang':lang, 'l1': 'tt', 'l2': 'pt', 'l3': 'en'
+            'lang':lang, 'l1': 'tt', 'l2': 'pt', 'l3': 'en', 'titlepage':titlepage
     }
     return render(request, 'usm/login.html', context)
 
 @login_required
 @allowed_users(allowed_roles=['client'])
 def usm_home(request, lang, hashid):
-    print(hashid)
     title = 'Client Dashboard'
     lang_data = lang_master(lang)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Subscribe Dashboard'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Subscribe Dashboard'
+    else:
+        titlepage='EDTL.EP - Subscribe Dashboard'
     context = {
-        'title': title, 'lang':lang, 'l1': 'tt', 'l2': 'pt', 'l3': 'en', 'lang_data':lang_data
+        'title': title, 'titlepage':titlepage, 'lang':lang, 'l1': 'tt', 'l2': 'pt', 'l3': 'en', 'lang_data':lang_data
     }
     return render(request, 'usm/dashboard.html', context)
 

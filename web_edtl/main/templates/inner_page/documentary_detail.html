@@ -1,5 +1,8 @@
 {% extends "main/layout.html" %}
 {% load static %}
+{% block title %}
+  {{titlepage}}
+{% endblock title %}
 {% block content %}
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
@@ -44,13 +47,7 @@
                 <h3>{{lang_data.DETAIL_ALBUM_INFO_LBL}}</h3>
                 <ul>
                   <li><strong>{{lang_data.DETAIL_ALBUM_LBL1}}</strong>:
-                    {% if lang == 'tt' %}
-                    {{objects.name_tet}}
-                    {% elif lang == 'pt' %}
-                    {{objects.name_por}}
-                    {% else %}
-                    {{objects.name_eng}}
-                    {% endif %}</li>
+                    {{objects.category}}</li>
                   <li>
                     <i class="bi bi-person text-primary"></i> {{objects.author.first_name}} {{objects.author.last_name}}
                     <i class="bi bi-person text-danger"></i> {{objects.datetime|date:"d/M/Y"}}

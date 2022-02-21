@@ -1,7 +1,10 @@
 {% extends "main/layout.html" %}
 {% load static %}
-{% block content %}
 {% load social_share %}
+{% block title %}
+  EDTL.EP - {{titlepage}}
+{% endblock title %}
+{% block content %}
 
 {% block head %}
 <meta property="og:title"         content="{{title2}}" />
@@ -22,6 +25,7 @@
       <div class="row">
 
         <h2 class="section-title">
+
             {% if lang == 'tt' %}
             {{objects.name_tet}}
             {% elif lang == 'pt' %}
@@ -29,7 +33,6 @@
             {% else %}
             {{objects.name_eng}}
             {% endif %}
-            
 
         </h2>
         <div class="col-md-5 entries">

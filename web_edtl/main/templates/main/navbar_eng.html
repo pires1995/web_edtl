@@ -12,6 +12,13 @@
             <li><a href="{% url 'who-we-are' l3 %}" >Who We Are</a></li>
             <li><a href="{% url 'what-we-do' l3 %}">What We Do</a></li>
             <li><a href="{% url 'board-profile' l3 %}">Board Director Profile</a></li>
+            <li class="dropdown"><a href="#"><span>Gabineti CA & Executive Diretors</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li><a href="{% url 'board-cabinet' l3 %}">Gabineti Apoiu Servisu</a></li>
+                <li><a href="{% url 'board-pmu' l3 %}">Project Management Unit (PMU)</a></li>
+                <li><a href="{% url 'board-audit' l3 %}">Auditória</a></li>
+              </ul>
+            </li>
           </ul>
         </li>
         <li><a href="{% url 'event-list' l3 %}" class="{% if url_name == 'event-list' %} active{% endif %}">Events</a></li>
@@ -51,10 +58,10 @@
             <li class="dropdown"><a href="#"><span>Recruitments</span> <i class="bi bi-chevron-down"></i></a>
                   <ul>
                     <li><a href="{% url 'vacancy-list' l3 %}">Job Vacancies</a></li>
-                    <li><a href=" {% url 'internships-list' l3 %} ">Internships</a></li>
+                    <li><a href=" {% url 'internships-list' l3 %} ">Internships and Students Placement</a></li>
                     <li><a href="{% url 'volunteer-list' l3 %}">Volunteer</a></li>
                   </ul>
-                </li>
+            </li>
                 <li class="dropdown"><a href="#"><span>Procurements</span> <i class="bi bi-chevron-down"></i></a>
                   <ul>
                     <li><a href="{% url 'tender-list' l3 %}">Public Tender</a></li>

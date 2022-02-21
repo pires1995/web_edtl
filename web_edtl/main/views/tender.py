@@ -19,11 +19,20 @@ def tender_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    page_description = get_object_or_404(PageManegament, name='tender')
+    if lang == 'tt':
+        titlepage='EDTL.EP - Lista Tender'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Lista Tender'
+    else:
+        titlepage='EDTL.EP - Tender List'
+    try:
+        page_description = get_object_or_404(PageManegament, name='tender',is_active = True)
+    except:
+        page_description = ''
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
-                 'page_obj':page_obj, 'today': today, 'page_description': page_description
+                 'page_obj':page_obj, 'titlepage':titlepage, 'today': today, 'page_description': page_description
     }
     template = 'inner_page/procurament/tender.html'
     return render(request, template, context)
@@ -45,11 +54,20 @@ def guideline_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    page_description = get_object_or_404(PageManegament, name='guideline')
+    if lang == 'tt':
+        titlepage='EDTL.EP - Lista Mata Dalan'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Lista Instrucao'
+    else:
+        titlepage='EDTL.EP - Guideline List'
+    try:
+        page_description = get_object_or_404(PageManegament, name='guideline', is_active=True)
+    except:
+        page_description = ''
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
-                'page_obj':page_obj, 'today': today, 'page_description': page_description
+                'page_obj':page_obj, 'titlepage':titlepage, 'today': today, 'page_description': page_description
     }
     template = 'inner_page/procurament/guideline.html'
     return render(request, template, context)
@@ -71,11 +89,21 @@ def policy_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    policy_page = get_object_or_404(PageManegament, name='policy')
+    titlepage = ''
+    if lang == 'tt':
+        titlepage='EDTL.EP - Lista Regra'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Lista Regras'
+    else:
+        titlepage='EDTL.EP - Policy List'
+    try:
+        policy_page = get_object_or_404(PageManegament, name='policy', is_active=True)
+    except:
+        policy_page = ''
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
-                'page_obj':page_obj, 'today': today, 'policy_page': policy_page
+                'page_obj':page_obj, 'titlepage':titlepage, 'today': today, 'policy_page': policy_page
     }
     template = 'inner_page/procurament/policy.html'
     return render(request, template, context)

@@ -19,10 +19,16 @@ def album_list(request,lang):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     legend = f"ALBUM {currentYear.year}"
+    if lang == 'tt':
+        titlepage='EDTL.EP - Lista Album'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Lista Album'
+    else:
+        titlepage='EDTL.EP - Album List'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
-                'gallery_categories': gallery_categories, 'page_obj':page_obj, 'legend': legend
+                'gallery_categories': gallery_categories, 'titlepage':titlepage, 'page_obj':page_obj, 'legend': legend
     }
     template = 'inner_page/gallery/album_list.html'
     return render(request, template, context)
@@ -33,9 +39,15 @@ def album_detail(request,lang, hashid):
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Album, hashed=hashid)
     gallery = Gallery.objects.filter(album=objects)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Detalla Album'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Detalha Album'
+    else:
+        titlepage='EDTL.EP - Album Detail'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,'objects':objects, 'gallery': gallery
+            'departments':departments, 'titlepage':titlepage, 'products': products, 'lang':lang, 'lang_data': lang_data,'objects':objects, 'gallery': gallery
     }
     template = 'inner_page/gallery/album_detail.html'
     return render(request, template, context)
@@ -51,10 +63,16 @@ def video_list(request,lang):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     legend = f"VIDEO {currentYear.year}"
+    if lang == 'tt':
+        titlepage='EDTL.EP - Lista Video'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Lista Video'
+    else:
+        titlepage='EDTL.EP - Video List'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
-                'gallery_categories': gallery_categories, 'page_obj':page_obj, 'legend': legend
+                'gallery_categories': gallery_categories,'titlepage':titlepage,  'page_obj':page_obj, 'legend': legend
     }
     template = 'inner_page/gallery/video_list.html'
     return render(request, template, context)

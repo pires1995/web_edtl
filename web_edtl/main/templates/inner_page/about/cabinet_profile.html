@@ -1,0 +1,59 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block title %}
+EDTL.EP - {{titlepage}}
+{% endblock title %}
+{% block content %}
+  <!-- ======= Breadcrumbs ======= -->
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>{{lang_data.BOARD_MEMBER_LBL2}}</li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+
+  <!-- ======= Our Team Section ======= -->
+  <section id="team " class="team section-bg blog">
+
+      <!-- GABINETE -->
+      <div class="container">
+        <div class="section-title" data-aos="fade-up">
+            <h2><strong>{{lang_data.BOARD_MEMBER_LBL2}}</strong></h2>
+            {% if lang == 'tt' %}
+              {{page_description.description_tet|safe}}
+              {% elif lang == 'pt' %}
+              {{page_description.description_por|safe}}
+              {% else %}
+              {{page_description.description_eng|safe}}
+              {% endif %}
+          </div>
+      <div class="row justify-content-center">
+        {% for object  in  gabinete %}
+          
+        
+        <div class="col-md-2 d-flex align-items-stretch">
+          <div class="member" data-aos="fade-up">
+            <div class="member-img">
+              <img src="{% static 'main/img/img_loading.png' %}" data-src="{{object.employee.image.url}}" class="img-fluid" alt="">
+              
+            </div>
+            <div class="member-info">
+              <h4> <a href="{% url 'board-detail' object.hashed  l3 %}"> {{object.employee.first_name}} {{object.employee.last_name}}</a> </h4>
+              <span>{{object.division.name_eng}}</span>
+              <span>{{object.position.name_eng}}</span>
+              <span>{{object.employee.email}}</span>
+              <span>+670 {{object.employee.mobile}}</span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+
+        </div>
+          <!-- END GABINETE -->
+    <!-- END AUDITORIA -->
+  </section><!-- End Oura Team Section -->
+{% endblock content %}

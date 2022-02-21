@@ -18,13 +18,19 @@ def announcement_list(request,lang):
     page_obj = paginator.get_page(page_number)
     year = Year.objects.all()
     year_data = []
+    if lang == 'tt':
+        titlepage='EDTL.EP - Lista Anunsiu'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Lista Anuncio'
+    else:
+        titlepage='EDTL.EP - Announcement List'
     for i in year:
         announce = Announcement.objects.filter(is_active=True, datetime__year=i.year).count()
         year_data.append([i, announce])
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
-                'page_obj': page_obj, 'year':year, 'year_data':year_data
+                'page_obj': page_obj, 'titlepage':titlepage, 'year':year, 'year_data':year_data
     }
     template = 'inner_page/announcement/list.html'
     return render(request, template, context)
@@ -37,6 +43,12 @@ def announcement_list_year(request,lang, year):
     title2=year
     year = Year.objects.all()
     year_data = []
+    if lang == 'tt':
+        titlepage='EDTL.EP - Lista Anunsiu'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Lista Anuncio'
+    else:
+        titlepage='EDTL.EP - Announcement List'
     for i in year:
         announce = Announcement.objects.filter(is_active=True, datetime__year=i.year).count()
         year_data.append([i, announce])
@@ -47,7 +59,7 @@ def announcement_list_year(request,lang, year):
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', \
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
-                'page_obj': page_obj, 'year':year, 'year_data':year_data, 'title2':title2
+                'page_obj': page_obj, 'titlepage':titlepage, 'year':year, 'year_data':year_data, 'title2':title2
     }
     template = 'inner_page/announcement/list.html'
     return render(request, template, context)
@@ -59,13 +71,16 @@ def announcement_detail(request,lang, hashid):
     objects = get_object_or_404(Announcement, hashed=hashid)
     if lang == 'tt':
         title3 = f"Avisu: {objects.title_tet}"
+        titlepage='EDTL.EP - Detalla Anunsiu'
     elif lang == 'pt':
         title3 = f"Aviso: {objects.title_por}"
+        titlepage='EDTL.EP - Detalha Anunciuo'
     elif lang == 'en':
         title3 = f"Announcement: {objects.title_eng}"
+        titlepage='EDTL.EP - Announcement Detail'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP','title3':title3,\
-            'departments':departments,'objects': objects, 'lang':lang, 'lang_data': lang_data, 'products':products, 
+            'departments':departments, 'titlepage':titlepage, 'objects': objects, 'lang':lang, 'lang_data': lang_data, 'products':products, 
     }
     template = 'inner_page/announcement/detail.html'
     return render(request, template, context)

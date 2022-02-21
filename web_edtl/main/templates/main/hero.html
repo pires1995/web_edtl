@@ -1,12 +1,32 @@
 {% load static %}
 <marquee style="color: #f03c02; font-size: 15px;">{{lang_data.HOME_MARQUEE}}
-  <i class="bi bi-lightning-fill"></i> </marquee>
+  <i class="bi bi-lightning-fill"></i>
+{% for obj in vacancy_event  %}
+  {% if lang == 'tt' %}
+  <strong>Vaga Ativu: </strong> {{obj.title_tet}}
+  {% elif lang == 'pt' %}
+  <strong>Vaga Ativu: </strong> {{obj.title_por}}
+  {% else %}
+  <strong>Active Vacancy: </strong> {{obj.title_eng}}
+  {% endif %}
+{% endfor %}
+<i class="bi bi-lightning-fill"></i>
+{% for obj in tender_marquee  %}
+  {% if lang == 'tt' %}
+  <strong>Tender Ativu: </strong> {{obj.title_tet}}
+  {% elif lang == 'pt' %}
+  <strong>Tender Ativu: </strong> {{obj.title_por}}
+  {% else %}
+  <strong>Active Tender: </strong> {{obj.title_eng}}
+  {% endif %}
+{% endfor %}
+
+</marquee>
   {% if messages %}
 
           {% for message in messages %}
           <div class="row justify-content-center">
             <div class="col-md-6">
-
               <div class="text-center alert alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}} {%endif%} p-2">
                 {{ message }}
               </div>

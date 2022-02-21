@@ -19,10 +19,12 @@ def news_list(request,lang):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     years = Year.objects.all()
+    
     if lang == "tt":
         queryset_list = News.objects.filter(is_active=True,is_approved=True, language="Tetum").all().order_by('-date_posted')
         news_category = NewsCategory.objects.all()
         total = queryset_list.count()
+        pagetitle='Lista Notisia'
         data = []
         year_data = []
         for n in news_category:
@@ -39,6 +41,7 @@ def news_list(request,lang):
         queryset_list = News.objects.filter(is_active=True,is_approved=True, language="Portugues").all().order_by('-date_posted')
         news_category = NewsCategory.objects.all()
         total = queryset_list.count()
+        pagetitle='Lista Noticia'
         data = []
         year_data = []
         for n in news_category:
@@ -53,6 +56,7 @@ def news_list(request,lang):
         queryset_list = News.objects.filter(is_active=True,is_approved=True, language="English").all().order_by('-date_posted')
         news_category = NewsCategory.objects.all()
         total = queryset_list.count()
+        pagetitle='News List'
         data = []
         year_data = []
         for n in news_category:
@@ -87,7 +91,7 @@ def news_list(request,lang):
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
                 'news_cat_count': data, 'total': total, 'year_data':year_data,
-             'queryset_list': queryset_list, 'legend':legend, 'search':search, 'page_obj':page_obj
+             'queryset_list': queryset_list, 'legend':legend, 'search':search, 'page_obj':page_obj, 'titlepage':pagetitle
     }
     template = 'inner_page/news/news_list.html'
     return render(request, template, context)
@@ -103,6 +107,7 @@ def news_list_category(request,lang, hashid):
         total = queryset_list.count()
         title2 = cat.name_tet
         news_category = NewsCategory.objects.all()
+        titlepage='Lista Notisia'
         data = []
         year_data = []
         for n in news_category:
@@ -118,6 +123,7 @@ def news_list_category(request,lang, hashid):
         queryset_list = News.objects.filter(is_active=True,is_approved=True, language="Portugues",news_category__hashed=hashid).all().order_by('-date_posted')
         news_category = NewsCategory.objects.all()
         total = queryset_list.count()
+        titlepage='Lista Noticia'
         cat = get_object_or_404(NewsCategory, hashed=hashid)
         title2 = cat.name_por
         data = []
@@ -136,6 +142,7 @@ def news_list_category(request,lang, hashid):
         news_category = NewsCategory.objects.all()
         total = queryset_list.count()
         cat = get_object_or_404(NewsCategory, hashed=hashid)
+        titlepage='Lista Noticia'
         title2 = cat.name_eng
         data = []
         year_data = []
@@ -156,7 +163,7 @@ def news_list_category(request,lang, hashid):
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
                 'news_cat_count': data, 'total': total, 'year_data':year_data,
-            'legend':legend, 'search':search, 'page_obj':page_obj, 'title2': title2
+            'legend':legend, 'search':search, 'page_obj':page_obj, 'title2': title2, 'titlepage':titlepage
     }
     template = 'inner_page/news/news_list.html'
     return render(request, template, context)
@@ -172,6 +179,7 @@ def news_list_year(request, lang, year):
         title2 = year
         total = queryset_list.count()
         news_category = NewsCategory.objects.all()
+        titlepage='Lista Notisia'
         data = []
         year_data = []
         for n in news_category:
@@ -187,6 +195,7 @@ def news_list_year(request, lang, year):
         news_category = NewsCategory.objects.all()
         total = queryset_list.count()
         year = get_object_or_404(Year, year=year)
+        titlepage='Lista Noticia'
         title2 = year
         data = []
         year_data = []
@@ -204,6 +213,7 @@ def news_list_year(request, lang, year):
         news_category = NewsCategory.objects.all()
         total = queryset_list.count()
         year = get_object_or_404(Year, year=year)
+        titlepage='News List'
         title2 = year
         data = []
         year_data = []
@@ -224,7 +234,7 @@ def news_list_year(request, lang, year):
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
                 'news_cat_count': data, 'total': total, 'year_data':year_data,
-            'legend':legend, 'search':search, 'page_obj':page_obj, 'title2': title2
+            'legend':legend, 'search':search, 'page_obj':page_obj, 'title2': title2, 'titlepage':titlepage
     }
     template = 'inner_page/news/news_list.html'
     return render(request, template, context)
@@ -232,17 +242,20 @@ def news_list_year(request, lang, year):
 
 def news_detail(request,lang,year, month, hashid, titleseo):
     if lang == "tt":
+        titlepage = 'Detalla Notisia'
         objects = get_object_or_404(News, hashed=hashid, language="Tetum")
         breakcumb = 'Lista Notisia'
         legend = "Detalha"
     elif lang == "pt":
+        titlepage = 'Detalha Noticia'
         objects = get_object_or_404(News, hashed=hashid, language="Portugues")
         breakcumb = 'Lista Notícia'
         legend = "Detalha"
     else:
+        titlepage = 'Detail'
         objects = get_object_or_404(News, hashed=hashid, language="English")
         breakcumb = 'News List'
-        legend = "Detail"
+        legend = "News Detail"
     lang_data = lang_master(lang)
     images = NewsImage.objects.filter(news=objects)
     departments = Department.objects.all()
@@ -280,7 +293,7 @@ def news_detail(request,lang,year, month, hashid, titleseo):
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP','products': products,\
         'departments':departments, 'lang':lang, 'lang_data': lang_data, \
         'objects': objects, 'legend':legend, 'images': images, 'breakcumb':breakcumb, \
-            'form':form, 'comments':comments
+            'form':form, 'comments':comments, 'titlepage':titlepage
     }
     template = 'inner_page/news/news_detail.html'
     return render(request, template, context)

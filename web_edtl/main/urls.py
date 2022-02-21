@@ -20,6 +20,9 @@ urlpatterns = [
     path('who-we-are/<str:lang>/', views.who_we_are, name="who-we-are"),
     path('what-we-do/<str:lang>/', views.what_we_do, name="what-we-do"),
     path('board-profile/<str:lang>/', views.board_profile, name="board-profile"),
+    path('board-cabinet/<str:lang>/', views.cabinet_profile, name="board-cabinet"),
+    path('board-pmu/<str:lang>/', views.pmu_profile, name="board-pmu"),
+    path('board-audit/<str:lang>/', views.audit_profile, name="board-audit"),
     path('board-detail/<str:hashid>/<str:lang>/', views.board_detail, name="board-detail"),
 
 #     RESOURCE

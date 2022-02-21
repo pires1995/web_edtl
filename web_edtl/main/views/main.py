@@ -1,17 +1,17 @@
+
 from random import choices
 from django.shortcuts import render, redirect, get_object_or_404
 from news.forms import NewsUserSignUpForm
 from news.models import NewsUser, SubscribeChoice
 from django.contrib import messages
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from django.template.loader import get_template
 from main.utils_lang import lang_master
-from news.models import News, NewsCategory, NewsImage
+from news.models import News
 from departments.models import Department, Division
 from product.models import Product
-from gallery.models import GalleryCategory, Gallery, Album, Banner
-from announcement.models import Announcement
+from gallery.models import GalleryCategory, Banner
 from news.models import News
 from faq.models import Faq
 from datetime import datetime
@@ -20,8 +20,9 @@ from django.conf import settings
 from main.forms import SubscribeForm
 from news.tasks import new_subs
 import re
-from django.urls import resolve
-
+from procurament.models import Tender
+from datetime import datetime
+from recruitment.models import Vacancy
 
 def home(request, lang):
     lang_data = lang_master(lang)
@@ -31,7 +32,11 @@ def home(request, lang):
     news_main = News.objects.filter(is_active=True, is_approved=True, language="English").last()
     news_recent = News.objects.filter(is_active=True, is_approved=True, language="English").order_by('-approved_date')[1:4]
     faq_home = Faq.objects.filter(is_active=True, is_homepage=True)
+    vacancy_marquee = Vacancy.objects.filter(is_active=True, end_period__gte = datetime.now().date())[:3]
+    tender_marquee = Tender.objects.filter(is_active=True, end_period__gte = datetime.now().date())[:3]
+
     form =  SubscribeForm(request.POST or None)
+    titlepage = 'Home'
     if request.method == 'POST':
         if form.is_valid():
             email = form.cleaned_data['email']
@@ -56,7 +61,7 @@ def home(request, lang):
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP','lang': lang, 'lang_data': lang_data,\
             'page': 'varanda', 'departments': departments, 'products': products, 'banners':banners, 
-            'news_main': news_main, 'news_recent':news_recent, 'faq_home':faq_home, 
+            'news_main': news_main, 'vacancy_event':vacancy_marquee, 'tender_marquee':tender_marquee, 'news_recent':news_recent, 'faq_home':faq_home, 'titlepage':titlepage
     }
     template = 'main/home.html'
     return render(request, template, context)
@@ -71,6 +76,7 @@ def inicio(request, lang):
     news_recent = News.objects.filter(is_active=True, is_approved=True, language="Portugues").order_by('-approved_date')[1:4]
     faq_home = Faq.objects.filter(is_active=True, is_homepage=True)
     form =  SubscribeForm(request.POST or None)
+    titlepage = 'Inicio'
     if request.method == 'POST':
         if form.is_valid():
             email = form.cleaned_data['email']
@@ -89,7 +95,7 @@ def inicio(request, lang):
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP','lang': lang, 'lang_data': lang_data,\
             'page': 'varanda', 'departments': departments, 'products': products, 'banners':banners, 
-            'news_main': news_main, 'news_recent':news_recent, 'faq_home':faq_home
+            'news_main': news_main, 'news_recent':news_recent, 'faq_home':faq_home, 'titlepage':titlepage
     }
     template = 'main/inicio.html'
     return render(request, template, context)
@@ -103,6 +109,7 @@ def varanda(request, lang):
     news_recent = News.objects.filter(is_active=True, is_approved=True, language="Tetum").order_by('-approved_date')[1:4]
     faq_home = Faq.objects.filter(is_active=True, is_homepage=True)
     form =  SubscribeForm(request.POST or None)
+    titlepage = 'Varanda'
     if request.method == 'POST':
         if form.is_valid():
             email = form.cleaned_data['email']
@@ -124,7 +131,7 @@ def varanda(request, lang):
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP','lang': lang, 'lang_data': lang_data,\
             'page': 'varanda', 'departments': departments, 'products': products, 'banners':banners, 
-            'news_main': news_main, 'news_recent':news_recent, 'faq_home':faq_home
+            'news_main': news_main, 'news_recent':news_recent, 'faq_home':faq_home, 'titlepage':titlepage
     }
     template = 'main/home.html'
     return render(request, template, context)
@@ -141,9 +148,16 @@ def department(request,lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
+    titlepage = ''
+    if lang == 'tt':
+        titlepage='EDTL.EP - Detalla Departamentu'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Detalha Departamento'
+    else:
+        titlepage='EDTL.EP - Department Detail'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
+            'departments':departments, 'titlepage':titlepage, 'products': products, 'lang':lang, 'lang_data': lang_data,
     }
     template = 'inner_page/department/department.html'
     return render(request, template, context)
@@ -154,10 +168,16 @@ def department_detail(request,lang, hashid):
     departments = Department.objects.all()
     division = Division.objects.filter(department=objects)
     products = Product.objects.filter(is_active=True)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Detalla Departamentu'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Detalha Departamento'
+    else:
+        titlepage='EDTL.EP - Department Detail'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products,  'lang':lang, 'lang_data': lang_data,\
-            'objects': objects, 'divisions':division
+            'objects': objects, 'titlepage':titlepage, 'divisions':division
     }
     template = 'inner_page/department/department.html'
     return render(request, template, context)
@@ -168,10 +188,16 @@ def division_detail(request,lang, hashid, hashid2):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Detalla Divisaun'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Detalha Divisao'
+    else:
+        titlepage='EDTL.EP - Division Detail'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,'objects': objects, \
-                'department':department
+                'department':department, 'titlepage':titlepage
     }
     template = 'inner_page/department/division.html'
     return render(request, template, context)

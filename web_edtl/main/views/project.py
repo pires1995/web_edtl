@@ -18,10 +18,16 @@ def project_ongoing_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Lista Projetu'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Lista Projeto'
+    else:
+        titlepage='EDTL.EP - Project List'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,
-            'page_obj': page_obj
+            'page_obj': page_obj, 'titlepage':titlepage
     }
     template = 'inner_page/project/ongoing.html'
     return render(request, template, context)
@@ -30,6 +36,12 @@ def project_ongoing_detail(request,lang, hashid):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Detalla Projetu'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Detalha Projeto'
+    else:
+        titlepage='EDTL.EP - Project Detail'
     location = None
     budget = None
     try:
@@ -41,7 +53,7 @@ def project_ongoing_detail(request,lang, hashid):
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', \
             'departments':departments, 'products': products, 'lang':lang, 'lang_data': lang_data,\
-                'objects': objects, 'location': location, 'budget':budget
+                'objects': objects, 'titlepage':titlepage, 'location': location, 'budget':budget
     }
     template = 'inner_page/project/ongoing_detail.html'
     return render(request, template, context)
@@ -54,10 +66,16 @@ def project_new_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Lista Projetu Foun'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Lista Novo Projeto'
+    else:
+        titlepage='EDTL.EP - Up Coming Project'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', \
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
-                'page_obj': page_obj
+                'page_obj': page_obj, 'titlepage':titlepage
     }
     template = 'inner_page/project/new.html'
     return render(request, template, context)
@@ -66,6 +84,12 @@ def project_new_detail(request,lang, hashid):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Detalla Projetu'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Detalha Projeto'
+    else:
+        titlepage='EDTL.EP - Project Detail'
     location = None
     budget = None
     try:
@@ -77,7 +101,7 @@ def project_new_detail(request,lang, hashid):
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', \
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
-                'objects': objects, 'location': location, 'budget':budget
+                'objects': objects, 'titlepage':titlepage, 'location': location, 'budget':budget
     }
     template = 'inner_page/project/new_detail.html'
     return render(request, template, context)

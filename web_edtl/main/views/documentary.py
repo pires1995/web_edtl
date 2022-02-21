@@ -26,14 +26,17 @@ def documentary_list(request,lang):
     page_obj = paginator.get_page(page_number)
     if lang == 'tt':
         legend = "DOCUMENTASAUN"
+        titlepage='EDTL.EP - Lista Dokumentasaun'
     elif lang == 'pt':
         legend = "DOCUMENTAÇÃO"
+        titlepage='EDTL.EP - Lista Documentacao'
     else :
         legend = "DOCUMENTATION"
+        titlepage='EDTL.EP - Documentary List'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', \
             'departments':departments,'products': products,'gallery_categories': gallery_categories, 'lang':lang, 'lang_data': lang_data,\
-                 'page_obj':page_obj, 'legend': legend, 'year':year
+                 'page_obj':page_obj, 'titlepage':titlepage, 'legend': legend, 'year':year
     }
     template = 'inner_page/documentary.html'
     return render(request, template, context)
@@ -61,14 +64,17 @@ def documentary_list_filter(request,lang, year):
     page_obj = paginator.get_page(page_number)
     if lang == 'tt':
         legend = f"DOCUMENTASAUN IHA TINAN {get_year}"
+        titlepage='EDTL.EP - Lista Dokumentasaun'
     elif lang == 'pt':
         legend = f"DOCUMENTAÇÃO NO ANO {get_year}"
+        titlepage='EDTL.EP - Lista Documentacao'
     else :
         legend = f"DOCUMENTATION IN YEAR {get_year} "
+        titlepage='EDTL.EP - Documentary List'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', \
             'departments':departments,'products': products,'gallery_categories': gallery_categories, 'lang':lang, 'lang_data': lang_data,\
-                 'page_obj':page_obj, 'legend': legend, 'year':year
+                 'page_obj':page_obj, 'titlepage':titlepage, 'legend': legend, 'year':year
     }
     template = 'inner_page/documentary.html'
     return render(request, template, context)
@@ -79,9 +85,15 @@ def documentary_detail(request,lang, hashid):
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Album, hashed=hashid)
     gallery = Gallery.objects.filter(album=objects)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Detalla Dokumentasaun'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Detalha Documentacao'
+    else:
+        titlepage='EDTL.EP - Documentation Detail'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,'objects':objects, 'gallery': gallery
+            'departments':departments, 'titlepage':titlepage, 'products': products, 'lang':lang, 'lang_data': lang_data,'objects':objects, 'gallery': gallery
     }
     template = 'inner_page/documentary_detail.html'
     return render(request, template, context)

@@ -27,7 +27,7 @@ def add_employee(request):
     else:   
         form = EmployeeForm()
     context = {
-        'form': form, 'title': 'Aumenta Informasaun Empregu', 'subtitle': 'Empregu'
+        'form': form, 'title': 'Aumenta Informasaun Empregu', 'subtitle': 'Empregu', 'group':group
     }
     return render(request, 'team/form.html', context)
 
@@ -46,7 +46,7 @@ def update_employee(request, hashid):
     else:   
         form = EmployeeForm(instance=objects)
     context = {
-        'form': form, 'title': 'Altera Informasaun Empregu', 'subtitle': 'Empregu'
+        'form': form, 'title': 'Altera Informasaun Empregu', 'subtitle': 'Empregu', 'group':group
     }
     return render(request, 'team/form.html', context)
 
@@ -60,9 +60,13 @@ def list_team(request):
     boardmembers = Position.objects.filter(group='Board Member')
     departments = Position.objects.filter(group='Department')
     divisions_board = Position.objects.filter(group='Division')
+    gabinete = Position.objects.filter(group='Gabineti Apoiu Servisu')
+    pmu = Position.objects.filter(group='Project Management Unit')
+    auditoria = Position.objects.filter(group='Auditoria')
     context = {
         'title': 'Lista Organograma', 'group': group, 'boardmembers': boardmembers, 'departments':departments,
-        'employees': employees, 'divisions': divisions, 'divisions_board':divisions_board
+        'employees': employees, 'divisions': divisions, 'divisions_board':divisions_board,
+        'gabinete':gabinete, 'pmu':pmu, 'auditoria':auditoria
     }
     return render(request, 'team/team_list.html', context)
 
@@ -83,7 +87,7 @@ def add_team(request):
     else:   
         form = PositionForm()
     context = {
-        'form': form, 'title': 'Aumenta Informasaun Pozisaun', 'subtitle': 'Pozisaun'
+        'form': form, 'title': 'Aumenta Informasaun Pozisaun', 'subtitle': 'Pozisaun', 'group':group
     }
     return render(request, 'team/form.html', context)
 
@@ -101,7 +105,7 @@ def update_team(request, hashid):
     else:   
         form = PositionForm(instance=objects)
     context = {
-        'form': form, 'title': 'Altera Informasaun Pozisaun', 'subtitle': 'Pozisaun'
+        'form': form, 'title': 'Altera Informasaun Pozisaun', 'subtitle': 'Pozisaun', 'group':group
     }
     return render(request, 'team/form.html', context)
 
@@ -109,8 +113,8 @@ def update_team(request, hashid):
 @login_required
 @allowed_users(allowed_roles=['admin','media'])
 def add_division_profile(request):
+    group = request.user.groups.all()[0].name
     if request.method == 'POST':
-        group = request.user.groups.all()[0].name
         newid, new_hashed = getnewid(Division)
         form = DivisionProfileForm(request.POST)
         if form.is_valid():
@@ -123,7 +127,7 @@ def add_division_profile(request):
     else:   
         form = DivisionProfileForm()
     context = {
-        'form': form, 'title': 'Aumenta Informasaun Divisaun', 'subtitle': 'Divisaun'
+        'form': form, 'title': 'Aumenta Informasaun Divisaun', 'subtitle': 'Divisaun', 'group': group
     }
     return render(request, 'team/form.html', context)
 
@@ -141,7 +145,7 @@ def update_division_profile(request, hashid):
     else:   
         form = DivisionProfileForm(instance=objects)
     context = {
-        'form': form, 'title': 'Altera Informasaun Divisaun', 'subtitle': 'Divisaun'
+        'form': form, 'title': 'Altera Informasaun Divisaun', 'subtitle': 'Divisaun', 'group':group
     }
     return render(request, 'team/form.html', context)
 

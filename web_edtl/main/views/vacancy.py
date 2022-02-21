@@ -19,9 +19,15 @@ def vacancy_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Lista Vaga'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Lista Vaga'
+    else:
+        titlepage='EDTL.EP - Vacancy List'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', 'lang':lang, 'lang_data': lang_data, \
-            'departments':departments,'products': products, 'page_obj':page_obj, 'today': today
+            'departments':departments,'titlepage':titlepage, 'products': products, 'page_obj':page_obj, 'today': today
     }
     template = 'inner_page/recruitment/vacancy_list.html'
     return render(request, template, context)
@@ -42,10 +48,16 @@ def internships_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Lista Estagio'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Lista Estagio'
+    else:
+        titlepage='EDTL.EP - Internship List'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en',\
             'departments':departments,'products': products,'title': 'EDTL, EP', 'lang':lang, 'lang_data': lang_data,\
-                'page_obj':page_obj, 'today': today
+                'page_obj':page_obj, 'today': today, 'titlepage':titlepage
     }
     template = 'inner_page/recruitment/internships_list.html'
     return render(request, template, context)
@@ -66,10 +78,16 @@ def volunteer_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Lista Voluntariu'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Lista Voluntario'
+    else:
+        titlepage='EDTL.EP - Volunteer List'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en',\
             'departments':departments,'products': products,'title': 'EDTL, EP', 'lang':lang, 'lang_data': lang_data,\
-                'page_obj':page_obj, 'today': today
+                'page_obj':page_obj, 'today': today, 'titlepage':titlepage
     }
     template = 'inner_page/recruitment/volunteer.html'
     return render(request, template, context)

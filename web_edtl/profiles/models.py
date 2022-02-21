@@ -7,6 +7,9 @@ GroupChoice = [
     ('Board Member', 'Board Member'),
     ('Department', 'Department'),
     ('Division', 'Division'),
+    ('Gabineti Apoiu Servisu', 'Gabineti Apoiu Servisu'),
+    ('Project Management Unit', 'Project Management Unit'),
+    ('Auditoria', 'Auditoria'),
 ]
 # Create your models here.
 class About(models.Model):

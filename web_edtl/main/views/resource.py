@@ -9,9 +9,15 @@ def resource_detail(request,lang, hashid):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Product, hashed=hashid)
+    if lang == 'tt':
+        titlepage='EDTL.EP - Produtu'
+    elif lang == 'pt':
+        titlepage='EDTL.EP - Produto'
+    else:
+        titlepage='EDTL.EP - Product'
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
-            'departments':departments, 'objects':objects, 'products': products,'lang':lang, 'lang_data': lang_data,
+            'departments':departments, 'titlepage':titlepage, 'objects':objects, 'products': products,'lang':lang, 'lang_data': lang_data,
     }
     template = 'inner_page/resource.html'
     return render(request, template, context)

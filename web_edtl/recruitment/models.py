@@ -21,7 +21,7 @@ class Vacancy(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     hashed = models.CharField(max_length=32, null=True, blank=True)
     def __str__(self):
-        template = '{0.name_tet}'
+        template = '{0.title_tet} - {0.title_eng}'
         return template.format(self)
 
     def save(self, *args, **kwargs):
