@@ -279,7 +279,7 @@ def news_approved(request, hashid):
     objects.approved_by = request.user
     objects.approved_date = datetime.datetime.now()
     objects.is_approved = True
-    email_users = NewsUser.objects.filter(choices=2)
+    email_users = NewsUser.objects.filter(choices=2,is_active=True)
     for email_to in email_users:
         set_name = email_to.email
         set_name2 = re.split(r'[@.]', set_name)
