@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 <footer id="footer">
 
   <div class="footer-top">
@@ -19,9 +20,9 @@
         <div class="col-md-3 footer-links">
           <h4>Useful Links</h4>
           <ul>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Client Financial Management System</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">User Subscribe Management</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Frequently Asked Questions</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'fsm-login' %}">Client Financial Management System</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'usm-login' lang %}">User Subscribe Management</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="{% url 'faq-list' lang %}">Frequently Asked Questions</a></li>
           </ul>
         </div>
 
@@ -36,7 +37,8 @@
         <div class="col-md-4 footer-newsletter">
           <h4>Join Our Newsletter</h4>
           <p>To get our lastest News, Event, Publication, Please enter your email on fiels bellow</p>
-          <form action="" method="post">
+          <form  method="POST">
+            {% csrf_token %}
             <input type="email" name="email"><input type="submit" value="Subscribe">
           </form>
         </div>

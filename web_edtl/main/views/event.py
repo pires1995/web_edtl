@@ -28,9 +28,15 @@ def event_detail(request,lang, hashid):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Event, hashed=hashid)
+    if lang == 'tt':
+        title2 = f"Eventu: {objects.name_tet}"
+    elif lang == 'pt':
+        title2 = f"Evento: {objects.name_por}"
+    elif lang == 'en':
+        title2 = f"Event: {objects.name_eng}"
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'lang':lang, 'lang_data': lang_data,\
-                'objects': objects
+                'objects': objects, 'title2':title2
     }
     return render(request, 'inner_page/event/detail.html', context)

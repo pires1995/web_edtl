@@ -167,5 +167,20 @@ class USMForm(forms.ModelForm):
                 Column('email', css_class='form-group col-md-12 mb-0'),
                 css_class='form-row'
             ),
-            HTML(""" <button class="btn btn-primary" type="submit"> Submit <i class="fa fa-save"></i></button> """)
+            HTML(""" <button class="btn btn-primary" type="submit" name="usm_form"> Submit <i class="fa fa-save"></i></button> """)
+        )
+
+class SubscribeForm(forms.ModelForm):
+    class Meta:
+        model = NewsUser
+        fields = ['email']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('email', css_class='form-group col-md-12 mb-0'),
+                css_class='form-row'
+            ),
+           
         )

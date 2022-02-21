@@ -10,50 +10,54 @@
 
         <h2 class="section-title">User Subscribe Management Dashboard</h2>
         
-        <div class="col-md-7">
+        <div class="col-md-6">
 
           <div class="sidebar">
-              <h3 class="sidebar-title">Informations:</h3>
+              <h3 class="sidebar-title">Information: </h3>
               <hr>
               <div class="sidebar-item categories">
-                <ul>
-                </ul>
-                <h6>Tes3 </h6>
-                <h6>TES2</h6>
-                <hr>
-                    <h6>
-                       Test
-                       
-                    </h6>
-            </div><!-- End sidebar categories-->
+                <h6>Email: <strong>{{usersubscribe}}</strong> </h6>
+                <a href="{% url 'usm-unsubscribe' lang usersubscribe.date_created.year usersubscribe.date_created.day usersubscribe.date_created.hour usersubscribe.date_created.minute usersubscribe.hashed %}" >
+                  <button class="btn btn-danger">Unsubscribe</button>
+                </a>
+              </div>
             
             
-            
-        </div><!-- End sidebar -->
+          </div><!-- End sidebar -->
         
-        </div><
-        <div class="col-md-2">
-
+        </div>
+        <div class="col-md-6">
           <div class="sidebar">
-              <h3 class="sidebar-title">Unsubscribe</h3>
-              <hr>
-              <div class="sidebar-item categories">
-                <ul>
-                </ul>
-                <h6>If You want to Unsubscribe, Click Button Bellow:</h6>
-              
-                <hr>
-                <form method="POST" enctype="multipart/form-data" class="php-email-form">
-                    {% csrf_token %}
-                    {% crispy form %}
-                  </form>
-            </div><!-- End sidebar categories-->
-            
-            
-            
+            <h3 class="sidebar-title">Manage your Subscription:</h3>
+            <hr>
+            <div class="sidebar-item categories">
+              <h6></h6>
+              <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" value="{{usersubscribe}}" name="email">
+                {% for ub in  subscribechoices %}
+                  <input type="checkbox" id="{{ub.name}}" name="choices" value="{{ub.id}}"
+                  {% for ub2 in usersubscribe.choices.all  %}
+                  {% if ub2 == ub %}
+                    checked
+                    {% else %}
+                    ''
+                    {% endif %}
+                    {% endfor %}
+                    >
+                    <label for="ub.name">{{ub}}</label><br>
+                    {% endfor %}
+                    
+                    <button href="{% url 'usm-choices' lang usersubscribe.hashed %}" class="btn btn-primary mt-2" name="usm_subscribe" type="submit">Submit</button>
+                  
+                </form>
+          </div><!-- End sidebar categories-->
+          
+          
+          
         </div><!-- End sidebar -->
         
-        </div><
+        </div>
     
 </div>
 

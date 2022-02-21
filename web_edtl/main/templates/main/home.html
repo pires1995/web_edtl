@@ -16,7 +16,7 @@
               <article class="entry">
   
                 <div class="entry-img text-center">
-                  <img src="{{news_main.image.url}}" alt="" class="img-fluid">
+                  <img src="{% static 'main/img/img_loading.png' %}" data-src="{{news_main.image.url}}" alt="" class="img-fluid">
                 </div>
   
                 <h2 class="entry-title">
@@ -50,7 +50,7 @@
                   {% for object in  news_recent %}
 
                   <div class="post-item clearfix">
-                    <img src="{{object.image.url}}" alt="">
+                    <img src="{% static 'main/img/img_loading.png' %}" data-src="{{object.image.url}}" alt="">
                     <h4><a href="{% url 'news-detail' lang object.entered_date|date:'Y' object.entered_date|date:'m' object.hashed object.title_seo  %}">{{object.title|truncatechars:100}}</a></h4>
                     <time datetime="2020-01-01">{{object.entered_date|date:"d/M/Y"}}</time>
                   </div>

@@ -13,6 +13,8 @@ urlpatterns = [
 #     NEWS
     path('news/<str:lang>/', views.news_list, name="news-list"),
     path('news-detail/<str:lang>/<str:year>/<str:month>/<str:hashid>/<str:titleseo>/', views.news_detail, name="news-detail"),
+    path('news/<str:lang>/<str:hashid>/', views.news_list_category, name="news-list-category"),
+    path('news/year/<str:lang>/<str:year>/', views.news_list_year, name="news-list-year"),
     
 #     ABOUT
     path('who-we-are/<str:lang>/', views.who_we_are, name="who-we-are"),
@@ -80,6 +82,7 @@ urlpatterns = [
     # ANNOUNNCEMENT
     path('announcement-list/<str:lang>/', views.announcement_list, name="announcement-list"),
     path('announcement-detail/<str:lang>/<str:hashid>/', views.announcement_detail, name="announcement-detail"),
+    path('announcement-list/year/<str:lang>/<str:year>/', views.announcement_list_year, name="announcement-list-year"),
 
 
     # USERS
@@ -107,7 +110,10 @@ urlpatterns = [
     path('client-bill-add/', views.client_bill_add, name='bill-add'),
     path('client-bill-detail/<str:hashid>', views.client_bill_detail, name='client-bill-detail'),
 
-
     # USM
     path('usm/login/<str:lang>/', views.usm_login , name='usm-login'),
+    path('usm/dashboard/<str:lang>/<str:day>/<str:hour>/<str:minute>/<str:hashid>/', views.usm_login , name='usm-homepage'),
+    path('usm/submit/choices/<str:lang>/<str:hashid>/', views.usm_choices , name='usm-choices'),
+    path('usm/unsubscribe/<str:lang>/<str:year>/<str:day>/<str:hour>/<str:minute>/<str:hashid>/', views.usm_unsubscribe , name='usm-unsubscribe'),
+    path('email-confirmation/<str:day>/<str:name>/<str:minute>/<str:hashid>/', views.email_confirmation , name='email-confirmation'),
 ]

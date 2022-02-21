@@ -30,6 +30,7 @@ def fms_login(request):
         'form': form, 'msg':msg
     }
     return render(request, 'fms/login.html', context)
+    
 @login_required
 @allowed_users(allowed_roles=['client'])
 def client_home(request):

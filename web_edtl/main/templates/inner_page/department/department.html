@@ -32,8 +32,8 @@
 
           <article class="entry entry-single">
 
-            <div class="entry-img text-center">
-              <img src="{{objects.image.url}}" alt="" class="img-fluid">
+            <div class="entry-img text-center p-4">
+              <img src="{% static 'main/img/img_loading.png' %}" data-src="{{objects.image.url}}" alt="" class="img-fluid">
             </div>
             <div class="entry-content">
               {% if lang == 'tt' %}

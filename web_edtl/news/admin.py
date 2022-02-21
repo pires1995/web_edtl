@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import NewsUser, News, NewsCategory, NewsImage, SubscribeChoice
+from .models import NewsUser, News, NewsCategory, NewsImage, SubscribeChoice, NewsComment
 # Register your models here.
 
 
@@ -12,3 +12,4 @@ admin.site.register(News)
 admin.site.register(NewsCategory)
 admin.site.register(NewsImage)
 admin.site.register(SubscribeChoice)
+admin.site.register(NewsComment)

@@ -30,7 +30,7 @@
                   {% for object in gallery %}
                     
                   <div class="swiper-slide">
-                    <img src="{{object.image.url}}" >
+                    <img src="{% static 'main/img/img_loading.png' %}" data-src="{{object.image.url}}" >
                   </div>
                   {% endfor %}
   

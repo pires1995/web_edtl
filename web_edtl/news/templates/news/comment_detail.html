@@ -1,0 +1,61 @@
+{% extends 'web_admin/layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
+            <!-- TODO -->
+            <li class="breadcrumb-item"><a href="{% url 'admin-news-comment-list' %}">Lista Komentariu</a></li>
+
+            <li class="breadcrumb-item active">{{title}}</li>
+            <!-- <li class="breadcrumb-item">Users</li> -->
+        </ol>
+    </nav>
+</div>
+<section class="section profile">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body pt-2 pb-0">
+                    <div class="card-title">
+                        <h2>Detalla Komentariu</h2>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card-title">
+                                                <h6 class="pb-2">Informasaun Geral</h6>
+                                                <hr>
+                                            </div>
+                                            <div>Naran Pessoal: <span class="card-title">{{objects.name}}</span> </div>
+                                            <div>Email: <span class="card-title">
+                                                    {{objects.email}} </span></div>
+                                            <div>Komentariu: 
+                                                {{objects.comments}}
+                                            </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    </div>
+</section>
+
+{% endblock content%}

@@ -23,8 +23,8 @@ def pagemanegament_list(request):
 @login_required
 @allowed_users(allowed_roles=['admin','media'])
 def pagemanegament_add(request):
+    group = request.user.groups.all()[0].name
     if request.method == 'POST':
-        group = request.user.groups.all()[0].name
         newid, new_hashed = getnewid(PageManegament)
         form = PageManegamentForm(request.POST, request.FILES)
         if form.is_valid():

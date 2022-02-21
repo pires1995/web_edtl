@@ -10,10 +10,28 @@
         </ol>
     </div>
 </section><!-- End Breadcrumbs -->
+{% if messages %}
+
+{% for message in messages %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+
+    <div class="text-center alert alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}} {%endif%} p-2">
+      {{ message }}
+    </div>
+  </div>
+</div>
+    {% endfor %}
+</div>
+
+{% endif %}
 <section id="blog" class="blog">
     <div class="container" data-aos="fade-up">
         <div class="section-title" data-aos="fade-up">
             <h2><strong>{{legend}}</strong></h2>
+            <h2>
+              {{title2}}
+            </h2>
           </div>
       <div class="row">
 
@@ -24,7 +42,7 @@
           <article class="entry">
 
             <div class="entry-img text-center">
-              <img src="{{obj.image.url}}" alt="" class="img-fluid">
+              <img src="{% static 'main/img/img_loading.png' %}" data-src="{{obj.image.url}}" alt="" class="img-fluid">
             </div>
 
             <h2 class="entry-title">
@@ -97,28 +115,23 @@
             <h3 class="sidebar-title">{{lang_data.CATEGORY}}</h3>
             <div class="sidebar-item categories">
               <ul>
+                <li><a href="{% url 'news-list' lang %}">All <span> {{total}} </span></a></li>
                 {% for news_cat in  news_cat_count %}
                   
-                <li><a href="#">{{news_cat.0}} <span>{{news_cat.1}}</span></a></li>
+                <li><a href="{% url 'news-list-category' lang news_cat.2 %}">{{news_cat.0}} <span>{{news_cat.1}}</span></a></li>
                 {% endfor %}
               </ul>
-            </div><!-- End sidebar categories-->
+            </div>
+            <!-- End sidebar categories-->
 
-            <!-- <h3 class="sidebar-title">Recent Posts</h3>
-            <div class="sidebar-item recent-posts">
-              <div class="post-item clearfix">
-                <img src="{% static 'main/img/news4.jpg' %}" alt="">
-                <h4><a href="#">Departementu Rede Transmisaun, husi devizaun Manutensaun Sub-Estasaun EDTL,E.P</a></h4>
-                <time datetime="2020-01-01">Jan 5, 2022</time>
-              </div>
-
-              <div class="post-item clearfix">
-                <img src="{% static 'main/img/news6.jpg' %}" alt="">
-                <h4><a href="#">Ekipa Tékniku Rede Transmisaun EDTL,E.P. halo teste 150kV Trasmission Line, Maliana-Suai section, iha National Dispatch Center (NDC) Camea</a></h4>
-                <time datetime="2020-01-01">Jan 7, 2022</time>
-              </div>
-
-            </div> -->
+            <h3 class="sidebar-title">Archives</h3>
+            <div class="sidebar-item categories">
+              <ul>
+                {% for obj in year_data %}
+                  
+                <li><a href="{% url 'news-list-year' lang obj.0 %}">{{obj.0}}<span>{{obj.1}}</span></a></li>
+                {% endfor %}
+              </ul>
             <!-- End sidebar recent posts-->
 
 

@@ -1,6 +1,24 @@
 {% extends "main/layout.html" %}
 {% load static %}
 {% block content %}
+{% load social_share %}
+
+{% block head %}
+
+{% for object in page_obj  %}
+  {% if lang == 'tt' %}
+
+    <meta property="og:title"         content="{{object.title_tet}}" />
+  {% elif lang == 'pt' %}
+  
+    <meta property="og:title"         content="{{object.title_por}}" />
+  {% else %}
+    
+    <meta property="og:title"         content="{{object.title_eng}}" />
+  {% endif %}
+{% endfor %}
+
+{% endblock head %}
 <!-- ======= Breadcrumbs ======= -->
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
@@ -67,10 +85,40 @@
                          <i class="bi bi-x text-danger"></i> {{lang_data.EXPIRED_LBL}}
                       {% endif %}
                     </td>
-                    <td>
-                      <span class="download">
-                        <a href="{% url 'vacancy-download' object.hashed %}" target="_blank"><i class="bi bi-download"></i> Download</a>
-                      </span>
+                    <td  >
+                      <div class="sharesos">
+
+                        <span class="download entry-content">
+                          <a href="{% url 'vacancy-download' object.hashed %}" target="_blank"><i class="bi bi-download"></i> Download</a>
+                          
+                            <h6>{{lang_data.SHARE_LBL}}: </h6>
+                            <ul style="display: flex; list-style: none; flex-wrap: wrap; padding: 0; margin: 0;">
+                                <li> <a href="#">{% post_to_facebook object_or_url "<p style='color: green;'>facebook</p>" %}  </a></li>
+                                
+                                {% if lang == 'tt' %}
+                                <li> <a href="#">{% post_to_whatsapp object_or_url objects.title_tet %} </a></li>
+                                
+                                {% elif lang == 'pt' %}
+                                <li> <a href="#">{% post_to_whatsapp object_or_url objects.title_por %} </a></li>
+                                  
+                                {% else %}
+                                <li> <a href="#">{% post_to_whatsapp object_or_url objects.title_eng %} </a></li>
+                                  
+                                {% endif %}
+
+                                
+                                {% if lang == 'tt' %}
+                                <li> <a href="#">{% post_to_twitter "News: {{objects.title_tet}}" object_or_url  %} </a></li>
+                                {% elif lang == 'pt' %}
+                                <li> <a href="#">{% post_to_twitter "News: {{objects.title_por}}" object_or_url  %} </a></li>
+                                {% else %}
+                                  
+                                <li> <a href="#">{% post_to_twitter "News: {{objects.title_eng}}" object_or_url  %} </a></li>
+                                {% endif %}
+                                <li> <a href="#">{% post_to_linkedin object_or_url %} </a></li>
+                              </ul>
+                            </span>
+                          </div>
                     </td>
                   </tr>
                   {% endfor %}

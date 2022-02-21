@@ -1,9 +1,10 @@
 {% extends "main/layout.html" %}
 {% load static %}
 {% block content %}
+{% load social_share %}
+
 {% block head %}
-<meta property="og:title"         content="{{objects.title}}" />
-<meta property="og:description"   content="{{objects.headline}}" />
+<meta property="og:title"         content="{{title3}}" />
 <meta property="og:image"         content="{{objects.image.url}}" />
 {% endblock head %}
   <!-- ======= Breadcrumbs ======= -->
@@ -38,9 +39,23 @@
         <article class="entry entry-single">
 
           <div class="entry-img pt-3 text-center">
-            <img src="{{objects.image.url}}" alt="" class="img-fluid">
+            <img src="{% static 'main/img/img_loading.png' %}" data-src="{{objects.image.url}}" alt="" class="img-fluid">
           </div>
-
+          <div class="entry-footer">
+            <h6>{{lang_data.SHARE_LBL}}: </h6>
+            <ul class="cats">
+              <li> <a href="#">{% post_to_facebook object_or_url "<p style='color: green;'>facebook</p>" %}  </a></li>
+              {% if lang == 'tt' %}
+              <li> <a href="#">{% post_to_whatsapp object_or_url objects.title_tet %} </a></li>
+              {% elif lang == 'pt' %}
+              <li> <a href="#">{% post_to_whatsapp object_or_url objects.title_por %} </a></li>
+              {% else %}
+              <li> <a href="#">{% post_to_whatsapp object_or_url objects.title_eng %} </a></li>
+              {% endif %}
+              <li> <a href="#">{% post_to_twitter "{{title3}}" object_or_url  %} </a></li>
+              <li> <a href="#">{% post_to_linkedin object_or_url %} </a></li>
+          </ul>
+        </div>
 
           
       </article><!-- End blog entry -->
@@ -56,7 +71,6 @@
               <hr>
               <div class="">
                 <div class="entry-footer">
-                <h6>{{lang_data.SHARE_LBL}}: </h6>
                 
             </div>
                 <ul>

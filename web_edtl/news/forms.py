@@ -1,6 +1,6 @@
 
 from django import forms
-from news.models import NewsUser, News, NewsImage
+from news.models import NewsUser, News, NewsImage, NewsComment
 from django_summernote.widgets import SummernoteWidget, SummernoteInplaceWidget
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column, Button, HTML
@@ -33,7 +33,6 @@ class NewsUserSignUpForm(forms.ModelForm):
 
 
 class NewsForm(forms.ModelForm):
-    # image = forms.FileField(label="Image", required=False)
     title = forms.CharField(label="Title")
     headline = forms.CharField(label="Headline", widget=forms.Textarea(
         attrs={"rows": 3}), required=False)
@@ -71,6 +70,29 @@ class NewsForm(forms.ModelForm):
                 css_class='form-row'
             ),
             HTML(""" <button class="btn btn-primary text-white" type="submit"><i class="bi bi-lock text-white"></i> Save</button> """)
+        )
+
+class NewsCommentForm(forms.ModelForm):
+
+    class Meta:
+        model = NewsComment
+        fields = ['name', 'email', 'comments']
+
+    def __init__(self, *args, **kwargs):
+        super(NewsCommentForm, self).__init__(*args, **kwargs)
+        # self.fields['image'].required = True
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Row(
+                Column('name', css_class='form-group col-md-6 mb-0'),
+                Column('email', css_class='form-group col-md-6 mb-0'),
+                css_class='form-row'
+            ),
+            Row(
+                Column('comments', css_class='form-group col-md-12 mb-0'),
+                css_class='form-row'
+            ),
+            HTML(""" <button class="btn btn-primary text-white" type="submit">Post Comment</button> """)
         )
 
 

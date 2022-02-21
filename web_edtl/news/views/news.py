@@ -1,5 +1,6 @@
+from random import choices
 from django.shortcuts import render, redirect, get_object_or_404
-from news.models import NewsUser, News, NewsCategory, NewsImage
+from news.models import NewsComment, NewsUser, News, NewsCategory, NewsImage, SubscribeChoice
 from news.forms import NewsUserSignUpForm, NewsForm, NewsImageForm, NewsImageUpdateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -171,6 +172,60 @@ def news_approval_request_list(request):
     }
     return render(request, 'coordinator/news_approval__request_list.html', context)
 
+@login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
+def news_comments_list(request):
+    group = request.user.groups.all()[0].name
+    news = NewsComment.objects.filter(is_reject=False, is_approved=False).order_by('-datetime')
+    news_reject = NewsComment.objects.filter(is_reject=True).order_by('-datetime')
+    news_approved = NewsComment.objects.filter(is_approved=True, is_reject=False).order_by('-datetime')
+    context = {
+        'news': news, 'title': 'New Comment', 'group': group,\
+            'news_approved':news_approved, 'title3':'Comment Approved', 'news_reject': news_reject, 'title2':'Comment Reject'
+    }
+    return render(request, 'news/comment.html', context)
+
+@login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
+def news_comments_detail(request, hashid):
+    group = request.user.groups.all()[0].name
+    objects = get_object_or_404(NewsComment, hashed=hashid)
+    context = {
+        'objects': objects, 'title': 'News Comment Detail', 'group': group
+    }
+    return render(request, 'news/comment_detail.html', context)
+
+@login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
+def news_comments_approved(request, hashid):
+    group = request.user.groups.all()[0].name
+    objects = get_object_or_404(NewsComment, hashed=hashid)
+    objects.is_approved = True
+    objects.is_reject = False
+    objects.approved_by = request.user
+    objects.save()
+    messages.success(request, 'Succesfully Approved Comment')
+    return redirect('admin-news-comment-list')
+
+@login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
+def news_comments_reject(request, hashid):
+    group = request.user.groups.all()[0].name
+    objects = get_object_or_404(NewsComment, hashed=hashid)
+    objects.is_approved = False
+    objects.is_reject = True
+    objects.save()
+    messages.success(request, 'Succesfully Reject Comment')
+    return redirect('admin-news-comment-list')
+
+@login_required
+@allowed_users(allowed_roles=['admin','media','coordinator'])
+def news_comments_delete(request, hashid):
+    group = request.user.groups.all()[0].name
+    objects = get_object_or_404(NewsComment, hashed=hashid)
+    objects.delete()
+    messages.success(request, 'Succesfully Delete Comment')
+    return redirect('admin-news-comment-list')
 
 @login_required
 @allowed_users(allowed_roles=['coordinator'])
@@ -224,11 +279,11 @@ def news_approved(request, hashid):
     objects.approved_by = request.user
     objects.approved_date = datetime.datetime.now()
     objects.is_approved = True
-    # email_users = NewsUser.objects.all()
-    # for email_to in email_users:
-    #     set_name = email_to.email
-    #     set_name2 = re.split(r'[@.]', set_name)
-    #     new_news.delay(email_to.email,set_name2[0], objects.title)
+    email_users = NewsUser.objects.filter(choices=2)
+    for email_to in email_users:
+        set_name = email_to.email
+        set_name2 = re.split(r'[@.]', set_name)
+        new_news.delay(email_to.email,set_name2[0], objects.title)
     objects.save()
     messages.success(request, f'Successfully Approved News')
     return redirect('admin-news-request-list')

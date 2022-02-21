@@ -89,6 +89,25 @@ class NewsImage(models.Model):
         self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
         return super(NewsImage, self).save(*args, **kwargs)
 
+class NewsComment(models.Model):
+    news = models.ForeignKey(News, on_delete=models.CASCADE, related_name="comments")
+    name = models.CharField(max_length=255, null=True)
+    email = models.EmailField()
+    comments = models.TextField()
+    is_approved = models.BooleanField(default=False, null=True)
+    is_reject = models.BooleanField(default=False, null=True)
+    is_admin= models.BooleanField(default=False, null=True, blank=True)
+    datetime = models.DateTimeField(auto_now_add=True, null=True)
+    approved_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    hashed = models.CharField(max_length=32, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
+        return super(NewsComment, self).save(*args, **kwargs)   
+
 class SubscribeChoice(models.Model):
     name = models.CharField(max_length=300, null=True)
     hashed = models.CharField(max_length=32, null=True, blank=True)

@@ -11,6 +11,7 @@ from product.models import Product
 from main.forms import AppointmentForm, SuggestionForm
 from appointment.models import Appointment, Suggestion
 from main.utils import getnewid
+from appointment.models import ContactMunicipality
 
 def appointment(request,lang):
     form = AppointmentForm()
@@ -38,9 +39,11 @@ def appointment(request,lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
+    contactMunicipality = ContactMunicipality.objects.filter(is_active=True).order_by('-municipality')
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'Appointment', \
-            'departments':departments,'form':form,'form2':form2, 'products': products, 'lang':lang, 'lang_data': lang_data,
+            'departments':departments,'form':form,'form2':form2, 'products': products, 'lang':lang, 'lang_data': lang_data,\
+                'contactMunicipality':contactMunicipality
     }
     template = 'inner_page/appointment.html'
     return render(request, template, context)

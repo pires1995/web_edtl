@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 <footer id="footer">
 
   <div class="footer-top">
@@ -35,8 +36,11 @@
         <div class="col-md-4 footer-newsletter">
           <h4>{{lang_data.FOOTER_LBL7}}</h4>
           <p>{{lang_data.FOOTER_LBL8}}</p>
-          <form action="" method="post">
-            <input type="email" name="email"><input type="submit" value="Subscribe">
+          <form  method="POST">
+            {% csrf_token %}
+            <input type="email" name="email">
+            <input type="submit" value="Subscribe">
+
           </form>
         </div>
 

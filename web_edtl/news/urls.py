@@ -22,6 +22,16 @@ urlpatterns = [
          views.news_deactivate, name="admin-news-deactivate"),
     path('news-sent/<str:hashid>/',
          views.news_sent, name="admin-news-sent"),
+    path('news-comments-list',
+         views.news_comments_list, name="admin-news-comment-list"),
+    path('news-comments-detail/<str:hashid>/',
+         views.news_comments_detail, name="admin-news-comment-detail"),
+    path('news-comments-approved/<str:hashid>/',
+         views.news_comments_approved, name="admin-news-comment-approved"),
+    path('news-comments-reject/<str:hashid>/',
+         views.news_comments_reject, name="admin-news-comment-reject"),
+    path('news-comments-delete/<str:hashid>/',
+         views.news_comments_delete, name="admin-news-comment-delete"),
 
     # NEWS COORDINATOR
     path('admin-request-news/', views.news_approval_request_list,

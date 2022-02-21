@@ -30,17 +30,22 @@
           
         </a>
       </h2>
-      <div class="col-lg-12 entries">
+      <div class="col-md-7 entries">
 
         <article class="entry entry-single">
 
-          <div class="entry-img text-center">
-            <img class="" src="{{objects.image.url}}" alt="" class="img-fluid">
+          <div class="entry-img text-center p-4 text-center">
+            <img class="img img-fluid" src="{% static 'main/img/img_loading.png' %}" data-src="{{objects.image.url}}" alt="" class="img-fluid">
           </div>
-
-
+      </article><!-- End blog entry -->
+        
+      </div><!-- End blog entries list -->
+      <div class="col-md-5 entries">
+        
+        <article class="entry entry-single">
 
           <div class="entry-content">
+            <h6>Description: </h6>
           {% if lang == 'tt' %}
           
           {{objects.overview_tet|safe}}
@@ -51,16 +56,9 @@
           {{objects.overview_eng|safe}}
             
           {% endif %}
-
-
-           
-
           </div>
-
-          
-      </article><!-- End blog entry -->
-        
-      </div><!-- End blog entries list -->
+      </article>
+      </div>
   
 </div>
 

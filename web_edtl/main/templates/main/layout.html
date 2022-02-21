@@ -59,25 +59,24 @@
   {% if page == 'varanda' %}
     
   {% include "main/hero.html" %}
+  
   {% endif %}
 
-  <main id="main">
-    {% if messages %}
-    <section id="portfolio blog" class="blog contact">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-6 ">
-            {% for message in messages %}
-            <div class="alert alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}} {%endif%} p-2">
-              {{ message }}
-            </div>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-    </section>
-    {% endif %}
+  {% if messages %}
 
+  {% for message in messages %}
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+  
+      <div class="text-center alert alert-{% if message.tags == 'error' %}danger{%else%}{{message.tags}} {%endif%} p-2">
+        {{ message }}
+      </div>
+    </div>
+  </div>
+      {% endfor %}
+  </div>
+  
+  {% endif %}
     {% block content %}
       
     {% endblock content %}
@@ -98,6 +97,7 @@
   <script src="{% static 'main/vendor/swiper/swiper-bundle.min.js' %}"></script>
   <script src="{% static 'main/vendor/waypoints/noframework.waypoints.js' %}"></script>
   <script src="{% static 'web_admin/js/jquery-3.6.0.min.js' %}"></script>
+  <script src="{% static 'main/js/loadimg.js' %}"></script>
   <!-- Template Main JS File -->
   <script src="{% static 'main/js/main.js' %}"></script>
   <script type="text/javascript">

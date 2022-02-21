@@ -71,91 +71,16 @@
                       </tr>
                     </thead>
                     <tbody>
-                      
+                      {% for object in contactMunicipality %}
+                        
                       <tr>
-                        <th scope="row">1</th>
-                        <td>Elias Martins da Cunha</td>
-                        <td>+670 78385129</td>
-                        <td>Supervisor</td>
-                        <td>Dili</td>
+                        <th scope="row">{{forloop.counter}}</th>
+                        <td>{{object.name}}</td>
+                        <td>+670 {{object.phone_number}}</td>
+                        <td>{{object.position}}</td>
+                        <td>{{object.municipality}}</td>
                       </tr>
-                      <tr>
-                        <th scope="row">2</th>
-                        <td>Tomás M.do Santos</td>
-                        <td>+670 76470488</td>
-                        <td>Supervisor</td>
-                        <td>Ainaro</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">3</th>
-                        <td>Jorge F.C.Leite</td>
-                        <td>+670 76869050</td>
-                        <td>Supervisor</td>
-                        <td>Aileu</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">4</th>
-                        <td>Mário J.Soares</td>
-                        <td>+670 76694492</td>
-                        <td>Supervisor</td>
-                        <td>Bobonaro</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">5</th>
-                        <td>Edigar B.da Silva</td>
-                        <td>+670 77484571</td>
-                        <td>Supervisor</td>
-                        <td>Baucau</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">6</th>
-                        <td>Alexander Seran</td>
-                        <td>+670 78154751</td>
-                        <td>Supervisor</td>
-                        <td>Covalima</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">7</th>
-                        <td>Assuncao Pinto Baptista</td>
-                        <td>+670 78385130</td>
-                        <td>Supervisor</td>
-                        <td>Ermera</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">8</th>
-                        <td>Chiquito dos santos</td>
-                        <td>+670 77331153</td>
-                        <td>Supervisor</td>
-                        <td>Lautem</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">9</th>
-                        <td>Alexsander Jesus</td>
-                        <td>+670 78309050</td>
-                        <td>Supervisor</td>
-                        <td>Liquica</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">10</th>
-                        <td>Francisco Soares </td>
-                        <td>+670 78154830</td>
-                        <td>Supervisor</td>
-                        <td>Manatuto</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">11</th>
-                        <td>Julio P.Pinheiro</td>
-                        <td>+670 78102176</td>
-                        <td>Supervisor</td>
-                        <td>Manufahi</td>
-                      </tr>
-                      <tr>
-                        <th scope="row">12</th>
-                        <td>Eduardo  Sarmento</td>
-                        <td>+670 77323265</td>
-                        <td>Supervisor</td>
-                        <td>Viqueque</td>
-                      </tr>
+                      {% endfor %}
                     </tbody>
                   </table>
             </div>
