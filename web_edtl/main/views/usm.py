@@ -16,7 +16,6 @@ from product.models import Product
 
 def usm_login(request,lang):
     lang_data = lang_master(lang)
-    group = request.user.groups.all()[0].name
     departments = Department.objects.all()
     subscribechoices = SubscribeChoice.objects.all()
     products = Product.objects.filter(is_active=True)
