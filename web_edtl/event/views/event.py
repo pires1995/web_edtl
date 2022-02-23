@@ -6,6 +6,16 @@ from django.contrib.auth.decorators import login_required
 from main.utils import getnewid
 from django.contrib import messages
 from custom.decorators import allowed_users
+from news.tasks import send_event,send_notification
+from django.utils.text import Truncator
+from news.models import NewsUser
+import re
+from custom.models import FirebaseToken
+import requests
+import json
+from django.templatetags.static import static
+
+image_url = static('main/img/logo.png')
 
 @login_required
 @allowed_users(allowed_roles=['admin','media','coordinator'])
@@ -97,3 +107,48 @@ def event_deactivate(request, hashid):
     objects.save()
     messages.success(request, 'Successfully Deactivate Event')
     return redirect('admin-event-list')
+
+
+def send_event_notification(registration_ids , message_title , message_desc, image):
+    fcm_api = "AAAA79BRMps:APA91bFy0m7nCsQslCnlJQVFF3ubHfaVPy1lmrF-Hr2vUk-bOCdcZJLC7DR86T2LBz1ndVNC9eB6grmQOLg1RRMEB2V54MFtXCmrTVWd_953iS_Wc-Cdnf1dtALuCma1tCMVBxr6s8uk"
+    url = "https://fcm.googleapis.com/fcm/send"
+    
+    headers = {
+    "Content-Type":"application/json",
+    "Authorization": 'key='+fcm_api}
+
+    payload = {
+        "registration_ids" :registration_ids,
+        "priority" : "high",
+        "notification" : {
+            "body" : message_desc,
+            "title" : f"News: {message_title}",
+            "image" : image.url,
+            "icon": image_url
+            
+        }
+    }
+
+    result = requests.post(url,  data=json.dumps(payload), headers=headers )
+    print(result.json())
+
+@login_required
+@allowed_users(allowed_roles=['admin','media'])
+def send_notif_user(request, hashid):
+    token2 = FirebaseToken.objects.all()[0]
+    token = [f'{token2}']
+    print(token)
+    objects = get_object_or_404(Event, hashed=hashid)
+    objects.is_send_notif = True
+    title = Truncator(objects.name_tet).words(5)
+    send_notification(token, title, 'Test', objects.image)
+    email_users = NewsUser.objects.filter(choices=1,is_active=True)
+    for email_to in email_users:
+        set_name = email_to.email
+        set_name2 = re.split(r'[@.]', set_name)
+        send_event.delay(email_to.email,set_name2[0], objects.name_tet)
+    objects.save()
+    messages.success(request, f'Successfully Send Notification')
+    return redirect('admin-event-list')
+
+

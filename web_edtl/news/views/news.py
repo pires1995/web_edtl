@@ -9,7 +9,7 @@ from datetime import datetime
 import datetime
 from django.contrib.auth.models import Group
 import os
-from news.tasks import send_email, new_news
+from news.tasks import new_news, send_notification
 from django.template.loader import get_template
 from django.core import serializers
 
@@ -20,6 +20,8 @@ import re
 from email.mime.image import MIMEImage
 from django.contrib.staticfiles import finders
 from custom.decorators import allowed_users
+from django.utils.text import Truncator
+from custom.models import FirebaseToken
 # Create your views here.
 
 # NEWS USER
@@ -275,6 +277,8 @@ def news_approved2(request, hashid):
 @login_required
 @allowed_users(allowed_roles=['coordinator'])
 def news_approved(request, hashid):
+    get_token = FirebaseToken.objects.all()[0]
+    token = [f'{get_token}']
     objects = get_object_or_404(News, hashed=hashid)
     objects.approved_by = request.user
     objects.approved_date = datetime.datetime.now()
@@ -284,6 +288,9 @@ def news_approved(request, hashid):
         set_name = email_to.email
         set_name2 = re.split(r'[@.]', set_name)
         new_news.delay(email_to.email,set_name2[0], objects.title)
+    title = Truncator(objects.title).words(5)
+    headline = Truncator(objects.headline).words(5)
+    send_notification(token, message_title=title, message_desc=headline, image=objects.image_thumbnail)
     objects.save()
     messages.success(request, f'Successfully Approved News')
     return redirect('admin-news-request-list')

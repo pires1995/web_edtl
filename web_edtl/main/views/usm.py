@@ -32,10 +32,14 @@ def usm_login(request,lang):
             email = form.cleaned_data['email']
             try:
                 objects = get_object_or_404(NewsUser, email=email)
-                return render(request, 'usm/dashboard.html',{'lang': lang,\
-                    'l1': 'tt', 'l2': 'pt', 'l3': 'en', 'products':products,\
-                    'departments':departments, 'lang_data':lang_data, 'usersubscribe': objects,\
-                         'subscribechoices':subscribechoices})
+                if objects.is_active == False:
+                    messages.error(request, f'Please Verify Your Email')
+                    return redirect('usm-login', lang)
+                else:
+                    return render(request, 'usm/dashboard.html',{'lang': lang,\
+                        'l1': 'tt', 'l2': 'pt', 'l3': 'en', 'products':products,\
+                        'departments':departments, 'lang_data':lang_data, 'usersubscribe': objects,\
+                            'subscribechoices':subscribechoices})
             except:
                 messages.error(request, f'Sorry, we cannot find your Email!')
                 return redirect('usm-login', lang)

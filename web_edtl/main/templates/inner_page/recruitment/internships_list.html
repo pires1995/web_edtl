@@ -17,6 +17,14 @@
     <div class="container" data-aos="fade-up">
         <div class="section-title" data-aos="fade-up">
             <h2><strong>{{lang_data.INTERNSHIP_TITLE_LBL}}</strong></h2>
+            {% if lang == 'tt' %}
+            {{page_description.description_tet|safe}}
+            {% elif lang == 'pt' %}
+            {{page_description.description_por|safe}}
+            {% else %}
+            {{page_description.description_eng|safe}}
+              
+            {% endif %}
           </div>
           <div class="row justify-content-center">
 

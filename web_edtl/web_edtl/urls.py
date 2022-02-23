@@ -20,7 +20,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.conf.urls import url
 from django.views.static import serve
-
+from main import views
 
 urlpatterns = [
     path('', include('main.urls')),
@@ -43,6 +43,7 @@ urlpatterns = [
     path('events/', include('event.urls')),
     path('notifications/', include('notification.urls')),
     path('summernote/', include('django_summernote.urls')),
+    path('firebase-messaging-sw.js', views.showFirebaseJS, name='show-firebase'),
 
     url(r'^media/(?P<path>.*)$', serve,
         {'document_root': settings.MEDIA_ROOT}),

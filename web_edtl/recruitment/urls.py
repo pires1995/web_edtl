@@ -23,4 +23,6 @@ urlpatterns = [
     path('volunteer-detail/<str:hashid>/', views.volunteer_detail, name='admin-volunteer-detail'),
     path('volunteer-activate/<str:hashid>/', views.volunteer_activate, name='admin-volunteer-activate'),
     path('volunteer-deactivate/<str:hashid>/', views.volunteer_deactivate, name='admin-volunteer-deactivate'),
+    path('send-vacancy/<str:hashid>/', views.vacancy_send_notif,
+         name='admin-vacancy-send')
 ]

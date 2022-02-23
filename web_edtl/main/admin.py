@@ -5,6 +5,7 @@ from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth.forms import (
     AdminPasswordChangeForm, UserChangeForm, UserCreationForm, ReadOnlyPasswordHashField
 )
+from django.http import HttpResponse
 
 
 class MyUserAdmin(UserAdmin):
@@ -41,3 +42,30 @@ class MyUserAdmin(UserAdmin):
 
 
 admin.site.register(User, MyUserAdmin)
+
+def showFirebaseJS(request):
+    data='importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js");' \
+         'importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js"); ' \
+         'var firebaseConfig = {' \
+         '        apiKey: "",' \
+         '        authDomain: "",' \
+         '        databaseURL: "",' \
+         '        projectId: "",' \
+         '        storageBucket: "",' \
+         '        messagingSenderId: "",' \
+         '        appId: "",' \
+         '        measurementId: ""' \
+         ' };' \
+         'firebase.initializeApp(firebaseConfig);' \
+         'const messaging=firebase.messaging();' \
+         'messaging.setBackgroundMessageHandler(function (payload) {' \
+         '    console.log(payload);' \
+         '    const notification=JSON.parse(payload);' \
+         '    const notificationOption={' \
+         '        body:notification.body,' \
+         '        icon:notification.icon' \
+         '    };' \
+         '    return self.registration.showNotification(payload.notification.title,notificationOption);' \
+         '});'
+
+    return HttpResponse(data,content_type="text/javascript")

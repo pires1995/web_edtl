@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from news.models import News, NewsCategory
 from datetime import datetime
@@ -7,6 +7,9 @@ from appointment.models import Appointment
 from news.models import NewsUser
 from finance.models import Client
 from custom.decorators import allowed_users
+from custom.models import FirebaseToken
+from django.http import HttpResponse
+
 def month():
     month_name = {
         '1': 'January',
@@ -35,3 +38,10 @@ def dashboard(request):
             'client': client, 'appointment': appointment, 'subusers': subusers
     }
     return render(request, 'web_admin/home.html', context)
+
+
+
+def create_token(request, token):
+    FirebaseToken.objects.create(token=token)
+    return HttpResponse('')
+        

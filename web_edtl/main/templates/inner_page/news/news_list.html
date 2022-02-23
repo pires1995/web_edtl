@@ -56,7 +56,7 @@
               <ul>
                 <li class="d-flex align-items-center"><i class="bi bi-person"></i>{{obj.author.first_name}} {{obj.author.last_name}}</li>
                 <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <time datetime="2020-01-01">{{obj.entered_date|date:"d/M/Y"}}</a></li>
-                <!-- <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#">12 Comments</a></li> -->
+                <li class="d-flex align-items-center"><i class="bi bi-eye"></i> <a href="#">{{obj.total_views}} Views</a></li>
               </ul>
             </div>
 
@@ -110,7 +110,7 @@
             <h3 class="sidebar-title">{{search}}</h3>
             <div class="sidebar-item search-form">
               <form action="">
-                <input type="text">
+                <input type="text" class="form-control" name="q" value="{{ request.GET.q }}" placeholder="Buka noticia..." aria-label="Buka noticia..." aria-describedby="basic-addon2">
                 <button type="submit"><i class="bi bi-search"></i></button>
               </form>
             </div><!-- End sidebar search formn-->

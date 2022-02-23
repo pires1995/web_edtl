@@ -34,7 +34,8 @@
                                 <th scope="col" width="5%">Nu.</th>
                                 <th scope="col" width="40%">Title</th>
                                 <th scope="col" width="10%">Author</th>
-                                <th scope="col" width="25%">Status</th>
+                                <th scope="col" width="15%">Status</th>
+                                <th scope="col" width="10%">Notification</th>
                                 <th scope="col" width="25%">Action</th>
                             </tr>
                         </thead>
@@ -54,6 +55,12 @@
                                     {% endif %}
 
                                 </td>
+                                <td>{% if n.is_send_notif == True %}
+                                    <i class="bi bi-check-lg"></i> Already Send Notification
+                                  {% else %}
+                                    <i class="bi bi-clock"></i> Waiting to Send Notification
+                                  {% endif %}
+                                  </td>
                                 <td>
                                     {% if n.is_active == False %}
                                     <a href="{% url 'admin-announcement-update' n.hashed %}" type="button" title="Update"
@@ -64,6 +71,8 @@
                                     {% else %}
                                     <a href="{% url 'admin-announcement-deactivate' n.hashed %}" type="button" title="Deactivate"
                                         class="btn btn-sm btn-danger"><i class="bi bi-x-circle"></i></a>
+                                    <a href="{% url 'admin-announcement-send' n.hashed %}" type="button" title="Send Notification"
+                                    class="btn btn-warning"><i class="bi bi-send"></i></a>
                                     {% endif %}
                                 </td>
                             </tr>

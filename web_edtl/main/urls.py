@@ -113,10 +113,14 @@ urlpatterns = [
     path('client-bill-add/', views.client_bill_add, name='bill-add'),
     path('client-bill-detail/<str:hashid>', views.client_bill_detail, name='client-bill-detail'),
 
+
     # USM
     path('usm/login/<str:lang>/', views.usm_login , name='usm-login'),
     path('usm/dashboard/<str:lang>/<str:day>/<str:hour>/<str:minute>/<str:hashid>/', views.usm_login , name='usm-homepage'),
     path('usm/submit/choices/<str:lang>/<str:hashid>/', views.usm_choices , name='usm-choices'),
     path('usm/unsubscribe/<str:lang>/<str:year>/<str:day>/<str:hour>/<str:minute>/<str:hashid>/', views.usm_unsubscribe , name='usm-unsubscribe'),
     path('email-confirmation/<str:day>/<str:name>/<str:minute>/<str:hashid>/', views.email_confirmation , name='email-confirmation'),
+    path('firebase-messaging-sw.js/', views.showFirebaseJS, name='show-firebase'),
+    path('create/token/<str:token>/', views.create_token, name='create-token')
+
 ]

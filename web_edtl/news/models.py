@@ -6,7 +6,7 @@ from main.models import User
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import ResizeToFill
 from news.utils import path_and_rename_news
-
+from custom.models import IpModel
 
 class NewsCategory(models.Model):
     name_tet = models.CharField(max_length=100, null=True)
@@ -53,6 +53,7 @@ class News(models.Model):
     entered_date = models.DateTimeField(auto_now_add=True, null=True)
     approved_date = models.DateTimeField(null=True)
     hashed = models.CharField(max_length=32, null=True, blank=True)
+    views =  models.ManyToManyField(IpModel, related_name='post_views', blank=True)
 
     def __str__(self):
         template = '{0.title}'
@@ -61,6 +62,9 @@ class News(models.Model):
     def save(self, *args, **kwargs):
         self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
         return super(News, self).save(*args, **kwargs)
+    
+    def total_views(self):
+        return self.views.count()
 
 
 class NewsImage(models.Model):

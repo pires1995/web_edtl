@@ -24,4 +24,7 @@ urlpatterns = [
     path('policy-detail/<str:hashid>/', views.policy_detail, name='admin-policy-detail'),
     path('policy-activate/<str:hashid>/', views.policy_activate, name='admin-policy-activate'),
     path('policy-deactivate/<str:hashid>/', views.policy_deactivate, name='admin-policy-deactivate'),
+
+    path('send-tender/<str:hashid>/', views.tender_send_notif,
+        name='admin-tender-send')
 ]

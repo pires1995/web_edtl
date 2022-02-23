@@ -43,7 +43,8 @@
                                 <th scope="col" width="10%">Start Date</th>
                                 <th scope="col" width="10%">End Date</th>
                                 <th scope="col" width="10%">Author</th>
-                                <th scope="col" width="20%">Status</th>
+                                <th scope="col" width="10%">Status</th>
+                                <th scope="col" width="10%">Notification</th>
                                 <th scope="col" width="15%">Action</th>
                             </tr>
                         </thead>
@@ -63,6 +64,12 @@
                                   <i class="bi bi-clock"></i> Waiting to Activate
                                 {% endif %}
                                 </td>
+                                <td>{% if object.is_send_notif == True %}
+                                  <i class="bi bi-check-lg"></i> Already Send Notification
+                                {% else %}
+                                  <i class="bi bi-clock"></i> Waiting to Send Notification
+                                {% endif %}
+                                </td>
                                 <td>
                                     {% if object.is_active == False %}
                                     <a href="{% url 'admin-event-update' object.hashed %}" type="button" title="Update"
@@ -73,6 +80,8 @@
                                     {% else %}
                                     <a href="{% url 'admin-event-deactivate' object.hashed %}" type="button" title="Deactivate"
                                         class="btn btn-danger"><i class="bi bi-x-circle"></i></a>
+                                    <a href="{% url 'admin-event-send-notif' object.hashed %}" type="button" title="Send Notification"
+                                        class="btn btn-warning"><i class="bi bi-send"></i></a>
 
 
                                     {% endif %}

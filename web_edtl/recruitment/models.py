@@ -17,6 +17,7 @@ class Vacancy(models.Model):
     file = models.FileField(upload_to=path_and_rename_vacancy_pdf,
                             validators=[FileExtensionValidator(allowed_extensions=['pdf', 'csv', 'doc', 'docx', 'xls', 'xlsx'])])
     is_active = models.BooleanField(default=False, null=True)
+    is_send_notif = models.BooleanField(default=False, null=True)
     datetime = models.DateTimeField(auto_now_add=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     hashed = models.CharField(max_length=32, null=True, blank=True)

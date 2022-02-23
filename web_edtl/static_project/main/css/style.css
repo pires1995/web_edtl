@@ -199,18 +199,15 @@ h1, h2, h3, h4, h5, h6 {
   border: 1px solid #f03c02;
   border-radius: 10px;
   padding: 10px;
-  margin-left: 5px;
+  margin-left: 10px;
   color: #f03c02;
   font-weight: 600;
-  background-color: rgb(238, 238, 238);
+  background-color: white;
   padding-left: 5px;
 }
 .navbar ul li #btn-appointment:hover {
   /* border: 2px solid rgb(238, 238, 238); */
   border-radius: 10px;
-  padding-left: 5px;
-  padding: 10px;
-  margin-left: 5px;
   color: white;
   background-color: #f03c02;
 }

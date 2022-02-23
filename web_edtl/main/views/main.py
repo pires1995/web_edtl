@@ -23,8 +23,13 @@ import re
 from procurament.models import Tender
 from datetime import datetime
 from recruitment.models import Vacancy
+from django.http import HttpResponse
+from custom.models import IpModel
+from main.utils import get_client_ip
+
 
 def home(request, lang):
+    ip = get_client_ip(request)
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
@@ -34,7 +39,9 @@ def home(request, lang):
     faq_home = Faq.objects.filter(is_active=True, is_homepage=True)
     vacancy_marquee = Vacancy.objects.filter(is_active=True, end_period__gte = datetime.now().date())[:3]
     tender_marquee = Tender.objects.filter(is_active=True, end_period__gte = datetime.now().date())[:3]
-
+    if IpModel.objects.filter(ip__isnull=True):
+        IpModel.objects.create(ip=ip)
+    visitors = IpModel.objects.all().count()
     form =  SubscribeForm(request.POST or None)
     titlepage = 'Home'
     if request.method == 'POST':
@@ -60,7 +67,7 @@ def home(request, lang):
                 return redirect('redirect-home')
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP','lang': lang, 'lang_data': lang_data,\
-            'page': 'varanda', 'departments': departments, 'products': products, 'banners':banners, 
+            'page': 'varanda', 'departments': departments, 'products': products, 'banners':banners, 'visitors':visitors,\
             'news_main': news_main, 'vacancy_event':vacancy_marquee, 'tender_marquee':tender_marquee, 'news_recent':news_recent, 'faq_home':faq_home, 'titlepage':titlepage
     }
     template = 'main/home.html'
@@ -292,3 +299,30 @@ def varanda2(request):
     }
     template = 'main/layout.html'
     return render(request, template, context)
+
+def showFirebaseJS(request):
+    data='importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-app.js");' \
+         'importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js"); ' \
+         'var firebaseConfig = {' \
+         '        apiKey: "AIzaSyAyrR2dgbPE11g6RJCXZ8-SR0tTBlbYToI",' \
+         '        authDomain: "edtl-website.firebaseapp.com",' \
+         '        databaseURL: "",' \
+         '        projectId: "edtl-website",' \
+         '        storageBucket: "edtl-website.appspot.com",' \
+         '        messagingSenderId: "1029992166043",' \
+         '        appId: "1:1029992166043:web:c48c04f8246ac1bbeacc3e",' \
+         '        measurementId: "G-FJY07M0N2N"' \
+         ' };' \
+         'firebase.initializeApp(firebaseConfig);' \
+         'const messaging=firebase.messaging();' \
+         'messaging.setBackgroundMessageHandler(function (payload) {' \
+         '    console.log(payload);' \
+         '    const notification=JSON.parse(payload);' \
+         '    const notificationOption={' \
+         '        body:notification.body,' \
+         '        icon:notification.icon' \
+         '    };' \
+         '    return self.registration.showNotification(payload.notification.title,notificationOption);' \
+         '});'
+
+    return HttpResponse(data,content_type="text/javascript")

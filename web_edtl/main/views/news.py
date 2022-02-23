@@ -10,9 +10,10 @@ from django.core.paginator import Paginator
 from django.db.models import Count, Q
 from news.forms import NewsCommentForm
 from main.utils import getnewid
-from custom.models import Year
+from custom.models import IpModel, Year
 from main.forms import SubscribeForm
 from news.models import News, NewsUser, SubscribeChoice
+from main.utils import get_client_ip
 
 def news_list(request,lang):
     lang_data = lang_master(lang)
@@ -67,6 +68,12 @@ def news_list(request,lang):
             year_data.append([year.year,news])
         legend = "NEWS"
         search = "Search for News"
+    query = request.GET.get("q")    
+    if query:
+        queryset_list = queryset_list.filter(
+        (Q(title__icontains=query))).distinct()
+    else:
+        queryset_list = queryset_list
     lang_data = lang_master(lang)
     paginator = Paginator(queryset_list, 5)
     page_number = request.GET.get('page')
@@ -240,22 +247,53 @@ def news_list_year(request, lang, year):
     return render(request, template, context)
 
 
+
+
 def news_detail(request,lang,year, month, hashid, titleseo):
+    ip = get_client_ip(request)
     if lang == "tt":
-        titlepage = 'Detalla Notisia'
-        objects = get_object_or_404(News, hashed=hashid, language="Tetum")
-        breakcumb = 'Lista Notisia'
-        legend = "Detalha"
+        if IpModel.objects.filter(ip=ip).exists():
+            titlepage = 'Detalla Notisia'
+            objects = get_object_or_404(News, hashed=hashid, language="Tetum")
+            objects.views.add(IpModel.objects.get(ip=ip))
+            breakcumb = 'Lista Notisia'
+            legend = "Detalha"
+        else:
+            IpModel.objects.create(ip=ip)
+            titlepage = 'Detalla Notisia'
+            objects = get_object_or_404(News, hashed=hashid, language="Tetum")
+            objects.views.add(IpModel.objects.get(ip=ip))
+            breakcumb = 'Lista Notisia'
+            legend = "Detalha"
     elif lang == "pt":
-        titlepage = 'Detalha Noticia'
-        objects = get_object_or_404(News, hashed=hashid, language="Portugues")
-        breakcumb = 'Lista Notícia'
-        legend = "Detalha"
+        if IpModel.objects.filter(ip=ip).exists():
+            titlepage = 'Detalha Noticia'
+            objects = get_object_or_404(News, hashed=hashid, language="Portugues")
+            objects.views.add(IpModel.objects.get(ip=ip))
+            breakcumb = 'Lista Notisia'
+            legend = "Detalha"
+        else:
+            IpModel.objects.create(ip=ip)
+            titlepage = 'Detalha Noticia'
+            objects = get_object_or_404(News, hashed=hashid, language="Portugues")
+            objects.views.add(IpModel.objects.get(ip=ip))
+            breakcumb = 'Lista Notisia'
+            legend = "Detalha"
+
     else:
-        titlepage = 'Detail'
-        objects = get_object_or_404(News, hashed=hashid, language="English")
-        breakcumb = 'News List'
-        legend = "News Detail"
+        if IpModel.objects.filter(ip=ip).exists():
+            titlepage = 'Detail'
+            objects = get_object_or_404(News, hashed=hashid, language="English")
+            objects.views.add(IpModel.objects.get(ip=ip))
+            breakcumb = 'Lista Notisia'
+            legend = "News Detail"
+        else:
+            IpModel.objects.create(ip=ip)
+            titlepage = 'Detail'
+            objects = get_object_or_404(News, hashed=hashid, language="English")
+            objects.views.add(IpModel.objects.get(ip=ip))
+            breakcumb = 'Lista Notisia'
+            legend = "News Detail"
     lang_data = lang_master(lang)
     images = NewsImage.objects.filter(news=objects)
     departments = Department.objects.all()

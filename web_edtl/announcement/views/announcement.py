@@ -5,8 +5,11 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from main.utils import title_seo, getnewid
 from custom.decorators import allowed_users
-
-
+from news.tasks import send_announcement_notification, send_announcement
+from django.utils.text import Truncator
+from custom.models import FirebaseToken
+from news.models import NewsUser
+import re
 # NEWS MANAGEMENT
 @login_required
 @allowed_users(allowed_roles=['admin','media','coordinator'])
@@ -96,4 +99,23 @@ def announcement_deactivate(request, hashid):
     object.is_active = False
     object.save()
     messages.success(request, f'Successfully Deactivate Announcement')
+    return redirect('admin-announcement-list')
+
+@login_required
+@allowed_users(allowed_roles=['admin','media'])
+def announcement_send_notif(request, hashid):
+    get_token = FirebaseToken.objects.all()[0]
+    token = [f'{get_token}']
+    objects = get_object_or_404(Announcement, hashed=hashid)
+    objects.is_send_notif = True
+    email_users = NewsUser.objects.filter(choices=3,is_active=True)
+    for email_to in email_users:
+        set_name = email_to.email
+        set_name2 = re.split(r'[@.]', set_name)
+        send_announcement.delay(email_to.email,set_name2[0], objects.title_tet)
+    title = Truncator(objects.title_tet).words(5)
+    headline = Truncator(objects.description_tet).words(5)
+    send_announcement_notification(token, message_title=title, message_desc=headline, image=objects.image_thumbnail)
+    objects.save()
+    messages.success(request, f'Successfully Send Notifications')
     return redirect('admin-announcement-list')

@@ -24,6 +24,7 @@ class Announcement(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     is_active = models.BooleanField(default=False, null=True)
+    is_send_notif = models.BooleanField(default=False, null=True)
     datetime = models.DateTimeField(auto_now_add=True, null=True)
     hashed = models.CharField(max_length=32, null=True, blank=True)
 

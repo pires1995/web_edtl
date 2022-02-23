@@ -11,5 +11,8 @@ urlpatterns = [
     path('admin/announcement-activate/<str:hashid>/',
             views.announcement_activate, name="admin-announcement-activate"),
     path('admin/announcement-deactivate/<str:hashid>/',
-            views.announcement_deactivate, name="admin-announcement-deactivate")
+            views.announcement_deactivate, name="admin-announcement-deactivate"),
+        #ANNOUNCEMENT SEND NOTIF
+    path('send-announcement/<str:hashid>/', views.announcement_send_notif,
+         name='admin-announcement-send')
 ]

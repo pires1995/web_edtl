@@ -30,7 +30,7 @@
                   <ul>
                     <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="#">{{news_main.author.first_name}} {{news_main.author.last_name}}</a></li>
                     <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time datetime="2020-01-01">{{news_main.entered_date|date:"d/M/Y"}}</time></a></li>
-                    <!-- <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="#">12 Comments</a></li> -->
+                    <li class="d-flex align-items-center"><i class="bi bi-eye"></i> <a href="#">{{news_main.total_views}} Views</a></li>
                   </ul>
                 </div>
   
@@ -60,11 +60,11 @@
                   {% endfor %}
                 </div>
                 <hr>
-                <h3 class="sidebar-title">{{lang_data.HOME_VISITOR}}</h3>
+                <h3 class="sidebar-title"> <i class="bi bi-bar-chart-fill"></i> {{lang_data.HOME_VISITOR}}</h3>
                 <div class="sidebar-item ">
                   <div class="post-item">
-                    <h6><i class="bi bi-clock"></i> {{lang_data.HOME_VISITOR_TODAY}}: <strong> 102 </strong></h6>
-                    <h6><i class="bi bi-clock-history"></i> {{lang_data.HOME_VISITOR_ALL}}: <strong> 202 </strong></h6>
+                    <!-- <h6><i class="bi bi-clock"></i> {{lang_data.HOME_VISITOR_TODAY}}: <strong> 102 </strong></h6> -->
+                    <h6><i class="bi bi-clock-history"></i> {{lang_data.HOME_VISITOR_ALL}}: <strong> {{visitors}} </strong></h6>
                   </div>
                 </div>
               </div>

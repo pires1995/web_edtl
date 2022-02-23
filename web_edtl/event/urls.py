@@ -8,5 +8,6 @@ urlpatterns = [
     path('event-detail/<str:hashid>/', views.event_detail, name='admin-event-detail'),
     path('event-activate/<str:hashid>/', views.event_activate, name='admin-event-activate'),
     path('event-deactivate/<str:hashid>/', views.event_deactivate, name='admin-event-deactivate'),
+    path('event-send-notification/<str:hashid>/', views.send_notif_user, name='admin-event-send-notif'),
 
 ]

@@ -26,3 +26,16 @@ class Year(models.Model):
 	def __str__(self):
 		template = '{0.year}'
 		return template.format(self)
+
+class FirebaseToken(models.Model):
+	token = models.CharField(max_length=600, null=True)
+	def __str__(self):
+		template = '{0.token}'
+		return template.format(self)
+
+class IpModel(models.Model):
+	ip = models.CharField(max_length=100)
+	datetime = models.DateTimeField(auto_now_add=True)
+	def __str__(self):
+		template = '{0.ip}'
+		return template.format(self)
