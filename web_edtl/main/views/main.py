@@ -48,7 +48,7 @@ def home(request, lang):
     last_month = timezone.now() - timedelta(days=30)
     yesterday = timezone.now() - timedelta(days=1)
     last_month_visitor = IpModel.objects.filter(datetime__lte=last_month).count()
-    yesterday_visitor = IpModel.objects.filter(datetime__gt=yesterday).count()
+    yesterday_visitor = IpModel.objects.filter(datetime__lte=yesterday).count()
     today_visitor = IpModel.objects.filter(datetime__contains=today.date()).count()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
