@@ -4,6 +4,7 @@ from .utils import path_and_rename_event
 from main.models import User
 
 class Event(models.Model):
+    model_name = "Event"
     name_tet = models.CharField(max_length=254, null=False)
     name_por = models.CharField(max_length=254, null=True)
     name_eng = models.CharField(max_length=254, null=True)

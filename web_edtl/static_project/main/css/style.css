@@ -122,6 +122,15 @@ h1, h2, h3, h4, h5, h6 {
   animation: blink 1s linear infinte !important;
   -webkit-animation: blink 1.5s infinite linear;
 }
+#topbar #btn-search{
+  border: 1px solid #f03c02;
+  border-radius: 6px;
+  padding: 4px 8px;
+  margin-left: 10px;
+  color: rgb(247, 247, 247);
+  font-weight: 600;
+  background-color: rgba(240, 60, 2, 0.8);
+}
 
 @keyframes blink {
   0% {
@@ -197,20 +206,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 .navbar ul li #btn-appointment {
   border: 1px solid #f03c02;
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 6px;
+  padding: 8px 12px;
   margin-left: 10px;
-  color: #f03c02;
+  color: rgb(247, 247, 247);
   font-weight: 600;
-  background-color: white;
-  padding-left: 5px;
+  background-color: rgba(240, 60, 2, 0.8);
 }
-.navbar ul li #btn-appointment:hover {
+/* .navbar ul li #btn-appointment:hover { */
   /* border: 2px solid rgb(238, 238, 238); */
-  border-radius: 10px;
-  color: white;
-  background-color: #f03c02;
-}
+  /* border-radius: 10px; */
+  /* color: white; */
+  /* background-color: #f03c02; */
+/* } */
 .navbar .read-more {
   color: #f03c02;
 }
@@ -989,17 +997,17 @@ section {
   line-height: 0;
 }
 .team .member .member-info {
-  padding: 25px 15px;
+  padding: 20px 10px;
 }
 .team .member .member-info h4 {
-  font-weight: 700;
+  font-weight: 500;
   margin-bottom: 5px;
-  font-size: 18px;
+  font-size: 16px;
   color: #2b2320;
 }
 .team .member .member-info span {
   display: block;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 400;
   color: #b4aca8;
 }
@@ -1776,6 +1784,10 @@ section {
 }
 .blog .sidebar .recent-posts .post-item + .post-item {
   margin-top: 15px;
+}
+#visitor {
+  color: #f03c02;
+  font-size: 20px;
 }
 .blog .sidebar .recent-posts img {
   width: 80px;

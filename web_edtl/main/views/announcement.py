@@ -6,7 +6,9 @@ from product.models import Product
 from announcement.models import Announcement
 from django.core.paginator import Paginator
 from custom.models import Year
-
+from custom.models import IpModel
+from main.utils import get_client_ip
+from django.utils import timezone
 
 def announcement_list(request,lang):
     lang_data = lang_master(lang)
@@ -16,6 +18,15 @@ def announcement_list(request,lang):
     paginator = Paginator(objects, 6)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     year = Year.objects.all()
     year_data = []
     if lang == 'tt':
@@ -43,6 +54,12 @@ def announcement_list_year(request,lang, year):
     title2=year
     year = Year.objects.all()
     year_data = []
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        pass
+    else:
+        IpModel.objects.create(ip=ip)
     if lang == 'tt':
         titlepage='EDTL.EP - Lista Anunsiu'
     elif lang == 'pt':
@@ -69,6 +86,12 @@ def announcement_detail(request,lang, hashid):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Announcement, hashed=hashid)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        pass
+    else:
+        IpModel.objects.create(ip=ip)
     if lang == 'tt':
         title3 = f"Avisu: {objects.title_tet}"
         titlepage='EDTL.EP - Detalla Anunsiu'

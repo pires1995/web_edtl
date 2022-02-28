@@ -63,10 +63,11 @@ def list_team(request):
     gabinete = Position.objects.filter(group='Gabineti Apoiu Servisu')
     pmu = Position.objects.filter(group='Project Management Unit')
     auditoria = Position.objects.filter(group='Auditoria')
+    executive = Position.objects.filter(group='Executive Directors')
     context = {
         'title': 'Lista Organograma', 'group': group, 'boardmembers': boardmembers, 'departments':departments,
         'employees': employees, 'divisions': divisions, 'divisions_board':divisions_board,
-        'gabinete':gabinete, 'pmu':pmu, 'auditoria':auditoria
+        'gabinete':gabinete, 'pmu':pmu, 'auditoria':auditoria, 'executive': executive
     }
     return render(request, 'team/team_list.html', context)
 

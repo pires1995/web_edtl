@@ -48,7 +48,7 @@
             </div>
             <div class="col-md-4">
               <div class="sidebar">
-                <h3 class="sidebar-title">{{lang_data.HOME_RECENT}}</h3>
+                <h3 class="sidebar-title"> <i class="bi bi-calendar-week"></i> {{lang_data.HOME_RECENT}}</h3>
                 <div class="sidebar-item recent-posts">
                   {% for object in  news_recent %}
 
@@ -60,11 +60,14 @@
                   {% endfor %}
                 </div>
                 <hr>
-                <h3 class="sidebar-title"> <i class="bi bi-bar-chart-fill"></i> {{lang_data.HOME_VISITOR}}</h3>
+                <h3 class="sidebar-title pt-2"> <i class="bi bi-bar-chart-fill"></i> {{lang_data.HOME_VISITOR}}</h3>
                 <div class="sidebar-item ">
                   <div class="post-item">
                     <!-- <h6><i class="bi bi-clock"></i> {{lang_data.HOME_VISITOR_TODAY}}: <strong> 102 </strong></h6> -->
-                    <h6><i class="bi bi-clock-history"></i> {{lang_data.HOME_VISITOR_ALL}}: <strong> {{visitors}} </strong></h6>
+                    <h6><i class="bi bi-eye-fill"></i> All : <strong id="visitor"> {{visitors}} </strong></h6>
+                    <h6><i class="bi bi-calendar3"></i> Last Month: <strong id="visitor"> {{last_month_visitor}} </strong></h6>
+                    <h6><i class="bi bi-calendar-week"></i> Yesterday: <strong id="visitor"> {{yesterday_visitor}} </strong></h6>
+                    <h6><i class="bi bi-calendar-check"></i> {{lang_data.HOME_VISITOR_TODAY}}: <strong id="visitor"> {{today_visitor}} </strong></h6>
                   </div>
                 </div>
               </div>

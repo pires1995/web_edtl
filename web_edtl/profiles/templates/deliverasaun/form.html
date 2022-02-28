@@ -1,0 +1,42 @@
+{% extends 'web_admin/layout.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+{{title}}
+{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+    <nav>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'admin-dashboard' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'admin-deliverasaun-list' %}">Lista Deliverasaunt</a></li>
+            <li class="breadcrumb-item active">{{title}}</li>
+        </ol>
+    </nav>
+</div>
+
+<section class="section">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Prienche Informasaun {{subtitle}}</h5>
+                    <!-- <span>
+                        <h5 class="fw-bold">Comments: </h5>
+                        <h6 class="fst-italic text-danger">{{object.comment}}</h6>
+                    </span> -->
+                    <hr>
+                    <!-- General Form Elements -->
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% crispy form %}
+                    </form><!-- End General Form Elements -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

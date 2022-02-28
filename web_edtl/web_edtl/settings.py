@@ -105,7 +105,7 @@ WSGI_APPLICATION = 'web_edtl.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'edtl8',
+        'NAME': 'edtl9',
         'USER': 'admin',
         'PASSWORD': 'Leste_123',
         'HOST': 'database-kinos.cx862xedog9t.ap-southeast-1.rds.amazonaws.com',

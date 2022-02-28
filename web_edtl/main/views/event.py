@@ -5,7 +5,9 @@ from departments.models import Department
 from product.models import Product
 from event.models import Event
 from django.core.paginator import Paginator
-
+from custom.models import IpModel
+from main.utils import get_client_ip
+from django.utils import timezone
 def event_list(request,lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
@@ -14,6 +16,15 @@ def event_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     if lang == 'tt':
         titlepage='Eventu'
     elif lang == 'pt':
@@ -34,6 +45,15 @@ def event_detail(request,lang, hashid):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Event, hashed=hashid)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     titlepage = ''
     if lang == 'tt':
         title2 = f"Eventu: {objects.name_tet}"

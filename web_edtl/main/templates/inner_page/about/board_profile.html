@@ -18,7 +18,7 @@ EDTL.EP - {{titlepage}}
   <section id="team " class="team section-bg blog">
       <div class="container">
           <div class="section-title text-center" data-aos="fade-up">
-              <h2><strong>{{lang_data.BOARD_MEMBER_LBL}}</strong></h2>
+              <h2><strong>{{lang_data.BOARD_MEMBER_LBL|upper}}</strong></h2>
               {% if lang == 'tt' %}
               {{page_description.description_tet|safe}}
               {% elif lang == 'pt' %}
@@ -28,26 +28,49 @@ EDTL.EP - {{titlepage}}
               {% endif %}
             </div>  
         <div class="row justify-content-center">
-          {% for object  in  boardmembers %}
+          <div class="col-md-9">
+            <div class="row">
+
             
-          
-          <div class="col-md-2 d-flex align-items-stretch">
-            <div class="member" data-aos="fade-up">
-              <div class="member-img">
-                <img src="{% static 'main/img/img_loading.png' %}" data-src="{{object.employee.image.url}}" class="img-fluid" alt="">
-                
-              </div>
-              <div class="member-info">
-                <h4> <a href="{% url 'board-detail' object.hashed l3 %}"> {{object.employee.first_name}} {{object.employee.last_name}}</a> </h4>
-                <span>{{object.division.name_eng}}</span>
-                <span>{{object.position.name_eng}}</span>
-                <span>{{object.employee.email}}</span>
-                <span>+670 {{object.employee.mobile}}</span>
+            {% for object  in  boardmembers %}
+            <div class="col-md-3 d-flex align-items-stretch">
+              <div class="member" data-aos="fade-up">
+                <div class="member-img">
+                  <img src="{% static 'main/img/img_loading.png' %}" data-src="{{object.employee.image.url}}" class="img-fluid" alt="">
+                </div>
+                <div class="member-info">
+                  <h4> <a href="{% url 'board-detail' object.hashed l3 %}"> {{object.employee.first_name}} {{object.employee.last_name}}</a> </h4>
+                  <span>{{object.division.name_eng}}</span>
+                  <span>{{object.position.name_eng}}</span>
+                  <span>{{object.employee.email}}</span>
+                  <span>+670 {{object.employee.mobile}}</span>
+                </div>
               </div>
             </div>
+            {% endfor %}
+            </div>
           </div>
-          {% endfor %}
-
+          <div class="col-md-3">
+            <div class="section-title text-center" data-aos="fade-up">
+              <h2><strong>DELIVERASAUN</strong></h2>
+              <hr>
+              {% for object in deliverasaun  %}
+                   <a href="{% url 'main-deliverasaun-detail' object.datetime.year object.datetime.month object.datetime.day lang object.hashed %}" class="text-primary"> {{object.date|date:"d/M/Y"}} - 
+                    {% if lang == 'tt' %}
+                    {{object.title_tet}}
+                    {% elif lang == 'pt' %}
+                    {{object.title_por}}
+                    {% else %}
+                    {{object.title_eng}}
+                      
+                    {% endif %}
+                  </a> 
+                  <br>
+              {% endfor %}
+              <hr>
+              <h6><a href="{% url 'main-deliverasaun-list' lang %}">View More</a></h6>
+            </div> 
+          </div>
         </div>
 
       </div>

@@ -14,13 +14,22 @@ from custom.models import IpModel, Year
 from main.forms import SubscribeForm
 from news.models import News, NewsUser, SubscribeChoice
 from main.utils import get_client_ip
+from django.utils import timezone
 
 def news_list(request,lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     years = Year.objects.all()
-    
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     if lang == "tt":
         queryset_list = News.objects.filter(is_active=True,is_approved=True, language="Tetum").all().order_by('-date_posted')
         news_category = NewsCategory.objects.all()
@@ -108,6 +117,15 @@ def news_list_category(request,lang, hashid):
     departments = Department.objects.all()
     years = Year.objects.all()
     products = Product.objects.filter(is_active=True)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     if lang == "tt":
         queryset_list = News.objects.filter(is_active=True,is_approved=True, language="Tetum",news_category__hashed=hashid).all().order_by('-date_posted')
         cat = get_object_or_404(NewsCategory, hashed=hashid)
@@ -180,6 +198,15 @@ def news_list_year(request, lang, year):
     years = Year.objects.all()
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     if lang == "tt":
         queryset_list = News.objects.filter(is_active=True,is_approved=True, language="Tetum",entered_date__year=year).all().order_by('-date_posted')
         year = get_object_or_404(Year, year=year)
@@ -255,28 +282,28 @@ def news_detail(request,lang,year, month, hashid, titleseo):
         if IpModel.objects.filter(ip=ip).exists():
             titlepage = 'Detalla Notisia'
             objects = get_object_or_404(News, hashed=hashid, language="Tetum")
-            objects.views.add(IpModel.objects.get(ip=ip))
+            objects.views.add(IpModel.objects.filter(ip=ip).last())
             breakcumb = 'Lista Notisia'
             legend = "Detalha"
         else:
             IpModel.objects.create(ip=ip)
             titlepage = 'Detalla Notisia'
             objects = get_object_or_404(News, hashed=hashid, language="Tetum")
-            objects.views.add(IpModel.objects.get(ip=ip))
+            objects.views.add(IpModel.objects.filter(ip=ip).last())
             breakcumb = 'Lista Notisia'
             legend = "Detalha"
     elif lang == "pt":
         if IpModel.objects.filter(ip=ip).exists():
             titlepage = 'Detalha Noticia'
             objects = get_object_or_404(News, hashed=hashid, language="Portugues")
-            objects.views.add(IpModel.objects.get(ip=ip))
+            objects.views.add(IpModel.objects.filter(ip=ip).last())
             breakcumb = 'Lista Notisia'
             legend = "Detalha"
         else:
             IpModel.objects.create(ip=ip)
             titlepage = 'Detalha Noticia'
             objects = get_object_or_404(News, hashed=hashid, language="Portugues")
-            objects.views.add(IpModel.objects.get(ip=ip))
+            objects.views.add(IpModel.objects.filter(ip=ip).last())
             breakcumb = 'Lista Notisia'
             legend = "Detalha"
 
@@ -284,14 +311,14 @@ def news_detail(request,lang,year, month, hashid, titleseo):
         if IpModel.objects.filter(ip=ip).exists():
             titlepage = 'Detail'
             objects = get_object_or_404(News, hashed=hashid, language="English")
-            objects.views.add(IpModel.objects.get(ip=ip))
+            objects.views.add(IpModel.objects.filter(ip=ip).last())
             breakcumb = 'Lista Notisia'
             legend = "News Detail"
         else:
             IpModel.objects.create(ip=ip)
             titlepage = 'Detail'
             objects = get_object_or_404(News, hashed=hashid, language="English")
-            objects.views.add(IpModel.objects.get(ip=ip))
+            objects.views.add(IpModel.objects.filter(ip=ip).last())
             breakcumb = 'Lista Notisia'
             legend = "News Detail"
     lang_data = lang_master(lang)

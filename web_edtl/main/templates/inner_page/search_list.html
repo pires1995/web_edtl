@@ -1,0 +1,215 @@
+{% extends "main/layout.html" %}
+{% load static %}
+{% block title %}
+  EDTL.EP - {{titlepage}}
+{% endblock title %}
+{% block content %}
+<section id="breadcrumbs" class="breadcrumbs">
+    <div class="container">
+        <ol>
+        <li><a href="{% url 'redirect-home' %}">{{lang_data.BREAKCUMB}}</a></li>
+        <li>
+          {% if lang == 'tt' %}
+              Buka
+              {% elif lang == 'pt' %}
+              Procurar
+              {% else %}
+              Search
+                
+              {% endif %}
+        </li>
+        </ol>
+    </div>
+</section><!-- End Breadcrumbs -->
+<section id="blog" class="blog team section-bg">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title" data-aos="fade-up">
+            <h2><strong>
+              {% if lang == 'tt' %}
+              Buka
+              {% elif lang == 'pt' %}
+              Procurar
+              {% else %}
+              Search
+                
+              {% endif %}
+              
+            </strong></h2>
+          </div>
+      <div class="row justify-content-center">
+
+        <div class="col-lg-10 entries">
+
+            
+            <div class="container">
+              <div class="row">
+                <div class="col-md-12">
+
+                  <div class="sidebar">
+        
+                    <h3 class="sidebar-title">{{search}}</h3>
+                    <div class="sidebar-item search-form">
+                      <form action="">
+                        <input type="text" class="form-control" id="searchid" name="s" value="{{ request.GET.s }}" placeholder="{% if lang == 'tt' %}Hakerek iha hene{% elif lang == 'pt' %}Procurar{% else %}Type keyword
+                          
+                        {% endif %}" aria-label="Buka noticia..." aria-describedby="basic-addon2">
+                        <button type="submit"><i class="bi bi-search"></i></button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+      
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <!-- ======= Our Clients Section ======= -->
+                  {% if event_list or announcement_list or tender_list or vacancy_list  %}
+                    
+                  <section id="clients" class="clients">
+                    <div class="container">
+                      <div class="section-title text-start">
+                      <h2><strong> 
+                        {% if lang == 'tt' %}
+                        Resultadu
+                        {% elif lang == 'pt' %}
+                        Resultado
+                        {% else %}
+                        Result                          
+                        {% endif %}
+                      </strong></h2>
+                    </div>
+                          <div class=" text-start">
+                            <h4><strong>
+                              {% if lang == 'tt' %}
+                              Eventu
+                              {% elif lang == 'pt' %}
+                              Evento
+                              {% else %}
+                              Event
+                              {% endif %}
+                                </strong></h4>
+                                {% if event_list %}
+                                  {% for event in event_list %}
+                                  <a href="{% url 'event-detail' lang event.hashed %}">
+                                    {% if lang == 'tt' %}
+                                    {{event.name_tet}}
+                                    {% elif lang == 'pt' %}
+                                    {{event.name_por}}
+                                    {% else %}
+                                    {{event.name_eng}}
+                                    {% endif %}
+                                  </a> <br>
+                                  {% endfor %}
+                                {% else %}
+                                -----------------
+                                {% endif %}
+                          </div>
+                          <div class=" text-start">
+                            <h4><strong>
+                              {% if lang == 'tt' %}
+                              Anunsiu
+                              {% elif lang == 'pt' %}
+                              Anuncio
+                              {% else %}
+                              Announcement
+                              {% endif %}
+                                </strong></h4>
+                                {% if announcement_list %}
+                                  {% for announcement in announcement_list %}
+                                  <a href="{% url 'announcement-detail' lang announcement.hashed %}">
+                                    {% if lang == 'tt' %}
+                                      {{announcement.title_tet}}
+                                      {% elif lang == 'pt' %}
+                                      {{announcement.title_por}}
+                                      {% else %}
+                                      {{announcement.title_eng}}
+                                      {% endif %}
+                                  </a> <br>
+                                  {% endfor %}
+                                  {% else %}
+                                  -----------------
+                                  {% endif %}
+                          </div>
+                          <div class=" text-start">
+                            <h4><strong>
+                              {% if lang == 'tt' %}
+                              Vaga
+                              {% elif lang == 'pt' %}
+                              Vaga
+                              {% else %}
+                              Vacancy
+                              {% endif %}
+                                </strong></h4>
+                                {% if vacancy_list %}
+                                    {% for vacancy in vacancy_list %}
+                                    <a href="{% url 'vacancy-list' lang %}">
+                                      {% if lang == 'tt' %}
+                                        {{vacancy.title_tet}}
+                                        {% elif lang == 'pt' %}
+                                        {{vacancy.title_por}}
+                                        {% else %}
+                                        {{vacancy.title_eng}}
+                                        {% endif %}
+                                    </a> <br>
+                                    {% endfor %}
+                                  {% else %}
+                                  -----------------
+                                  {% endif %}
+                          </div>
+                          <div class=" text-start">
+                            <h4><strong>
+                              {% if lang == 'tt' %}
+                              Tender
+                              {% elif lang == 'pt' %}
+                              Tender
+                              {% else %}
+                              Tender
+                              {% endif %}
+                                </strong></h4>
+                                {% if tender_list %}
+                                  {% for tender in tender_list %}
+                                  <a href="{% url 'tender-list' lang %}">
+                                    {% if lang == 'tt' %}
+                                      {{tender.title_tet}}
+                                      {% elif lang == 'pt' %}
+                                      {{tender.title_por}}
+                                      {% else %}
+                                      {{tender.title_eng}}
+                                      {% endif %}
+                                  </a> <br>
+                                  {% endfor %}
+                                  {% else %}
+                                  -----------------
+                                  {% endif %}
+                          </div>
+                    </div>
+                  </section>
+                  {% else %}
+                  <section id="clients" class="clients">
+                    <div class="container">
+                      <div class="text-center">
+                      <h4><strong> 
+                        {% if lang == 'tt' %}
+                        Hahu Buka /  <i class="bi bi-emoji-frown"></i> Laiha Resultadu 
+                        {% elif lang == 'pt' %}
+                        Start Search /  <i class="bi bi-emoji-frown"></i> No Result 
+                        {% else %}
+                        Start Search /  <i class="bi bi-emoji-frown"></i> No Result 
+                        {% endif %}
+                      </strong></h4>
+                    </div>
+                    </div>
+                  </section>
+                  {% endif %}
+                  </div>
+              </div>
+            </div>
+
+        </div><!-- End blog entries list -->
+
+
+      </div>
+
+    </div>
+  </section>
+{% endblock content %}

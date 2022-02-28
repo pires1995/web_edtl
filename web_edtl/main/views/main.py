@@ -21,15 +21,18 @@ from main.forms import SubscribeForm
 from news.tasks import new_subs
 import re
 from procurament.models import Tender
-from datetime import datetime
+from datetime import datetime, timedelta
 from recruitment.models import Vacancy
 from django.http import HttpResponse
 from custom.models import IpModel
 from main.utils import get_client_ip
-
-
+from django.utils import timezone
+from django.db.models import Q
+from event.models import Event
+from announcement.models import Announcement
+from itertools import chain
 def home(request, lang):
-    ip = get_client_ip(request)
+    
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
@@ -39,9 +42,22 @@ def home(request, lang):
     faq_home = Faq.objects.filter(is_active=True, is_homepage=True)
     vacancy_marquee = Vacancy.objects.filter(is_active=True, end_period__gte = datetime.now().date())[:3]
     tender_marquee = Tender.objects.filter(is_active=True, end_period__gte = datetime.now().date())[:3]
-    if IpModel.objects.filter(ip__isnull=True):
-        IpModel.objects.create(ip=ip)
+    
     visitors = IpModel.objects.all().count()
+    today = timezone.now()
+    last_month = timezone.now() - timedelta(days=30)
+    yesterday = timezone.now() - timedelta(days=1)
+    last_month_visitor = IpModel.objects.filter(datetime__lte=last_month).count()
+    yesterday_visitor = IpModel.objects.filter(datetime__gt=yesterday).count()
+    today_visitor = IpModel.objects.filter(datetime__contains=today.date()).count()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     form =  SubscribeForm(request.POST or None)
     titlepage = 'Home'
     if request.method == 'POST':
@@ -65,9 +81,11 @@ def home(request, lang):
                 new_subs.delay(usersub.email, set_name2[0], domain)
                 messages.success(request,'Please Confirm Email')
                 return redirect('redirect-home')
+
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP','lang': lang, 'lang_data': lang_data,\
-            'page': 'varanda', 'departments': departments, 'products': products, 'banners':banners, 'visitors':visitors,\
+            'page': 'varanda', 'departments': departments, 'products': products, 'banners':banners, 'visitors':visitors, 'last_month_visitor':last_month_visitor,\
+                'yesterday_visitor':yesterday_visitor, 'today_visitor':today_visitor,
             'news_main': news_main, 'vacancy_event':vacancy_marquee, 'tender_marquee':tender_marquee, 'news_recent':news_recent, 'faq_home':faq_home, 'titlepage':titlepage
     }
     template = 'main/home.html'
@@ -82,6 +100,21 @@ def inicio(request, lang):
     news_main = News.objects.filter(is_active=True, is_approved=True, language="Portugues").last()
     news_recent = News.objects.filter(is_active=True, is_approved=True, language="Portugues").order_by('-approved_date')[1:4]
     faq_home = Faq.objects.filter(is_active=True, is_homepage=True)
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
+    visitors = IpModel.objects.all().count()
+    today = timezone.now()
+    last_month = timezone.now() - timedelta(days=30)
+    yesterday = timezone.now() - timedelta(days=1)
+    last_month_visitor = IpModel.objects.filter(datetime__lte=last_month).count()
+    yesterday_visitor = IpModel.objects.filter(datetime__lt=yesterday).count()
+    today_visitor = IpModel.objects.filter(datetime__contains=today.date()).count()
     form =  SubscribeForm(request.POST or None)
     titlepage = 'Inicio'
     if request.method == 'POST':
@@ -101,7 +134,8 @@ def inicio(request, lang):
                     return redirect('redirect-home')
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP','lang': lang, 'lang_data': lang_data,\
-            'page': 'varanda', 'departments': departments, 'products': products, 'banners':banners, 
+            'page': 'varanda','visitors':visitors, 'last_month_visitor':last_month_visitor,\
+                'yesterday_visitor':yesterday_visitor, 'today_visitor':today_visitor, 'departments': departments, 'products': products, 'banners':banners, 
             'news_main': news_main, 'news_recent':news_recent, 'faq_home':faq_home, 'titlepage':titlepage
     }
     template = 'main/inicio.html'
@@ -115,6 +149,21 @@ def varanda(request, lang):
     news_main = News.objects.filter(is_active=True, is_approved=True, language="Tetum").last()
     news_recent = News.objects.filter(is_active=True, is_approved=True, language="Tetum").order_by('-approved_date')[1:4]
     faq_home = Faq.objects.filter(is_active=True, is_homepage=True)
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
+    visitors = IpModel.objects.all().count()
+    today = timezone.now()
+    last_month = timezone.now() - timedelta(days=30)
+    yesterday = timezone.now() - timedelta(days=1)
+    last_month_visitor = IpModel.objects.filter(datetime__lte=last_month).count()
+    yesterday_visitor = IpModel.objects.filter(datetime__lt=yesterday).count()
+    today_visitor = IpModel.objects.filter(datetime__contains=today.date()).count()
     form =  SubscribeForm(request.POST or None)
     titlepage = 'Varanda'
     if request.method == 'POST':
@@ -137,7 +186,8 @@ def varanda(request, lang):
                     return redirect('redirect-home')
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP','lang': lang, 'lang_data': lang_data,\
-            'page': 'varanda', 'departments': departments, 'products': products, 'banners':banners, 
+            'page': 'varanda', 'visitors':visitors, 'last_month_visitor':last_month_visitor,\
+               'yesterday_visitor':yesterday_visitor, 'today_visitor':today_visitor, 'departments': departments, 'products': products, 'banners':banners, 
             'news_main': news_main, 'news_recent':news_recent, 'faq_home':faq_home, 'titlepage':titlepage
     }
     template = 'main/home.html'
@@ -155,6 +205,15 @@ def department(request,lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     titlepage = ''
     if lang == 'tt':
         titlepage='EDTL.EP - Detalla Departamentu'
@@ -175,6 +234,15 @@ def department_detail(request,lang, hashid):
     departments = Department.objects.all()
     division = Division.objects.filter(department=objects)
     products = Product.objects.filter(is_active=True)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     if lang == 'tt':
         titlepage='EDTL.EP - Detalla Departamentu'
     elif lang == 'pt':
@@ -195,6 +263,15 @@ def division_detail(request,lang, hashid, hashid2):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     if lang == 'tt':
         titlepage='EDTL.EP - Detalla Divisaun'
     elif lang == 'pt':
@@ -214,6 +291,15 @@ def video_list(request,lang):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     gallery_categories = GalleryCategory.objects.all()
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
             'departments':departments,'products': products, 'gallery_categories':gallery_categories, 'lang':lang, 'lang_data': lang_data,
@@ -229,6 +315,15 @@ def faq_list(request,lang):
     objects = Faq.objects.filter(is_active=True)
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     page_obj = paginator.get_page(page_number)
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
@@ -243,6 +338,15 @@ def faq_detail(request,lang,hashid):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Faq, hashed=hashid)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     context = {
         'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', \
             'departments':departments,'products': products,'lang':lang, 'lang_data': lang_data, 'objects':objects
@@ -326,3 +430,58 @@ def showFirebaseJS(request):
          '});'
 
     return HttpResponse(data,content_type="text/javascript")
+
+def search(request,lang):
+    lang_data = lang_master(lang)
+    departments = Department.objects.all()
+    products = Product.objects.filter(is_active=True)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
+    if lang == 'tt':
+        titlepage='Buks'
+    elif lang == 'pt':
+        titlepage='Procurar'
+    else:
+        titlepage='Search'
+    query = request.GET.get("s")    
+    event_list = None
+    announcement_list = None
+    vacancy_list = None
+    tender_list = None
+    if query:
+        if len(query) >= 3:
+            if lang == 'tt':
+                event_list =  Event.objects.filter(is_active=True, name_tet__icontains=query).distinct()
+                announcement_list = Announcement.objects.filter(is_active=True, title_tet__icontains=query).distinct()
+                vacancy_list = Vacancy.objects.filter(is_active=True, title_tet__icontains=query).distinct()
+                tender_list = Tender.objects.filter(is_active=True, title_tet__icontains=query).distinct()
+            elif lang == 'pt':
+                event_list =  Event.objects.filter(is_active=True, name_por__icontains=query).distinct()
+                announcement_list = Announcement.objects.filter(is_active=True, title_por__icontains=query).distinct()
+                vacancy_list = Vacancy.objects.filter(is_active=True, title_por__icontains=query).distinct()
+                tender_list = Tender.objects.filter(is_active=True, title_por__icontains=query).distinct()
+            elif lang == 'en':
+                event_list =  Event.objects.filter(is_active=True, name_eng__icontains=query).distinct()
+                announcement_list = Announcement.objects.filter(is_active=True, title_eng__icontains=query).distinct()
+                vacancy_list = Vacancy.objects.filter(is_active=True,title_eng__icontains=query).distinct()
+                tender_list = Tender.objects.filter(is_active=True, title_eng__icontains=query).distinct()
+        else:
+            messages.error(request,'Please type more than 3 characters')
+            return redirect('search-list', lang)
+    else:
+        pass
+    print(vacancy_list)
+    context = {
+        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP',\
+            'departments':departments,'products': products,'lang':lang, 'lang_data': lang_data, 'titlepage':titlepage,\
+            'event_list':event_list, 'announcement_list':announcement_list, 'vacancy_list':vacancy_list, 'tender_list':tender_list
+    }
+    template = 'inner_page/search_list.html'
+    return render(request, template, context)

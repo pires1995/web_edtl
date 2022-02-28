@@ -9,7 +9,9 @@ from datetime import datetime
 from django.http import FileResponse
 from django.conf import settings
 from pagemanegament.models import PageManegament
-
+from custom.models import IpModel
+from main.utils import get_client_ip
+from django.utils import timezone
 def vacancy_list(request,lang):
     today = datetime.now()
     lang_data = lang_master(lang)
@@ -20,6 +22,15 @@ def vacancy_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     page_description = ''
     if lang == 'tt':
         titlepage='EDTL.EP - Lista Vaga'
@@ -54,6 +65,15 @@ def internships_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     page_description = ''
     if lang == 'tt':
         titlepage='EDTL.EP - Lista Estagio'
@@ -89,6 +109,15 @@ def volunteer_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     page_description = ''
     if lang == 'tt':
         titlepage='EDTL.EP - Lista Voluntariu'

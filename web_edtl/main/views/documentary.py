@@ -7,6 +7,9 @@ from django.core.paginator import Paginator
 from datetime import datetime
 from itertools import chain
 from custom.models import Year
+from custom.models import IpModel
+from main.utils import get_client_ip
+from django.utils import timezone
 
 def documentary_list(request,lang):
     currentYear = datetime.now()
@@ -17,6 +20,15 @@ def documentary_list(request,lang):
     album=Album.objects.filter(is_active=True, datetime__year__lt = currentYear.year)
     video=Video.objects.filter(is_active=True, datetime__year__lt = currentYear.year)
     year = Year.objects.all()
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     documentary_lists = sorted(
         chain(album, video),
         key=lambda documentary: documentary.datetime, reverse=True
@@ -48,6 +60,15 @@ def documentary_list_filter(request,lang, year):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     gallery_categories = Department.objects.all()
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     try:
         album=Album.objects.filter(is_active=True, datetime__year = get_year.year)
         print(album)
@@ -85,6 +106,15 @@ def documentary_detail(request,lang, hashid):
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Album, hashed=hashid)
     gallery = Gallery.objects.filter(album=objects)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     if lang == 'tt':
         titlepage='EDTL.EP - Detalla Dokumentasaun'
     elif lang == 'pt':

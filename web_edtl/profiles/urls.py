@@ -26,4 +26,11 @@ urlpatterns = [
     # POSITION
     path('position-add/', views.add_team, name='admin-position-add'),
     path('position-update/<str:hashid>/', views.update_team, name='admin-position-update'),
+
+    path('administrator/deliverasaun-list/', views.deliverasaun_list, name='admin-deliverasaun-list'),
+    path('administrator/deliverasaun-add/', views.deliverasaun_add, name='admin-deliverasaun-add'),
+    path('administrator/deliverasaun-update/<str:hashid>/', views.deliverasaun_update, name='admin-deliverasaun-update'),
+    path('administrator/deliverasaun-detail/<str:hashid>/', views.deliverasaun_detail, name='admin-deliverasaun-detail'),
+    path('administrator/deliverasaun-activate/<str:hashid>/', views.deliverasaun_activate, name='admin-deliverasaun-activate'),
+    path('administrator/deliverasaun-deactivate/<str:hashid>/', views.deliverasaun_deactivate, name='admin-deliverasaun-deactivate'),
 ]

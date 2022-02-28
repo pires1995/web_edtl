@@ -8,7 +8,9 @@ from django.core.paginator import Paginator
 from django.http import FileResponse
 from django.conf import settings
 from pagemanegament.models import PageManegament
-
+from custom.models import IpModel
+from main.utils import get_client_ip
+from django.utils import timezone
 def tender_list(request,lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
@@ -19,6 +21,15 @@ def tender_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     if lang == 'tt':
         titlepage='EDTL.EP - Lista Tender'
     elif lang == 'pt':
@@ -54,6 +65,15 @@ def guideline_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     if lang == 'tt':
         titlepage='EDTL.EP - Lista Mata Dalan'
     elif lang == 'pt':
@@ -89,6 +109,15 @@ def policy_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     titlepage = ''
     if lang == 'tt':
         titlepage='EDTL.EP - Lista Regra'

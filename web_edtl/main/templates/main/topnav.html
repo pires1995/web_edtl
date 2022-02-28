@@ -24,7 +24,15 @@
       <a href="{% url 'home' l3 %}" class="timor">
         <img src="{% static 'main/img/img_loading.png' %}" data-src="{% static 'main/img/ENG-16.png' l3 %}" style="width: 20px;" alt="">
       </a>
-       <input class="search-input" placeholder="Search..." type="text">
+      <a class="btn btn-sm btn-primary" href="{% url 'search-list' lang %}" id="btn-search">
+        {% if lang == 'tt' %}
+        Buka  
+        {% elif lang == 'pt' %}
+        Procurar
+        {% else %}
+        Search
+        {% endif %} 
+        <i class="bi bi-search"></i> </a>
     </div>
   </div>
 </section>

@@ -71,43 +71,5 @@
 </section>
 {% endblock content %}
 {% block scripts %}
-<!-- <script src="{% static 'web_admin/js/code/highcharts.js' %}"></script>
-<script>
-    Highcharts.chart('news_bar', {
-        chart: {
-            type: 'column'
-        },
-        title: {
-            text: 'News Approved'
-        },
-        xAxis: {
-            categories: [
-                {% for entry in news %}
-                   '{{entry.news_category__name}}' {% if not forloop.last %}, 
-                   {% endif %}
-                {% endfor %}
-            ]
-        },
-        series: [
-        {
-            grouping: false,
-            name: 'Geral',
-            data: [
-                {% for entry in news %}
-                {{ entry.geral_count }} {% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            ]
-        }, 
-        {
-            grouping: false,
-            name: 'Projetu',
-            data: [
-                {% for entry in news %}
-                {{ entry.project_count }} {% if not forloop.last %}, {% endif %}
-                {% endfor %}
-            ],
-            color: 'crimson'
-        }]
-    });
-</script> -->
+    
 {% endblock scripts %}

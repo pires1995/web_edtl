@@ -31,3 +31,12 @@ def path_and_rename_service(instance, filename):
 	else:
 		filename = '{}.{}'.format(uuid4().hex, ext)
 	return os.path.join(upload_to, filename)
+
+def path_and_rename_deliverasaun(instance, filename):
+	upload_to = 'deliverasaun/pdf/{}/{}'.format(instance.pk,instance.hashed)
+	ext = filename.split('.')[-1]
+	if instance.pk:
+		filename = '{}_{}.{}'.format(instance.pk,instance.hashed,ext)
+	else:
+		filename = '{}.{}'.format(uuid4().hex, ext)
+	return os.path.join(upload_to, filename)

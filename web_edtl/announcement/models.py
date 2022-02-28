@@ -9,6 +9,7 @@ from announcement.utils import path_and_rename_announcement
 
 
 class Announcement(models.Model):
+    model_name = "Announcement"
     title_tet = models.CharField(max_length=300, null=True)
     title_por = models.CharField(max_length=300, null=True)
     title_eng = models.CharField(max_length=300, null=True)

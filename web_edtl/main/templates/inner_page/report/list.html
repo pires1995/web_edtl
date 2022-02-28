@@ -16,10 +16,13 @@
     <div class="container" data-aos="fade-up">
         <div class="section-title" data-aos="fade-up">
             <h2><strong>{{lang_data.REPORT_TITLE_LBL}}</strong></h2>
+            <h2>
+              {{title2}}
+            </h2>
           </div>
       <div class="row justify-content-center">
 
-        <div class="col-lg-10 entries">
+        <div class="col-lg-9 entries">
 
             
             <div class="container">
@@ -79,7 +82,24 @@
 
         </div><!-- End blog entries list -->
 
-
+        <div class="col-md-3 ">
+          <div class="container">  
+          <div class="sidebar">
+              <h3 class="sidebar-title">{{lang_data.PROJECT_DETAIL7_LBL}}</h3>
+              <div class="sidebar-item2 categories">
+                  <ul>
+                    {% for object in year_data %}
+                      
+                    <li><a href="{% url 'report-list-year' lang object.0 %}">{{object.0}}<span>{{object.1}}</span></a></li>
+                    {% endfor %}
+                </ul>
+            </div><!-- End sidebar categories-->
+            
+            
+            
+          </div><!-- End sidebar -->
+        </div>
+        </div>
       </div>
 
     </div>

@@ -1,0 +1,25 @@
+{% extends "web_admin/layout.html" %}
+{% block content %}
+	<ol class="breadcrumb mb-2 mt-1">
+		<li class="breadcrumb-item active" aria-current="page">{{ legend|upper }}</li>
+	</ol>
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="card border-info shadow-lg pt-1 rounded">
+				<div class="card-header bg-card">
+					{{ legend|upper }}
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-sm-6">
+						</div> <!--end col-->
+						<div class="col-sm-6">
+						</div> <!--end col-->
+					</div> <!--end row-->
+				</div> <!--end card-body-->
+			</div> <!--end card-->
+		</div> <!--end col-->
+	</div> <!--end row-->
+{% endblock %}
+{% block scripts %}
+{% endblock %}

@@ -1,7 +1,8 @@
 from django.db import models
-from .utils import path_and_rename_orgchart, path_and_rename_about, path_and_rename_service
+from .utils import path_and_rename_orgchart, path_and_rename_about, path_and_rename_service,path_and_rename_deliverasaun
 import hashlib
 from main.models import User
+from django.core.validators import FileExtensionValidator
 
 GroupChoice = [
     ('Board Member', 'Board Member'),
@@ -10,6 +11,7 @@ GroupChoice = [
     ('Gabineti Apoiu Servisu', 'Gabineti Apoiu Servisu'),
     ('Project Management Unit', 'Project Management Unit'),
     ('Auditoria', 'Auditoria'),
+    ('Executive Directors', 'Executive Directors'),
 ]
 # Create your models here.
 class About(models.Model):
@@ -140,3 +142,24 @@ class Section(models.Model):
         self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
         return super(Section, self).save(*args, **kwargs)
 
+class Deliverasaun(models.Model):
+    title_tet = models.CharField(max_length=254, null=False)
+    title_por = models.CharField(max_length=254, null=True)
+    title_eng = models.CharField(max_length=254, null=True)
+    description_tet = models.TextField(null=True, blank=True)
+    description_por = models.TextField(null=True, blank=True)
+    description_eng = models.TextField(null=True, blank=True)
+    file = models.FileField(upload_to=path_and_rename_deliverasaun,
+                            validators=[FileExtensionValidator(allowed_extensions=['pdf'])])
+    is_active = models.BooleanField(default=False, null=True)
+    date = models.DateField(null=True)
+    datetime = models.DateTimeField(auto_now_add=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    hashed = models.CharField(max_length=32, null=True, blank=True)
+    def __str__(self):
+        template = '{0.name_tet}'
+        return template.format(self)
+
+    def save(self, *args, **kwargs):
+        self.hashed = hashlib.md5(str(self.id).encode()).hexdigest()
+        return super(Deliverasaun, self).save(*args, **kwargs)

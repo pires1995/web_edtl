@@ -1,4 +1,6 @@
 from django.urls import path
+
+from main.views.main import search
 from . import views
 from django.contrib.auth import views as auth_views
 from .forms import UserLoginForm
@@ -22,8 +24,11 @@ urlpatterns = [
     path('board-profile/<str:lang>/', views.board_profile, name="board-profile"),
     path('board-cabinet/<str:lang>/', views.cabinet_profile, name="board-cabinet"),
     path('board-pmu/<str:lang>/', views.pmu_profile, name="board-pmu"),
+    path('executive-directors/<str:lang>/', views.executive_directors, name="executive-directors"),
     path('board-audit/<str:lang>/', views.audit_profile, name="board-audit"),
     path('board-detail/<str:hashid>/<str:lang>/', views.board_detail, name="board-detail"),
+    path('deliverasaun-list/<str:lang>/', views.deliverasaun_list, name="main-deliverasaun-list"),
+    path('deliverasaun-detail/<str:year>/<str:month>/<str:day>/<str:lang>/<str:hashid>/', views.deliverasaun_detail, name="main-deliverasaun-detail"),
 
 #     RESOURCE
     path('resource/<str:lang>/<str:hashid>/', views.resource_detail, name="resource-detail"),
@@ -41,7 +46,7 @@ urlpatterns = [
     path('report-list/<str:lang>/', views.report_list, name="report-list"),
     path('report-detail/<str:lang>/<str:hashid>/', views.report_detail, name="report-detail"),
     path('report-download/<str:hashid>/', views.report_download, name="report-download"),
-
+    path('report-list/year/<str:lang>/<str:year>/', views.report_list_year, name="report-list-year"),
     # DOCUMENTARY
     path('documentary-list/<str:lang>/', views.documentary_list, name="documentary-list"),
     path('documentary-list-filter/<str:lang>/<str:year>/', views.documentary_list_filter, name="documentary-list-filter"),
@@ -112,6 +117,9 @@ urlpatterns = [
     path('client-bill-list/', views.client_bill_list, name='bill-list'),
     path('client-bill-add/', views.client_bill_add, name='bill-add'),
     path('client-bill-detail/<str:hashid>', views.client_bill_detail, name='client-bill-detail'),
+	path('client-account/', views.AccountUpdate, name='user-client-account'),
+	path('client-change/password/', views.UserPasswordChangeView.as_view(), name='user-client-change-password'),
+	path('client-change/password/done/', views.UserPasswordChangeDoneView.as_view(), name='user-client-change-password-done'),
 
 
     # USM
@@ -121,6 +129,10 @@ urlpatterns = [
     path('usm/unsubscribe/<str:lang>/<str:year>/<str:day>/<str:hour>/<str:minute>/<str:hashid>/', views.usm_unsubscribe , name='usm-unsubscribe'),
     path('email-confirmation/<str:day>/<str:name>/<str:minute>/<str:hashid>/', views.email_confirmation , name='email-confirmation'),
     path('firebase-messaging-sw.js/', views.showFirebaseJS, name='show-firebase'),
-    path('create/token/<str:token>/', views.create_token, name='create-token')
+    path('create/token/<str:token>/', views.create_token, name='create-token'),
+
+
+    # SEARCH 
+    path('search/<str:lang>/', views.search , name='search-list'),
 
 ]

@@ -12,8 +12,20 @@ from main.forms import AppointmentForm, SuggestionForm
 from appointment.models import Appointment, Suggestion
 from main.utils import getnewid
 from appointment.models import ContactMunicipality
+from custom.models import IpModel
+from main.utils import get_client_ip
+from django.utils import timezone
 
 def appointment(request,lang):
+    today = timezone.now()
+    ip = get_client_ip(request)
+    if IpModel.objects.filter(ip=ip).exists():
+        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
+    else:
+        IpModel.objects.create(ip=ip)
     form = AppointmentForm()
     form2 = SuggestionForm()
     if 'appointment_form' in request.POST:
@@ -41,6 +53,7 @@ def appointment(request,lang):
     products = Product.objects.filter(is_active=True)
     contactMunicipality = ContactMunicipality.objects.filter(is_active=True).order_by('-municipality')
     titlepage = ''
+
     if lang == 'tt':
         titlepage='EDTL.EP - Kontaktu'
     elif lang == 'pt':
