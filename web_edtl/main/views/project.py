@@ -21,7 +21,7 @@ def project_ongoing_list(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -48,7 +48,7 @@ def project_ongoing_detail(request,lang, hashid):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -87,7 +87,7 @@ def project_new_list(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -114,7 +114,7 @@ def project_new_detail(request,lang, hashid):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)

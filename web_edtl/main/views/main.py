@@ -47,8 +47,8 @@ def home(request, lang):
     last_month =  today - timedelta(days=30)
     yesterday =  today - timedelta(days=1)
     last_month_visitor = IpModel.objects.filter(datetime__range=(last_month,today)).count()
-    yesterday_visitor = IpModel.objects.filter(datetime__contains=yesterday).count()
-    today_visitor = IpModel.objects.filter(datetime__contains=datetime.now().date()).count()
+    yesterday_visitor = IpModel.objects.filter(datetime__date=yesterday).count()
+    today_visitor = IpModel.objects.filter(datetime__date=datetime.now().date()).count()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
         if IpModel.objects.filter(ip=ip, datetime__date=datetime.now().date()):
@@ -103,11 +103,11 @@ def inicio(request, lang):
     last_month =  today - timedelta(days=30)
     yesterday =  today - timedelta(days=1)
     last_month_visitor = IpModel.objects.filter(datetime__range=(last_month,today,)).count()
-    yesterday_visitor = IpModel.objects.filter(datetime__contains=yesterday).count()
-    today_visitor = IpModel.objects.filter(datetime__contains=today).count()
+    yesterday_visitor = IpModel.objects.filter(datetime__date=yesterday).count()
+    today_visitor = IpModel.objects.filter(datetime__date=today).count()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -153,11 +153,11 @@ def varanda(request, lang):
     last_month =  today - timedelta(days=30)
     yesterday =  today - timedelta(days=1)
     last_month_visitor = IpModel.objects.filter(datetime__range=(last_month,today,)).count()
-    yesterday_visitor = IpModel.objects.filter(datetime__contains=yesterday).count()
-    today_visitor = IpModel.objects.filter(datetime__contains=today).count()
+    yesterday_visitor = IpModel.objects.filter(datetime__date=yesterday).count()
+    today_visitor = IpModel.objects.filter(datetime__date=today).count()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -207,7 +207,7 @@ def department(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -236,7 +236,7 @@ def department_detail(request,lang, hashid):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -265,7 +265,7 @@ def division_detail(request,lang, hashid, hashid2):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -293,7 +293,7 @@ def video_list(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -317,7 +317,7 @@ def faq_list(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -340,7 +340,7 @@ def faq_detail(request,lang,hashid):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -437,7 +437,7 @@ def search(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)

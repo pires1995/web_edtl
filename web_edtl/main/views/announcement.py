@@ -21,7 +21,7 @@ def announcement_list(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -57,7 +57,10 @@ def announcement_list_year(request,lang, year):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        pass
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
+            pass
+        else:
+            IpModel.objects.create(ip=ip)
     else:
         IpModel.objects.create(ip=ip)
     if lang == 'tt':
@@ -89,7 +92,10 @@ def announcement_detail(request,lang, hashid):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        pass
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
+            pass 
+        else:
+            IpModel.objects.create(ip=ip)
     else:
         IpModel.objects.create(ip=ip)
     if lang == 'tt':

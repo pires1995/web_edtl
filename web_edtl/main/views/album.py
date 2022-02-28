@@ -6,7 +6,6 @@ from departments.models import Department
 from product.models import Product
 from gallery.models import Gallery, GalleryCategory, Album, Video
 from django.core.paginator import Paginator
-from datetime import datetime
 from custom.models import IpModel
 from main.utils import get_client_ip
 from datetime import datetime
@@ -25,7 +24,7 @@ def album_list(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -54,7 +53,7 @@ def album_detail(request,lang, hashid):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -87,7 +86,7 @@ def video_list(request,lang):
     ip = get_client_ip(request)
     today = datetime.now().date()
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)

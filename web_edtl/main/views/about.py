@@ -19,7 +19,7 @@ def who_we_are(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -49,7 +49,7 @@ def what_we_do(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -82,7 +82,7 @@ def board_profile(request,lang):
     deliverasaun = Deliverasaun.objects.filter(is_active=True).order_by('datetime')[:10]
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -116,7 +116,7 @@ def cabinet_profile(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -150,7 +150,7 @@ def pmu_profile(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -182,7 +182,7 @@ def audit_profile(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -215,7 +215,7 @@ def board_detail(request, hashid, lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -245,7 +245,7 @@ def deliverasaun_list(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -269,7 +269,7 @@ def deliverasaun_detail(request,lang,year,month,day,hashid):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -292,7 +292,7 @@ def executive_directors(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
