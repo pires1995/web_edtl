@@ -1,17 +1,15 @@
 
 
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from main.utils_lang import lang_master
-from departments.models import Department, Division
+from departments.models import Department
 from product.models import Product
 from project.models import Project, ProjectBudget, ProjectCategory, ProjectLocation, ProjectStatus
 from django.core.paginator import Paginator
-from django.http import FileResponse
-from django.conf import settings
-from django.db.models import Q
 from custom.models import IpModel
 from main.utils import get_client_ip
-from django.utils import timezone
+from datetime import datetime
+
 def project_ongoing_list(request,lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
@@ -20,10 +18,10 @@ def project_ongoing_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -47,10 +45,10 @@ def project_ongoing_detail(request,lang, hashid):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -86,10 +84,10 @@ def project_new_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -113,10 +111,10 @@ def project_new_detail(request,lang, hashid):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)

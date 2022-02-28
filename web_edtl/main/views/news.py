@@ -14,17 +14,16 @@ from custom.models import IpModel, Year
 from main.forms import SubscribeForm
 from news.models import News, NewsUser, SubscribeChoice
 from main.utils import get_client_ip
-from django.utils import timezone
-
+from datetime import datetime
 def news_list(request,lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     years = Year.objects.all()
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -117,10 +116,10 @@ def news_list_category(request,lang, hashid):
     departments = Department.objects.all()
     years = Year.objects.all()
     products = Product.objects.filter(is_active=True)
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -198,10 +197,10 @@ def news_list_year(request, lang, year):
     years = Year.objects.all()
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)

@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from main.utils_lang import lang_master
-from departments.models import Department, Division
+from departments.models import Department
 from product.models import Product
 from report.models import Report
 from django.core.paginator import Paginator
@@ -9,8 +9,7 @@ from django.conf import settings
 from custom.models import IpModel
 from main.utils import get_client_ip
 from custom.models import Year
-from django.utils import timezone
-
+from datetime import datetime
 
 def report_list(request,lang):
     lang_data = lang_master(lang)
@@ -23,10 +22,10 @@ def report_list(request,lang):
     page_obj = paginator.get_page(page_number)
     year = Year.objects.all()
     year_data = []
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -54,10 +53,10 @@ def report_detail(request,lang, hashid):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Report, hashed=hashid)
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -90,10 +89,10 @@ def report_list_year(request,lang, year):
     title2=year
     year = Year.objects.all()
     year_data = []
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)

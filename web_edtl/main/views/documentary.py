@@ -10,6 +10,7 @@ from custom.models import Year
 from custom.models import IpModel
 from main.utils import get_client_ip
 from django.utils import timezone
+from datetime import datetime
 
 def documentary_list(request,lang):
     currentYear = datetime.now()
@@ -20,10 +21,10 @@ def documentary_list(request,lang):
     album=Album.objects.filter(is_active=True, datetime__year__lt = currentYear.year)
     video=Video.objects.filter(is_active=True, datetime__year__lt = currentYear.year)
     year = Year.objects.all()
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -60,10 +61,10 @@ def documentary_list_filter(request,lang, year):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     gallery_categories = Department.objects.all()
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -106,10 +107,10 @@ def documentary_detail(request,lang, hashid):
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Album, hashed=hashid)
     gallery = Gallery.objects.filter(album=objects)
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)

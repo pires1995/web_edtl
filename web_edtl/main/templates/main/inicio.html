@@ -63,8 +63,11 @@
                 <h3 class="sidebar-title">{{lang_data.HOME_VISITOR}}</h3>
                 <div class="sidebar-item ">
                   <div class="post-item">
-                    <h6><i class="bi bi-clock"></i> {{lang_data.HOME_VISITOR_TODAY}}: <strong> 102 </strong></h6>
-                    <h6><i class="bi bi-clock-history"></i> {{lang_data.HOME_VISITOR_ALL}}: <strong> 202 </strong></h6>
+                    <!-- <h6><i class="bi bi-clock"></i> {{lang_data.HOME_VISITOR_TODAY}}: <strong> 102 </strong></h6> -->
+                    <h6><i class="bi bi-eye-fill"></i> All : <strong id="visitor"> {{visitors}} </strong></h6>
+                    <h6><i class="bi bi-calendar3"></i> This Month: <strong id="visitor"> {{last_month_visitor}} </strong></h6>
+                    <h6><i class="bi bi-calendar-week"></i> Yesterday: <strong id="visitor"> {{yesterday_visitor}} </strong></h6>
+                    <h6><i class="bi bi-calendar-check"></i> {{lang_data.HOME_VISITOR_TODAY}}: <strong id="visitor"> {{today_visitor}} </strong></h6>
                   </div>
                 </div>
               </div>

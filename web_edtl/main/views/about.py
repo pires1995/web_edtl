@@ -1,10 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from news.forms import NewsUserSignUpForm
-from news.models import NewsUser
-from django.contrib import messages
-from django.core.mail import send_mail, EmailMultiAlternatives
-from django.conf import settings
-from django.template.loader import get_template
+
 from main.utils_lang import lang_master
 from profiles.models import Position, About, Service, Deliverasaun
 from departments.models import Department
@@ -13,17 +8,18 @@ from pagemanegament.models import PageManegament
 from custom.models import IpModel
 from main.utils import get_client_ip
 from django.core.paginator import Paginator
-from django.utils import timezone
+from datetime import datetime
+
 
 def who_we_are(request,lang):
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     objects = About.objects.all().first()
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -50,10 +46,10 @@ def what_we_do(request,lang):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     objects = Service.objects.filter(is_active=True)
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -82,11 +78,11 @@ def board_profile(request,lang):
     gabinete = Position.objects.filter(group='Gabineti Apoiu Servisu')
     pmu = Position.objects.filter(group='Project Management Unit')
     auditoria = Position.objects.filter(group='Auditoria')
-    today = timezone.now()
+    today = datetime.now().date()
     deliverasaun = Deliverasaun.objects.filter(is_active=True).order_by('datetime')[:10]
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -117,10 +113,10 @@ def cabinet_profile(request,lang):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     gabinete = Position.objects.filter(group='Gabineti Apoiu Servisu')
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -151,10 +147,10 @@ def pmu_profile(request,lang):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     pmu = Position.objects.filter(group='Project Management Unit')
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -183,10 +179,10 @@ def audit_profile(request,lang):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     auditoria = Position.objects.filter(group='Auditoria')
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -216,10 +212,10 @@ def board_detail(request, hashid, lang):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Position, hashed=hashid)
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -246,10 +242,10 @@ def deliverasaun_list(request,lang):
     objects = Deliverasaun.objects.filter(is_active=True)
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -270,10 +266,10 @@ def deliverasaun_detail(request,lang,year,month,day,hashid):
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Deliverasaun, hashed=hashid)
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -293,10 +289,10 @@ def executive_directors(request,lang):
     objects = Position.objects.filter(group='Executive Directors')
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)

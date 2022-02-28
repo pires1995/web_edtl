@@ -9,7 +9,7 @@ from django.core.paginator import Paginator
 from datetime import datetime
 from custom.models import IpModel
 from main.utils import get_client_ip
-from django.utils import timezone
+from datetime import datetime
 
 def album_list(request,lang):
     currentYear = datetime.now()
@@ -22,10 +22,10 @@ def album_list(request,lang):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     legend = f"ALBUM {currentYear.year}"
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -51,10 +51,10 @@ def album_detail(request,lang, hashid):
     products = Product.objects.filter(is_active=True)
     objects = get_object_or_404(Album, hashed=hashid)
     gallery = Gallery.objects.filter(album=objects)
-    today = timezone.now()
+    today = datetime.now().date()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
@@ -85,9 +85,9 @@ def video_list(request,lang):
     page_obj = paginator.get_page(page_number)
     legend = f"VIDEO {currentYear.year}"
     ip = get_client_ip(request)
-    today = timezone.now()
+    today = datetime.now().date()
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
+        if IpModel.objects.filter(ip=ip, datetime__contains=today):
             pass
         else:
             IpModel.objects.create(ip=ip)
