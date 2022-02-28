@@ -46,12 +46,12 @@ def home(request, lang):
     today = datetime.now().date()
     last_month =  today - timedelta(days=30)
     yesterday =  today - timedelta(days=1)
-    last_month_visitor = IpModel.objects.filter(datetime__range=(last_month,today,)).count()
+    last_month_visitor = IpModel.objects.filter(datetime__range=(last_month,today)).count()
     yesterday_visitor = IpModel.objects.filter(datetime__contains=yesterday).count()
-    today_visitor = IpModel.objects.filter(datetime__contains=today).count()
+    today_visitor = IpModel.objects.filter(datetime__contains=datetime.now().date()).count()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
-        if IpModel.objects.filter(ip=ip, datetime__contains=today):
+        if IpModel.objects.filter(ip=ip, datetime__date=datetime.now().date()):
             pass
         else:
             IpModel.objects.create(ip=ip)
