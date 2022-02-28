@@ -48,13 +48,7 @@
             <h6>{{lang_data.SHARE_LBL}}: </h6>
             <ul class="cats">
               <li> <a href="#">{% post_to_facebook object_or_url "<p style='color: green;'>facebook</p>" %}  </a></li>
-              {% if lang == 'tt' %}
-              <li> <a href="#">{% post_to_whatsapp object_or_url objects.title_tet %} </a></li>
-              {% elif lang == 'pt' %}
-              <li> <a href="#">{% post_to_whatsapp object_or_url objects.title_por %} </a></li>
-              {% else %}
-              <li> <a href="#">{% post_to_whatsapp object_or_url objects.title_eng %} </a></li>
-              {% endif %}
+              <li> <a href="#">{% post_to_whatsapp  object_or_url title3  %} </a></li>
               <li> <a href="#">{% post_to_twitter "{{title3}}" object_or_url  %} </a></li>
               <li> <a href="#">{% post_to_linkedin object_or_url %} </a></li>
           </ul>

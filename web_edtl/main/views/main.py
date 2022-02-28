@@ -100,6 +100,12 @@ def inicio(request, lang):
     news_main = News.objects.filter(is_active=True, is_approved=True, language="Portugues").last()
     news_recent = News.objects.filter(is_active=True, is_approved=True, language="Portugues").order_by('-approved_date')[1:4]
     faq_home = Faq.objects.filter(is_active=True, is_homepage=True)
+    today = timezone.now()
+    last_month = timezone.now() - timedelta(days=30)
+    yesterday = timezone.now() - timedelta(days=1)
+    last_month_visitor = IpModel.objects.filter(datetime__lte=last_month).count()
+    yesterday_visitor = IpModel.objects.filter(datetime__lt=yesterday).count()
+    today_visitor = IpModel.objects.filter(datetime__contains=today.date()).count()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
         if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
@@ -109,12 +115,6 @@ def inicio(request, lang):
     else:
         IpModel.objects.create(ip=ip)
     visitors = IpModel.objects.all().count()
-    today = timezone.now()
-    last_month = timezone.now() - timedelta(days=30)
-    yesterday = timezone.now() - timedelta(days=1)
-    last_month_visitor = IpModel.objects.filter(datetime__lte=last_month).count()
-    yesterday_visitor = IpModel.objects.filter(datetime__lt=yesterday).count()
-    today_visitor = IpModel.objects.filter(datetime__contains=today.date()).count()
     form =  SubscribeForm(request.POST or None)
     titlepage = 'Inicio'
     if request.method == 'POST':
@@ -149,6 +149,13 @@ def varanda(request, lang):
     news_main = News.objects.filter(is_active=True, is_approved=True, language="Tetum").last()
     news_recent = News.objects.filter(is_active=True, is_approved=True, language="Tetum").order_by('-approved_date')[1:4]
     faq_home = Faq.objects.filter(is_active=True, is_homepage=True)
+    visitors = IpModel.objects.all().count()
+    today = timezone.now()
+    last_month = timezone.now() - timedelta(days=30)
+    yesterday = timezone.now() - timedelta(days=1)
+    last_month_visitor = IpModel.objects.filter(datetime__lte=last_month).count()
+    yesterday_visitor = IpModel.objects.filter(datetime__lt=yesterday).count()
+    today_visitor = IpModel.objects.filter(datetime__contains=today.date()).count()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
         if IpModel.objects.filter(ip=ip, datetime__contains=today.date()):
@@ -157,13 +164,6 @@ def varanda(request, lang):
             IpModel.objects.create(ip=ip)
     else:
         IpModel.objects.create(ip=ip)
-    visitors = IpModel.objects.all().count()
-    today = timezone.now()
-    last_month = timezone.now() - timedelta(days=30)
-    yesterday = timezone.now() - timedelta(days=1)
-    last_month_visitor = IpModel.objects.filter(datetime__lte=last_month).count()
-    yesterday_visitor = IpModel.objects.filter(datetime__lt=yesterday).count()
-    today_visitor = IpModel.objects.filter(datetime__contains=today.date()).count()
     form =  SubscribeForm(request.POST or None)
     titlepage = 'Varanda'
     if request.method == 'POST':

@@ -1,8 +1,16 @@
 {% extends "main/layout.html" %}
 {% load static %}
+{% load social_share %}
 {% block title %}
   {{titlepage}}
 {% endblock title %}
+{% block head %}
+<meta property="og:title"              content="{{titlepage}}" />
+<meta property="og:type"          content="website" />
+<meta property="og:description"              content="{{titlepage}}" />
+<meta property="og:image"              content="{{ request.META.HTTP_HOST }}{% static 'main/img/logo.png' %}"/>
+           
+{% endblock head %}
 {% block content %}
 <!-- ======= Breadcrumbs ======= -->
 <section id="breadcrumbs" class="breadcrumbs">
@@ -25,6 +33,17 @@
             {{page_description.description_eng|safe}}
               
             {% endif %}
+            <div class="text-center">
+        
+              <ul style="display:  inline-flex; list-style: none; padding: 0; margin: 0;" >
+                <li> 
+                {% post_to_facebook object_or_url object.title_eng %} 
+              </li>
+              <li> <a href="#">{% post_to_whatsapp  object_or_url   %} </a></li>
+              <li> <a href="#">{% post_to_twitter "Vaga: " object_or_url  %} </a></li>
+              <li> <a href="#">{% post_to_linkedin object_or_url %} </a></li>
+            </ul>
+          </div>
           </div>
       <div class="row justify-content-center">
 

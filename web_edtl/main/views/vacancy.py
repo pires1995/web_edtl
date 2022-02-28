@@ -22,6 +22,7 @@ def vacancy_list(request,lang):
     paginator = Paginator(objects, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
+    page_description = ''
     today = timezone.now()
     ip = get_client_ip(request)
     if IpModel.objects.filter(ip=ip).exists():
@@ -31,19 +32,22 @@ def vacancy_list(request,lang):
             IpModel.objects.create(ip=ip)
     else:
         IpModel.objects.create(ip=ip)
-    page_description = ''
-    if lang == 'tt':
-        titlepage='EDTL.EP - Lista Vaga'
-    elif lang == 'pt':
-        titlepage='EDTL.EP - Lista Vaga'
-    else:
-        titlepage='EDTL.EP - Vacancy List'
+    for obj in objects:
+        if lang == 'tt':
+            titlepage='EDTL.EP - Lista Vaga'
+            title3 = f"Vaga: {obj.title_tet}"
+        elif lang == 'pt':
+            titlepage='EDTL.EP - Lista Vaga'
+            title3 = f"Vaga: {obj.title_por}"
+        elif lang == 'en':
+            titlepage='EDTL.EP - Vacancy List'
+            title3 = f"Vacancy: {obj.title_eng}"
     try:
         page_description = get_object_or_404(PageManegament, name='vacancy',is_active = True)
     except:
         page_description = ''
     context = {
-        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', 'lang':lang, 'lang_data': lang_data, \
+        'l1': 'tt', 'l2': 'pt', 'l3': 'en','title': 'EDTL, EP', 'lang':lang, 'lang_data': lang_data, 'title3':title3, \
             'departments':departments, 'page_description':page_description, 'titlepage':titlepage, 'products': products, 'page_obj':page_obj, 'today': today
     }
     template = 'inner_page/recruitment/vacancy_list.html'

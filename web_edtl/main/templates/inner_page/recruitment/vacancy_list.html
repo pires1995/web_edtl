@@ -4,24 +4,14 @@
 {% block title %}
   {{titlepage}}
 {% endblock title %}
-{% block content %}
-
 {% block head %}
-
-{% for object in page_obj  %}
-  {% if lang == 'tt' %}
-
-    <meta property="og:title"         content="{{object.title_tet}}" />
-  {% elif lang == 'pt' %}
-  
-    <meta property="og:title"         content="{{object.title_por}}" />
-  {% else %}
-    
-    <meta property="og:title"         content="{{object.title_eng}}" />
-  {% endif %}
-{% endfor %}
-
+<meta property="og:title"              content="{{titlepage}}" />
+<meta property="og:type"          content="website" />
+<meta property="og:description"              content="{{titlepage}}" />
+<meta property="og:image"              content="{{ request.META.HTTP_HOST }}{% static 'main/img/logo.png' %}"/>
+           
 {% endblock head %}
+{% block content %}
 <!-- ======= Breadcrumbs ======= -->
 <section id="breadcrumbs" class="breadcrumbs">
     <div class="container">
@@ -36,6 +26,7 @@
         {{page_description.description_eng|safe}}
           
         {% endif %}
+        
       </ol>
     </div>
 </section><!-- End Breadcrumbs -->
@@ -43,9 +34,20 @@
     <div class="container" data-aos="fade-up">
         <div class="section-title" data-aos="fade-up">
             <h2><strong>{{lang_data.VACANCY_TITLE_LBL}}</strong></h2>
+              
+              <div class="text-center">
+      
+                <ul style="display:  inline-flex; list-style: none; padding: 0; margin: 0;" >
+                  <li> 
+                  {% post_to_facebook object_or_url object.title_eng %} 
+                </li>
+                <li> <a href="#">{% post_to_whatsapp  object_or_url   %} </a></li>
+                <li> <a href="#">{% post_to_twitter "Vaga: " object_or_url  %} </a></li>
+                <li> <a href="#">{% post_to_linkedin object_or_url %} </a></li>
+              </ul>
+            </div>
           </div>
       <div class="row justify-content-center">
-
         <div class="col-md-12 entries">
           <div class="table-responsive">
             <table class="table table-bordered">
@@ -102,33 +104,7 @@
 
                         <span class="download entry-content">
                           <a href="{% url 'vacancy-download' object.hashed %}" target="_blank"><i class="bi bi-download"></i> Download</a>
-                          
-                            <h6>{{lang_data.SHARE_LBL}}: </h6>
-                            <ul style="display: flex; list-style: none; flex-wrap: wrap; padding: 0; margin: 0;">
-                                <li> <a href="#">{% post_to_facebook object_or_url "<p style='color: green;'>facebook</p>" %}  </a></li>
-                                
-                                {% if lang == 'tt' %}
-                                <li> <a href="#">{% post_to_whatsapp object_or_url objects.title_tet %} </a></li>
-                                
-                                {% elif lang == 'pt' %}
-                                <li> <a href="#">{% post_to_whatsapp object_or_url objects.title_por %} </a></li>
-                                  
-                                {% else %}
-                                <li> <a href="#">{% post_to_whatsapp object_or_url objects.title_eng %} </a></li>
-                                  
-                                {% endif %}
 
-                                
-                                {% if lang == 'tt' %}
-                                <li> <a href="#">{% post_to_twitter "News: {{objects.title_tet}}" object_or_url  %} </a></li>
-                                {% elif lang == 'pt' %}
-                                <li> <a href="#">{% post_to_twitter "News: {{objects.title_por}}" object_or_url  %} </a></li>
-                                {% else %}
-                                  
-                                <li> <a href="#">{% post_to_twitter "News: {{objects.title_eng}}" object_or_url  %} </a></li>
-                                {% endif %}
-                                <li> <a href="#">{% post_to_linkedin object_or_url %} </a></li>
-                              </ul>
                             </span>
                           </div>
                     </td>
