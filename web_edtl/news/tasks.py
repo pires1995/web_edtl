@@ -12,9 +12,7 @@ from django.templatetags.static import static
 image_url = static('main/img/logo.png')
 
 @shared_task
-def send_email(subject,template, email_from, email_to):
-
-   
+def send_email(subject,template, email_from, email_to):   
     email = EmailMessage(
         subject,
         template,
@@ -116,6 +114,82 @@ def new_subs(email_to,to_email, url):
     msg.send()
     return None
 
+
+@shared_task
+def reply_app(email_to,to_email, comment):
+    subject = 'Appointment Reply from EDTL.EP'
+    body_html = render_to_string('email/reply_app.html',{'to_email': to_email, 'comment': comment})
+    from_email = settings.EMAIL_HOST_USER
+    msg = EmailMultiAlternatives(
+        subject,
+        body_html,
+        from_email=from_email,
+        to=[email_to]
+    )
+    msg.attach_alternative(body_html, "text/html")
+    msg.send()
+    return None
+@shared_task
+def reject_app(email_to,to_email, comment):
+    subject = 'Appointment Reject from EDTL.EP'
+    body_html = render_to_string('email/reject_app.html',{'to_email': to_email, 'comment': comment})
+    from_email = settings.EMAIL_HOST_USER
+    msg = EmailMultiAlternatives(
+        subject,
+        body_html,
+        from_email=from_email,
+        to=[email_to]
+    )
+    msg.attach_alternative(body_html, "text/html")
+    msg.send()
+    return None
+
+
+@shared_task
+def approve_app(email_to,to_email, comment):
+    subject = 'Appointment Approved from EDTL.EP'
+    body_html = render_to_string('email/approve_app.html',{'to_email': to_email, 'comment': comment})
+    from_email = settings.EMAIL_HOST_USER
+    msg = EmailMultiAlternatives(
+        subject,
+        body_html,
+        from_email=from_email,
+        to=[email_to]
+    )
+    msg.attach_alternative(body_html, "text/html")
+    msg.send()
+    return None
+
+
+@shared_task
+def appoint_submit(email_to,to_email, name):
+    subject = 'New Appointment to Secretary'
+    body_html = render_to_string('email/appoint_submit.html',{'to_email': to_email, 'name': name})
+    from_email = settings.EMAIL_HOST_USER
+    msg = EmailMultiAlternatives(
+        subject,
+        body_html,
+        from_email=from_email,
+        to=[email_to]
+    )
+    msg.attach_alternative(body_html, "text/html")
+    msg.send()
+    return None
+
+@shared_task
+def finance_incomming(email_to,to_email, name):
+    subject = 'New Bill to Finance'
+    body_html = render_to_string('email/finance_incoming.html',{'to_email': to_email, 'name': name})
+    from_email = settings.EMAIL_HOST_USER
+    msg = EmailMultiAlternatives(
+        subject,
+        body_html,
+        from_email=from_email,
+        to=[email_to]
+    )
+    msg.attach_alternative(body_html, "text/html")
+    msg.send()
+    return None
 
 def send_notification(registration_ids , message_title , message_desc, image):
     fcm_api = "AAAA79BRMps:APA91bFy0m7nCsQslCnlJQVFF3ubHfaVPy1lmrF-Hr2vUk-bOCdcZJLC7DR86T2LBz1ndVNC9eB6grmQOLg1RRMEB2V54MFtXCmrTVWd_953iS_Wc-Cdnf1dtALuCma1tCMVBxr6s8uk"

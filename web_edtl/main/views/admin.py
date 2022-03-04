@@ -9,7 +9,7 @@ from finance.models import Client
 from custom.decorators import allowed_users
 from custom.models import FirebaseToken
 from django.http import HttpResponse
-
+from finance.models import Client, Bill
 def month():
     month_name = {
         '1': 'January',
@@ -33,9 +33,18 @@ def dashboard(request):
     client = Client.objects.filter(is_active=True).count()
     appointment = Appointment.objects.filter(is_done=True).count()
     subusers = NewsUser.objects.all().count()
+    appointment_approved = Appointment.objects.filter(is_approved=True).count()
+    appointment_done = Appointment.objects.filter(is_done=True).count()
+    appointment_incomming = Appointment.objects.filter(is_approved=False, is_reject=False).count()
+    clients = Client.objects.all().count()
+    bill_incoming = Bill.objects.filter(is_done=False).count()
+    bill_done = Bill.objects.filter(is_done=True).count()
     context ={
         'group': group, 'title': 'Dashboard', \
-            'client': client, 'appointment': appointment, 'subusers': subusers
+        'appointment_approved':appointment_approved,\
+        'appointment_done':appointment_done,'clients':clients,\
+        'bill_incoming':bill_incoming, 'bill_done':bill_done,\
+        'appointment_incomming':appointment_incomming,  'client': client, 'appointment': appointment, 'subusers': subusers
     }
     return render(request, 'web_admin/home.html', context)
 

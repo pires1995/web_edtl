@@ -1,10 +1,5 @@
 from django.shortcuts import render, redirect
-from news.forms import NewsUserSignUpForm
-from news.models import NewsUser
 from django.contrib import messages
-from django.core.mail import send_mail, EmailMultiAlternatives
-from django.conf import settings
-from django.template.loader import get_template
 from main.utils_lang import lang_master
 from departments.models import Department
 from product.models import Product
@@ -15,6 +10,9 @@ from appointment.models import ContactMunicipality
 from custom.models import IpModel
 from main.utils import get_client_ip
 from datetime import datetime
+from news.tasks import appoint_submit
+from main.models import User
+import re
 def appointment(request,lang):
     today = datetime.now().date()
     ip = get_client_ip(request)
@@ -30,11 +28,17 @@ def appointment(request,lang):
     if 'appointment_form' in request.POST:
         newid, new_hashed = getnewid(Appointment)
         form = AppointmentForm(request.POST)
+        fullname = request.POST.get('first_name')
+        secretary = User.objects.filter(groups__name='secretary', is_active=True)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.id = newid
             instance.hashed = new_hashed
             instance.save()
+            for email_to in secretary:
+                set_name = email_to.email
+                set_name2 = re.split(r'[@.]', set_name)
+                appoint_submit.delay(email_to.email,set_name2[0],fullname)
             messages.success(request, f'Successfully Submit Appointment')
             return redirect('appointment', lang)
     elif 'suggestion_form' in request.POST:

@@ -69,7 +69,7 @@
                     <h5 class="card-title mr-2">Done Bill List
                     </h5>
                     <hr>
-                    <table class="table table-striped table-bordered" id="example">
+                    <table class="table table-striped table-bordered" id="example2">
                         <thead>
                             <tr>
                                 <th scope="col">Nu.</th>
@@ -125,6 +125,29 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var table = $('#example').removeAttr('width').DataTable({
+            "scrollY": "50vh",
+            "scrollX": false,
+            "scrollCollapse": true,
+            "paging": true,
+            deferRender: true,
+            searchBuilder: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'excelHtml5',
+                {
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
+                    messageTop: '',
+                }
+            ],
+        });
+        table.buttons().container().appendTo('#example .col-md-6:eq(0)');
+    });
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var table = $('#example2').removeAttr('width').DataTable({
             "scrollY": "50vh",
             "scrollX": false,
             "scrollCollapse": true,

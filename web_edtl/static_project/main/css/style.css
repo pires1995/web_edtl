@@ -132,6 +132,10 @@ h1, h2, h3, h4, h5, h6 {
   background-color: rgba(240, 60, 2, 0.8);
 }
 
+#topbar #btn-search:active{
+  border: 1px solid #ffffff;
+}
+
 @keyframes blink {
   0% {
     opacity: 1;

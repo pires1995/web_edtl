@@ -61,7 +61,10 @@ class CustomUserForm(forms.ModelForm):
         )
 
 class AppointmentForm(forms.ModelForm):
-    first_name = forms.CharField(label="Fullname", required=True)
+    first_name = forms.CharField(label="Fullname", required=True, widget=forms.TextInput(attrs={'placeholder': 'Enter your Fullname'}))
+    email = forms.EmailField(label="Email", required=True, widget=forms.EmailInput(attrs={'placeholder': 'Enter your Email'}))
+    mobile = forms.IntegerField(label="Phone Number", required=True, widget=forms.NumberInput(attrs={'placeholder': 'Enter your Phone Number'}))
+    subject = forms.CharField(widget=forms.Textarea(attrs={'placeholder':'Enter Subject'}))
     appointment_date = forms.DateField(widget=DateInput(), required=True)
     appointment_time = forms.TimeField(widget=forms.TimeInput(attrs={'type': 'time'}))
     class Meta:

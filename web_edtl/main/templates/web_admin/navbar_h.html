@@ -24,13 +24,32 @@
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
 
-
+                    {% if group == 'coordinator' %}
+                    
                     <li class="notification-item">
-
+                        
                         <a href="{% url 'admin-news-request-list' %}">
                             <i class="bi bi-newspaper"></i>News (<strong><span id="notifapprbody1"></span></strong>)
                         </a>
                     </li>
+                    
+                    {% elif group == 'secretary' %}
+                    
+                        <li class="notification-item">
+                            
+                            <a href="{% url 'admin-appointment-list' %}">
+                                <i class="bi bi-calendar-date"></i>Appointment (<strong><span id="notifyapprovedbody"></span></strong>)
+                            </a>
+                        </li>
+                    {% elif group == 'finance' %}
+                    
+                        <li class="notification-item">
+                            
+                            <a href="{% url 'admin-bill-list' %}">
+                                <i class="bi bi-arrow-down-square"></i>Bill (<strong><span id="notifyfinancebody"></span></strong>)
+                            </a>
+                        </li>
+                    {% endif %}
                     <!-- <li>
                         <hr class="dropdown-divider">
                     </li> -->
@@ -38,37 +57,6 @@
                 </ul><!-- End Notification Dropdown Items -->
 
             </li><!-- End Notification Nav -->
-            <!-- <li class="nav-item dropdown">
-
-                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                    <i class="bi bi-chat-left-text"></i>
-                    <span class="badge bg-success badge-number">3</span>
-                </a>
-
-                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                    <li class="dropdown-header">
-                        You have 3 new messages
-                        <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li class="message-item">
-                        <a href="#">
-                            <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
-                            <div>
-                                <h4>Maria Hudson</h4>
-                                <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
-                                <p>4 hrs. ago</p>
-                            </div>
-                        </a>
-                    </li>
-
-                </ul>
-
-            </li> -->
-            <!-- End Messages Nav -->
 
             <li class="nav-item dropdown pe-3">
 
@@ -85,7 +73,7 @@
                         <h6>{{request.user.email}}</h6>
                         {% endif %}
 
-                        <span>Web Designer</span>
+                        <!-- <span>Web Designer</span> -->
                     </li>
                     <li>
                         <hr class="dropdown-divider">

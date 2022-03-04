@@ -31,7 +31,7 @@ from event.models import Event
 from announcement.models import Announcement
 from itertools import chain
 def home(request, lang):
-    
+    # vacancy_marquee = []
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)
@@ -39,8 +39,11 @@ def home(request, lang):
     news_main = News.objects.filter(is_active=True, is_approved=True, language="English").last()
     news_recent = News.objects.filter(is_active=True, is_approved=True, language="English").order_by('-approved_date')[1:4]
     faq_home = Faq.objects.filter(is_active=True, is_homepage=True)
-    vacancy_marquee = Vacancy.objects.filter(is_active=True, end_period__gte = datetime.now().date())[:3]
-    tender_marquee = Tender.objects.filter(is_active=True, end_period__gte = datetime.now().date())[:3]
+    vacancy_marquee = Vacancy.objects.filter(is_active=True, end_period__gte=datetime.now().date())[:5]
+    tender_marquee = Tender.objects.filter(is_active=True, end_period__gte = datetime.now().date())[:5]
+    # for i in vacancy:
+    #     if i.end_period < datetime.now().date():
+    #         print(i)
     
     visitors = IpModel.objects.all().count()
     today = datetime.now().date()

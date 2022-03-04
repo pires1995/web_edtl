@@ -14,7 +14,6 @@ from main.utils import get_client_ip
 from datetime import datetime
 
 def vacancy_list(request,lang):
-    today = datetime.now()
     lang_data = lang_master(lang)
     departments = Department.objects.all()
     products = Product.objects.filter(is_active=True)

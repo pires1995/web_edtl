@@ -5,16 +5,19 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from datetime import datetime
 from custom.decorators import allowed_users
+from news.tasks import reject_app, reply_app, approve_app
+import re
 
 @login_required
 @allowed_users(allowed_roles=['secretary'])
 def appointment_list(request):
     group = request.user.groups.all()[0].name
-    objects = Appointment.objects.filter(is_approved=False, is_reject=False)
+    objects = Appointment.objects.filter(is_approved=False, is_reject=False).order_by('-appointment_date')
     if request.method == 'POST':
         id = request.POST.get('id')
         decision = request.POST.get('decision')
         comments = request.POST.get('comments')
+        email = request.POST.get('email')
         obj = Appointment.objects.get(pk=id)
         if decision == "1":
             obj.is_approved = True
@@ -23,6 +26,11 @@ def appointment_list(request):
             obj.is_reject = False
             obj.reject_date = None
             obj.reject_comment = ''
+            set_name = obj.email
+            set_name2 = re.split(r'[@.]', set_name)
+            approve_app.delay(obj.email, set_name2[0], obj.approved_comment)
+            obj.user = request.user
+            obj.save()
         elif decision == "2":
             obj.is_reject = True
             obj.is_approved = False
@@ -30,6 +38,11 @@ def appointment_list(request):
             obj.approved_comment = ''
             obj.approved_date = None
             obj.reject_date = datetime.now()
+            set_name = obj.email
+            set_name2 = re.split(r'[@.]', set_name)
+            reject_app.delay(obj.email, set_name2[0], obj.reject_comment)
+            obj.user = request.user
+            obj.save()
         else:
             obj.is_reject = False
             obj.is_approved = False
@@ -37,8 +50,11 @@ def appointment_list(request):
             obj.approved_date = None
             obj.reject_date = None
             obj.reply_date = datetime.now()
-        obj.user = request.user
-        obj.save()
+            set_name = obj.email
+            set_name2 = re.split(r'[@.]', set_name)
+            reply_app.delay(obj.email, set_name2[0], obj.reply_comment)
+            obj.user = request.user
+            obj.save()
         messages.success(request, f'Successfully Send Messages')
         return redirect('admin-appointment-list')
     context = {

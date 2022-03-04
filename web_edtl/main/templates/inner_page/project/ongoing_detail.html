@@ -1,5 +1,6 @@
 {% extends "main/layout.html" %}
 {% load static %}
+{% load humanize %}
 {% block title %}
   {{titlepage}}
 {% endblock title %}
@@ -49,7 +50,7 @@
                     <h6>{{lang_data.PROJECT_DETAIL9_LBL}}: <strong>{{objects.contract_number}}</strong></h6>
                     <h6>{{lang_data.PROJECT_DETAIL10_LBL}}: <strong>{{objects.start_period|date:"d/M/Y"}}</strong></h6>
                     <h6>{{lang_data.PROJECT_DETAIL11_LBL}}: <strong>{{objects.end_period|date:"d/M/Y"}}</strong></h6>
-                    <h6>{{lang_data.PROJECT_DETAIL12_LBL}}: <strong>${{budget.budget}}</strong></h6>
+                    <h6>{{lang_data.PROJECT_DETAIL12_LBL}}: <strong>${{budget.budget|intcomma}}</strong></h6>
                     <h6>{{lang_data.PROJECT_DETAIL16_LBL}}: <strong>{{objects.typeofprocurament}}</strong></h6>
                 </div>
                 </article><!-- End blog entry -->

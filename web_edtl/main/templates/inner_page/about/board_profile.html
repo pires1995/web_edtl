@@ -52,7 +52,7 @@ EDTL.EP - {{titlepage}}
           </div>
           <div class="col-md-3">
             <div class="section-title text-center" data-aos="fade-up">
-              <h2><strong>DELIVERASAUN</strong></h2>
+              <h2><strong>DELIBERASAUN</strong></h2>
               <hr>
               {% for object in deliverasaun  %}
                    <a href="{% url 'main-deliverasaun-detail' object.datetime.year object.datetime.month object.datetime.day lang object.hashed %}" class="text-primary"> {{object.date|date:"d/M/Y"}} - 

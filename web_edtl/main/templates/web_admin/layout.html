@@ -8,7 +8,7 @@
 	<title>EDTL, EP - {% block title %}
 
 		{% endblock title %}</title>
-	<link href="{% static 'web_admin/img/edtl.png' %}" rel="icon">
+	<link href="{% static 'main/img/logo.png' %}" rel="icon">
 
 	<!-- Google Fonts -->
 	<link href="https://fonts.gstatic.com" rel="preconnect">
@@ -146,6 +146,14 @@
 	{% if group == 'coordinator' %}
 	<script src="{% static 'web_admin/notif/notif_approver0.js' %}"></script>
 	<script src="{% static 'web_admin/notif/notif_approver1.js' %}"></script>
+	
+	{% elif group == 'secretary' %}
+	<script src="{% static 'web_admin/notif/notif_app.js' %}"></script>
+	<script src="{% static 'web_admin/notif/notif_app1.js' %}"></script>
+	
+	{% elif group == 'finance' %}
+	<script src="{% static 'web_admin/notif/notif_finance0.js' %}"></script>
+	<script src="{% static 'web_admin/notif/notif_finance1.js' %}"></script>
 	{% endif %}
 	{% block scripts %}
 

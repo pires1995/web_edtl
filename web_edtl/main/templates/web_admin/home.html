@@ -5,16 +5,25 @@
 {% endblock title %}
 {% block content %}
 
-<div class="pagetitle">
-    <h1>Welcome to EDTL, EP Website Admin Dashboard</h1>
-    <nav>
+<div class="pagetitle text-center">
+  {% if group == 'admin' or group == 'coordinator' or group == 'admin' %}
+  <h1 class="p-3">Welcome to EDTL, EP Website Admin Dashboard</h1>
+  {% elif group == 'secretary' %}
+  <h1 class="p-3">Welcome to EDTL, EP Appointment Dashboard</h1>
+  {% elif group == 'finance' %}
+  <h1 class="p-3">Welcome to EDTL, EP Bill Management Dashboard</h1>
+  {% endif %}
+    <!-- <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item active">Dashboard</li>
         </ol>
-    </nav>
+    </nav> -->
 </div><!-- End Page Title -->
 
 <section class="section dashboard">
+  {% if group == 'admin' or group == 'coordinator' or group == 'media' %}
+    
+  
     <div class="row">
         <div class="col-md-4">
                 <div class="card info-card sales-card">
@@ -91,6 +100,123 @@
         </div><!-- End Right side columns -->
 
     </div>
+    {% elif group == 'secretary' %}
+    <div class="row">
+      <div class="col-md-4">
+              <div class="card info-card sales-card">
+
+                <div class="card-body">
+                  <h5 class="card-title">Appointment Approved</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-people"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{appointment_approved}}</h6>
+
+                    </div>
+                  </div>
+                </div>
+            </div><!-- End Sales Card -->
+      </div>
+      <div class="col-md-4">
+          <div class="card info-card customers-card">
+
+              <div class="card-body">
+                <h5 class="card-title">Appointment Done</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{appointment_done}}</h6>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+      </div>
+      <div class="col-md-4">
+          <div class="card info-card revenue-card">
+
+              <div class="card-body">
+                <h5 class="card-title">Incoming Appointment </h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-person-plus"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{appointment_incomming}}</h6>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+      </div>
+    </div>
+    {% elif group == 'finance' %}
+    <div class="row">
+      <div class="col-md-4">
+              <div class="card info-card sales-card">
+
+                <div class="card-body">
+                  <h5 class="card-title">Incoming Bill</h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-arrow-down-square"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{bill_incoming}}</h6>
+
+                    </div>
+                  </div>
+                </div>
+            </div><!-- End Sales Card -->
+      </div>
+      <div class="col-md-4">
+          <div class="card info-card customers-card">
+
+              <div class="card-body">
+                <h5 class="card-title">Approved Bill</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-clipboard-check"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{bill_done}}</h6>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+      </div>
+      <div class="col-md-4">
+          <div class="card info-card revenue-card">
+
+              <div class="card-body">
+                <h5 class="card-title">Client</h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>{{clients}}</h6>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+      </div>
+    </div>
+    {% endif %}
 </section>
 {% endblock content %}
 {% block scripts %}

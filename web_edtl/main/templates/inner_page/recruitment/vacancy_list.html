@@ -93,7 +93,7 @@
                     <td>{{object.start_period|date:"d/M/Y"}}</td>
                     <td>{{object.end_period|date:"d/M/Y"}}</td>
                     <td>
-                      {% if object.end_period >= today.date %}
+                      {% if object.end_period >= today %}
                          <i class="bi bi-check text-success"></i>  {{lang_data.ACTIVE_LBL}}
                       {% else %}
                          <i class="bi bi-x text-danger"></i> {{lang_data.EXPIRED_LBL}}

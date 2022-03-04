@@ -14,6 +14,9 @@ from custom.forms import UserUpdateForm
 from django.contrib.auth.views import PasswordChangeView, PasswordResetDoneView
 from django.urls import reverse_lazy
 from main.models import User
+import re
+from news.tasks import finance_incomming
+
 
 def fms_login(request):
     form = FMSLoginForm(request.POST or None)
@@ -64,6 +67,8 @@ def client_bill_add(request):
     if request.method == 'POST':
         newid, new_hashed = getnewid(Bill)
         form = BillForm(request.POST, request.FILES)
+        fullname = client.name
+        finance = User.objects.filter(groups__name='finance', is_active=True)
         if form.is_valid():
             instance = form.save(commit=False)
             instance.id = newid
@@ -71,6 +76,11 @@ def client_bill_add(request):
             instance.hashed = new_hashed
             instance.upload_date = datetime.now()
             instance.save()
+            for email_to in finance:
+                set_name = email_to.email
+                print(set_name)
+                set_name2 = re.split(r'[@.]', set_name)
+                finance_incomming.delay(email_to.email,set_name2[0],fullname)
             messages.success(request, f'Successfully Add Bill')
             return redirect('bill-list')
     else:
@@ -80,6 +90,33 @@ def client_bill_add(request):
         'group': group
     }
     return render(request, 'fms/form.html', context)
+
+@login_required
+@allowed_users(allowed_roles=['client'])
+def client_bill_update(request,hashid):
+    group = request.user.groups.all()[0].name
+    objects = get_object_or_404(Bill, hashed=hashid)
+    if request.method == 'POST':
+        form = BillForm(request.POST, request.FILES, instance=objects)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Successfully Update Bill')
+            return redirect('bill-list')
+    else:
+        form = BillForm(instance=objects)
+    context = {
+        'title': 'Update Bill','subtitle': 'Bill', 'form': form,
+        'group': group
+    }
+    return render(request, 'fms/form.html', context)
+
+@login_required
+@allowed_users(allowed_roles=['client'])
+def client_bill_delete(request,hashid):
+    objects = get_object_or_404(Bill,hashed=hashid)
+    objects.delete()
+    messages.success(request, f'Successfully Delete Image')
+    return redirect('bill-list')
 
 @login_required
 @allowed_users(allowed_roles=['client'])
